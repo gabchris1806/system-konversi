@@ -1,0 +1,1171 @@
+/* ===== GENERAL ===== */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #f3f4f6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* ===== CONTAINER (Register & Login) ===== */
+.container {
+    background: #fff;
+    padding: 30px 25px;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    width: 350px;
+    text-align: center;
+}
+
+h2 { margin-bottom: 20px; color: #333; }
+
+input {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+button {
+    width: 96%;
+    padding: 10px;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+button:hover { background: #45a049; }
+
+.link {
+    font-size: 12px;
+    margin-top: 15px;
+    display: block;
+    color: #007BFF;
+    text-decoration: none;
+}
+.link:hover { text-decoration: underline; }
+
+/* ===== LOGIN BUTTON (Blue Style) ===== */
+.login-btn {
+    background: #007BFF;
+}
+.login-btn:hover {
+    background: #0069d9;
+}
+
+/* ===== DASHBOARD ===== */
+/* ===== BODY DASHBOARD ===== */
+body.dashboard-page {
+    font-family: 'Poppins', sans-serif;
+    background: #f3f4f6;
+    margin: 0;
+    display: block; 
+}
+
+.dashboard-content {
+    padding: 20px;
+}
+
+/* ===== NAVBAR ===== */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #D0F0C0;
+    padding: 10px 20px;
+    color: black;
+    position: relative;
+    z-index: 1000;
+}
+
+.navbar-left {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    width: 60px;
+    height: 60px;
+    margin-right: 10px;
+}
+
+.app-title {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+}
+
+.user-info {
+    text-align: left;
+    margin-right: 10px;
+}
+
+.user-name {
+    display: block;
+    font-weight: bold;
+}
+
+.user-nip {
+    font-size: 12px;
+}
+
+.profile-menu {
+    position: relative;
+    display: inline-block;
+}
+
+.profile {
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    border-radius: 50%;
+    padding: 5px;
+}
+
+.dropdown {
+    display: none;
+    position: absolute;
+    right: 0;
+    background: white;
+    color: black;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    overflow: hidden;
+    z-index: 1001;
+}
+
+.dropdown a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: black;
+}
+
+.dropdown a:hover {
+    background: #f1f1f1;
+}
+
+.profile-menu:hover .dropdown {
+    display: block;
+}
+
+/* ===== TAB BAR STYLING ===== */
+.tab-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
+    position: relative;
+    z-index: 100;
+}
+
+.tab-bar {
+    display: flex;
+    background: white;
+    border-radius: 12px 12px 0 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+    margin-bottom: 0;
+    position: relative;
+    z-index: 101;
+}
+
+.tab-button {
+    flex: 1;
+    padding: 15px 20px;
+    background: #f8f9fa;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    color: #666;
+    transition: all 0.3s ease;
+    border-right: 1px solid #dee2e6;
+    position: relative;
+}
+
+.tab-button:last-child {
+    border-right: none;
+}
+
+.tab-button:hover {
+    background: #e9ecef;
+    color: #333;
+}
+
+.tab-button.active {
+    background: #28a745;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(40, 167, 69, 0.3);
+}
+
+.tab-button.active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: #28a745;
+}
+
+/* ===== TAB CONTENT STYLING ===== */
+.tab-content {
+    background: white;
+    border-radius: 0 0 12px 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    padding: 25px;
+    min-height: 400px;
+}
+
+.form-content {
+    display: none;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.form-content.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Tab content headers */
+.form-content h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #333;
+    border-bottom: 2px solid #28a745;
+    padding-bottom: 10px;
+}
+
+/* ===== FORM KONVERSI ===== */
+.konversi-form h3 {
+    margin-top: 20px;
+    color: #444;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 5px;
+}
+
+.row {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.form-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.form-group input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 12px;
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 15px;
+}
+
+.submit-btn:hover {
+    background: #218838;
+}
+
+/* ===== INPUT WRAPPER STYLING ===== */
+.input-wrapper {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.input-wrapper input {
+    border: none;
+    outline: none;
+    padding: 10px;
+    flex: 1;
+}
+
+.input-wrapper span {
+    background: #f1f1f1;
+    padding: 10px;
+    font-size: 14px;
+    color: #333;
+}
+
+/* ===== YEAR SELECTOR FOR FORMAT 2 ===== */
+.year-selector-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 15px;
+    margin-bottom: 25px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border-left: 4px solid #28a745;
+}
+
+.year-selector-container label {
+    font-weight: bold;
+    color: #333;
+    font-size: 16px;
+}
+
+.year-selector-container select {
+    padding: 10px 15px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    background: white;
+    cursor: pointer;
+    min-width: 150px;
+    transition: all 0.3s ease;
+}
+
+.year-selector-container select:focus {
+    outline: none;
+    border-color: #28a745;
+    box-shadow: 0 0 5px rgba(40, 167, 69, 0.3);
+}
+
+
+
+.btn-lihat:active {
+    transform: translateY(0);
+}
+
+/* ===== SUMMARY CONTAINER ===== */
+.summary-container {
+    background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 25px;
+    border-left: 4px solid #28a745;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.summary-row {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.summary-item {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.summary-item label {
+    font-weight: 600;
+    color: #333;
+    font-size: 14px;
+}
+
+.summary-item span {
+    font-size: 18px;
+    font-weight: bold;
+    color: #28a745;
+    background: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    min-width: 80px;
+    text-align: center;
+}
+
+/* ===== FORMAT 2 TABLE STYLING ===== */
+.format2-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    background: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.format2-table th {
+    background: linear-gradient(135deg, #28a745, #218838);
+    color: white;
+    font-weight: 600;
+    padding: 18px 12px;
+    text-align: center;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.format2-table td {
+    padding: 15px 12px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+    color: #555;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.format2-table tbody tr:hover {
+    background-color: #f8f9fa;
+    transform: scale(1.001);
+}
+
+.format2-table tbody tr:nth-child(even) {
+    background-color: #fafafa;
+}
+
+.format2-table tbody tr:nth-child(even):hover {
+    background-color: #f0f0f0;
+}
+
+/* ===== NO DATA & LOADING MESSAGES ===== */
+.no-data-message {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+    font-style: italic;
+    font-size: 16px;
+}
+
+.loading {
+    text-align: center;
+    padding: 30px;
+    color: #28a745;
+    font-weight: 600;
+    position: relative;
+}
+
+.loading::after {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-left: 10px;
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid #28a745;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* ===== TOMBOL TAMBAH BARIS TERPISAH ===== */
+.table-controls {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 15px 0;
+    padding-left: 5px; /* Sesuaikan dengan lebar kolom "II" */
+}
+
+.add-row-button {
+    width: 55px;
+    height: 35px;
+    border-radius: 5%;
+    background: #ffffff;
+    color: rgb(7, 7, 7);
+    border: none;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.add-row-button:hover {
+    background: #218838;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+.add-row-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Sembunyikan tombol di footer tabel */
+.format3-table tfoot tr:first-child {
+    display: none;
+}
+
+/* ===== FORMAT 3 TABLE STYLING - UPDATED WIDTH ===== */
+.format3-container {
+    margin-top: 20px;
+}
+
+.format3-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    table-layout: fixed; /* Tambahkan untuk kontrol width yang lebih baik */
+}
+
+/* UPDATED COLUMN WIDTHS - Kolom II diperkecil untuk sesuaikan dengan tombol tambah */
+.format3-table th:nth-child(1) { width: 5%; }   /* Kolom II - DIPERKECIL dari 8% ke 5% */
+.format3-table th:nth-child(2) { width: 38%; }  /* HASIL PENILAIAN KINERJA - DIPERBESAR dari 35% ke 38% */
+.format3-table th:nth-child(3) { width: 12%; }  /* LAMA */
+.format3-table th:nth-child(4) { width: 12%; }  /* BARU */
+.format3-table th:nth-child(5) { width: 12%; }  /* JUMLAH */
+.format3-table th:nth-child(6) { width: 21%; }  /* KETERANGAN */
+
+.format3-table th, .format3-table td {
+    border: 1px solid #ddd;
+    padding: 12px 8px;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 13px;
+}
+
+.format3-table thead th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+    position: sticky;
+    top: 0;
+}
+
+.format3-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.format3-table tbody tr:hover {
+    background-color: #e8f5e8;
+}
+
+.total-row td {
+    border: 1px solid #28a745 !important;
+    background-color: #28a745 !important;
+    color: white !important;
+    font-weight: bold !important;
+    padding: 12px 8px !important;
+}
+
+/* Pastikan tfoot juga terlihat jika masih digunakan */
+.format3-table tfoot {
+    display: table-footer-group !important;
+}
+
+.format3-table tfoot tr {
+    background-color: #28a745 !important;
+    color: white !important;
+    font-weight: bold !important;
+}
+
+.format3-table tfoot td {
+    border: 1px solid #28a745 !important;
+    background-color: #28a745 !important;
+    color: white !important;
+    padding: 12px 8px !important;
+}
+
+
+
+/* Pastikan rowspan di-update dengan benar */
+.row-number {
+    vertical-align: middle;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* ===== KETERANGAN CELL STYLING - UPDATED ===== */
+.keterangan-cell {
+    background-color: #e8f4f8 !important;
+    cursor: text;
+    min-height: 30px;
+    text-align: left !important;
+    padding: 8px 12px !important; /* Tambah padding horizontal */
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    word-wrap: break-word; /* Untuk text yang panjang */
+    overflow-wrap: break-word;
+}
+
+.keterangan-cell:hover {
+    background-color: #d1ecf1 !important;
+    border-color: #bee5eb;
+}
+
+.keterangan-cell:focus {
+    outline: none;
+    background-color: #d4edda !important;
+    border-color: #28a745;
+    box-shadow: 0 0 5px rgba(40, 167, 69, 0.3);
+}
+
+.keterangan-cell[contenteditable="true"]:empty::before {
+    content: "Klik untuk menambah keterangan...";
+    color: #6c757d;
+    font-style: italic;
+}
+
+.keterangan-cell:focus::before {
+    content: none;
+}
+
+.format3-table th, .format3-table td {
+    border: 1px solid #ddd;
+    padding: 12px 8px;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 13px;
+}
+
+.format3-table thead th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+    position: sticky;
+    top: 0;
+}
+
+.format3-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.format3-table tbody tr:hover {
+    background-color: #e8f5e8;
+}
+
+/* Total row styling */
+.total-row td {
+    border: 1px solid #28a745 !important;
+    background-color: #28a745 !important;
+    color: white !important;
+    font-weight: bold !important;
+    padding: 12px 8px !important;
+}
+
+/* Pastikan tfoot juga terlihat jika masih digunakan */
+.format3-table tfoot {
+    display: table-footer-group !important;
+}
+
+.format3-table tfoot tr {
+    background-color: #28a745 !important;
+    color: white !important;
+    font-weight: bold !important;
+}
+
+.format3-table tfoot td {
+    border: 1px solid #28a745 !important;
+    background-color: #28a745 !important;
+    color: white !important;
+    padding: 12px 8px !important;
+}
+
+/* Pastikan rowspan di-update dengan benar */
+.row-number {
+    vertical-align: middle;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* Editable cells styling */
+.editable-cell {
+    position: relative;
+    cursor: pointer;
+    min-height: 30px;
+    background-color: #fff3cd;
+    transition: all 0.3s ease;
+}
+
+.editable-cell:hover {
+    background-color: #ffeaa7;
+    transform: scale(1.02);
+}
+
+.editable-cell:hover::after {
+    content: "✏";
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    font-size: 12px;
+    opacity: 0.7;
+}
+
+.calculated-cell {
+    background-color: #d4edda;
+    font-weight: bold;
+}
+
+/* Input styling when editing */
+.cell-input {
+    width: 100%;
+    border: none;
+    background: transparent;
+    text-align: center;
+    font-size: 13px;
+    padding: 4px;
+    outline: none;
+    box-shadow: 0 0 5px rgba(40, 167, 69, 0.5);
+}
+
+/* Total row styling */
+.format3-table tfoot tr {
+    background-color: #28a745 !important;
+    color: white;
+    font-weight: bold;
+}
+
+.format3-table tfoot td {
+    border-color: #28a745;
+}
+
+/* ===== ADD/REMOVE ROWS STYLING ===== */
+.description-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.editable-description {
+    background-color: #fff3cd;
+    padding: 2px 5px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.editable-description:hover {
+    background-color: #ffeaa7;
+}
+
+.remove-row-btn {
+    opacity: 0;               
+    transition: opacity 0.3s; 
+    margin-left: 4px;         
+    padding: 1px 4px;         
+    background: #757575;     
+    color: white;
+    border: none;
+    border-radius: 2px;       
+    font-size: 10px;          
+    cursor: pointer;
+    line-height: 1;          
+    width: 20px;              
+    height: 16px;             
+    display: inline-flex;     
+    align-items: center;
+    justify-content: center;
+}
+
+.description-container:hover .remove-row-btn {
+    opacity: 1;
+}
+
+.remove-row-btn:hover {
+    background: #ffffff !important;
+}
+
+#add-performance-row {
+    padding: 8px 16px;
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+#add-performance-row:hover {
+    background: #218838 !important;
+    transform: translateY(-1px);
+}
+
+/* ===== UPDATED FORMAT 3 BOTTOM SECTION STYLING ===== */
+.format3-bottom-section {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.format3-notes-section {
+    background: #f8f9fa;
+    padding: 25px;
+    border-radius: 10px;
+    border: 2px solid #e9ecef;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    width: 1098px;
+}
+
+.format3-notes-section h4 {
+    color: #333;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 18px;
+    border-bottom: 3px solid #28a745;
+    padding-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.format3-notes-section p {
+    color: #555;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 12px;
+    padding-left: 5px;
+}
+
+.format3-notes-section .note-footer {
+    color: #856404;
+    font-size: 13px;
+    font-style: italic;
+    margin: 20px 0;
+    padding: 15px;
+    background: #fff3cd;
+    border-radius: 8px;
+    border-left: 4px solid #ffc107;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 2px 6px rgba(255, 193, 7, 0.15);
+}
+
+.format3-notes-section .note-footer::before {
+    content: "⚠";
+    font-size: 16px;
+    color: #ffc107;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+/* BUTTONS SECTIONS - Properly styled and aligned */
+.format3-actions {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    margin: 25px 0 10px 0;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 10px;
+    border: 2px solid #e9ecef;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+.report-btn {
+    padding: 14px 24px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    min-width: 160px;
+    box-sizing: border-box;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+}
+
+.btn-print {
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: white;
+    border: 2px solid transparent;
+}
+
+.btn-print:hover {
+    background: linear-gradient(135deg, #0056b3, #004085);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 123, 255, 0.4);
+    border-color: #0056b3;
+}
+
+.btn-download {
+    background: linear-gradient(135deg, #dc3545, #c82333);
+    color: white;
+    border: 2px solid transparent;
+}
+
+.btn-download:hover {
+    background: linear-gradient(135deg, #c82333, #a71e2a);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(220, 53, 69, 0.4);
+    border-color: #c82333;
+}
+
+.report-btn svg {
+    transition: transform 0.3s ease;
+}
+
+.report-btn:hover svg {
+    transform: scale(1.1);
+}
+
+/* WARNING MESSAGE STYLING */
+.format3-warning {
+    background: #fff3cd;
+    color: #856404;
+    padding: 18px;
+    border-radius: 8px;
+    border: 2px solid #ffeaa7;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+    margin: 20px 0;
+    box-shadow: 0 3px 8px rgba(255, 234, 167, 0.3);
+}
+
+.format3-warning::before {
+    content: "⚠";
+    font-size: 18px;
+    color: #ffc107;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+/* TABEL KEDUA - Pastikan konsistensi width */
+.format3-table:nth-of-type(2) th:nth-child(1) { width: 55%; }  /* Keterangan */
+.format3-table:nth-of-type(2) th:nth-child(2) { width: 22.5%; }  /* Pangkat */
+.format3-table:nth-of-type(2) th:nth-child(3) { width: 22.5%; }  /* Jenjang Jabatan */
+
+/* ===== DROPDOWN BULAN STYLING ===== */
+.form-group select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e1e5e9;
+    border-radius: 8px;
+    font-size: 14px;
+    background-color: white;
+    transition: border-color 0.3s ease;
+    cursor: pointer;
+}
+
+.form-group select:focus {
+    outline: none;
+    border-color: #28a745;
+    box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.1);
+}
+
+.form-group select:hover {
+    border-color: #28a745;
+}
+
+/* ===== RESPONSIVE FOR MOBILE ===== */
+@media (max-width: 768px) {
+    .format3-bottom-section {
+        gap: 15px;
+    }
+
+    .format3-notes-section {
+        padding: 20px;
+    }
+
+    .format3-actions {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+        padding: 20px;
+    }
+
+    .report-btn {
+        padding: 16px 20px;
+        font-size: 13px;
+        min-width: auto;
+        width: 100%;
+    }
+
+    .format3-notes-section h4 {
+        font-size: 16px;
+    }
+
+    .format3-notes-section p {
+        font-size: 13px;
+    }
+}
+
+/* ===== PRINT STYLES ===== */
+@media print {
+    .format3-actions,
+    .format3-warning {
+        display: none !important;
+    }
+
+    .format3-bottom-section {
+        page-break-inside: avoid;
+    }
+
+    .format3-notes-section {
+        background: transparent !important;
+        border: 1px solid #ddd !important;
+        page-break-inside: avoid;
+        box-shadow: none !important;
+    }
+
+    .format3-notes-section .note-footer {
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+    }
+}
+
+/* ===== PRINT STYLES - COMPLETE UPDATE ===== */
+@media print {
+    /* Hide navigation and other UI elements */
+    .navbar,
+    .tab-bar,
+    .year-selector-container {
+        display: none !important;
+    }
+
+    /* Hide action buttons and warning */
+    .format3-actions,
+    .format3-warning {
+        display: none !important;
+    }
+
+    /* Hide add button (plus button) and table controls */
+    .add-row-button,
+    .table-controls {
+        display: none !important;
+    }
+
+    /* Hide remove buttons */
+    .remove-row-btn {
+        display: none !important;
+    }
+
+    /* Hide edit indicators and hover effects */
+    .editable-cell:hover::after {
+        display: none !important;
+    }
+
+    /* Remove interactive styling for print */
+    .editable-cell {
+        background-color: transparent !important;
+        cursor: default !important;
+    }
+
+    .keterangan-cell {
+        background-color: transparent !important;
+        cursor: default !important;
+        border: 1px solid #ddd !important;
+    }
+
+    /* Make sure only the report content is visible */
+    body.dashboard-page {
+        background: white !important;
+    }
+
+    .tab-content {
+        box-shadow: none !important;
+        border-radius: 0 !important;
+    }
+
+    .format3-container {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    /* Table styling for print */
+    .format3-table {
+        width: 100% !important;
+        margin: 20px 0 !important;
+        box-shadow: none !important;
+    }
+
+    .format3-table th, 
+    .format3-table td {
+        border: 1px solid #000 !important;
+        -webkit-print-color-adjust: exact;
+        color-adjust: exact;
+        font-size: 12px !important;
+        padding: 8px !important;
+    }
+
+    /* Ensure total row styling is visible in print */
+    .total-row td {
+        background-color: #28a745 !important;
+        color: white !important;
+        -webkit-print-color-adjust: exact;
+        color-adjust: exact;
+        border: 1px solid #000 !important;
+    }
+
+    /* Notes section styling */
+    .format3-bottom-section {
+        page-break-inside: avoid;
+        margin-top: 20px !important;
+    }
+
+    .format3-notes-section {
+        background: transparent !important;
+        border: 1px solid #ddd !important;
+        page-break-inside: avoid;
+        box-shadow: none !important;
+        width: auto !important;
+    }
+
+    .format3-notes-section .note-footer {
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+    }
+
+    /* Hide page title and other non-essential elements */
+    .form-content h2 {
+        margin-top: 0 !important;
+        text-align: center !important;
+        font-size: 18px !important;
+    }
+
+    /* Center the main title */
+    .format3-container h3 {
+        text-align: center !important;
+        margin-bottom: 20px !important;
+        font-size: 16px !important;
+        font-weight: bold !important;
+    }
+
+    /* Ensure proper page breaks */
+    .format3-table {
+        page-break-inside: avoid;
+    }
+}
