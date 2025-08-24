@@ -37,12 +37,10 @@ if (!$user) {
     <link rel="stylesheet" href="style.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
-        /* ===== FONT FAMILY GLOBAL ===== */
         * {
             font-family: 'Poppins', sans-serif;
         }
-        
-        /* ===== FIX NAVBAR Z-INDEX ===== */
+    
         .navbar {
             position: relative;
             z-index: 1000;
@@ -52,7 +50,6 @@ if (!$user) {
             z-index: 1001;
         }
         
-        /* ===== TAB BAR STYLING ===== */
         .tab-container {
             max-width: 1200px;
             margin: 20px auto;
@@ -687,51 +684,42 @@ if (!$user) {
                                 <td class="editable-cell" data-type="ak_minimal_jenjang">50</td>
                             </tr>
                             <tr>
-                                <td id="keterangan-pangkat" style="text-align: left; padding: 12px;">Kelebihan/ kekurangan <sup>**)</sup> Angka Kredit yang harus dicapai untuk kenaikan pangkat</td>
+                                <td id="keterangan-pangkat" style="text-align: left; padding: 12px;">Kelebihan/ kekurangan <sup>)</sup> Angka Kredit yang harus dicapai untuk kenaikan pangkat</td>
                                 <td class="calculated-cell" data-type="kelebihan_pangkat">25.000</td>
                                 <td></td>
                             </tr>
                             <tr>
-                                <td id="keterangan-jenjang" style="text-align: left; padding: 12px;">Kelebihan/kekurangan <sup>**)</sup> Angka Kredit yang harus dicapai untuk peningkatan jenjang</td>
+                                <td id="keterangan-jenjang" style="text-align: left; padding: 12px;">Kelebihan/kekurangan <sup>)</sup> Angka Kredit yang harus dicapai untuk peningkatan jenjang</td>
                                 <td></td>
                                 <td class="calculated-cell" data-type="kelebihan_jenjang">25.000</td>
                             </tr>
                         </tbody>
                     </table>
 
-                    <!-- UPDATED BOTTOM SECTION: KETERANGAN WITH INLINE BUTTONS & WARNING -->
-                    <div class="format3-bottom-section">
-                        <div class="format3-notes-section">
+                    <!-- UPDATED BOTTOM SECTION: KETERANGAN WITH CETAK LAPORAN BUTTON & WARNING MOVED DOWN -->
+                    <div class="format3-bottom-section no-print">
+                        <div class="format3-notes-section no-print">
                             <h4>Keterangan:</h4>
                             <p>**) Diisi dengan angka kredit yang diperoleh dari hasil konversi</p>
                             <p>***) Diisi dengan jenis kegiatan lainnya yang dapat dinilai angka kreditnya</p>
                             
-                            <div class="note-footer">
-                                Laporan ini dibuat berdasarkan data konversi yang telah diinput untuk tahun <span id="current-year-display">2025</span>
-                            </div>
-                            
-                            <!-- BUTTONS SECTIONS - Properly aligned and styled -->
-                            <div class="format3-actions">
-                                <button type="button" class="report-btn btn-print" onclick="cetakLaporan()">
-                                    <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
+                            <!-- CETAK LAPORAN BUTTON - MOVED TO RIGHT -->
+                            <div class="format3-actions no-print" style="text-align: right; margin: 20px 0;">
+                                <button type="button" class="report-btn btn-print" onclick="cetakLaporan()" style="padding: 12px 24px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 14px;">
+                                    <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24" style="margin-right: 8px; vertical-align: middle;">
                                         <path d="M19 8h-1V3H6v5H5c-1.1 0-2 .9-2 2v6c0 1.1.9 2 2 2h2v3h10v-3h2c1.1 0 2-.9 2-2v-6c0-1.1-.9-2-2-2zM8 5h8v3H8V5zm8 12v2H8v-2h8zm2-2v-2H6v2H6v-2H4v-2h16v2h-2v2z"/>
                                         <rect x="6" y="11" width="12" height="2"/>
                                     </svg>
                                     Cetak Laporan
                                 </button>
-                                
-                                <button type="button" class="report-btn btn-download" onclick="downloadPDF()">
-                                    <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
-                                        <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
-                                    </svg>
-                                    Download PDF
-                                </button>
                             </div>
                         </div>
 
-                        <!-- WARNING MESSAGE -->
-                        <div class="format3-warning" style="display: none;">
-                            <span style="color: #856404; font-weight: bold;">Belum ada data konversi untuk tahun ini. Silakan tambahkan data di Format 1.</span>
+                        <!-- WARNING MESSAGE - MOVED BELOW -->
+                        <div class="format3-warning" style="display: none; background: #fff3cd; border: 1px solid #ffeaa7; padding: 12px; border-radius: 5px; margin-top: 15px;">
+                            <span style="color: #856404; font-weight: bold;">
+                                Laporan ini dibuat berdasarkan data konversi yang telah diinput untuk tahun <span id="current-year-display">2025</span>
+                            </span>
                         </div>
                     </div>
                 </div>    
@@ -778,59 +766,39 @@ if (!$user) {
     persentaseInput.addEventListener("input", hitungAngkaKredit);
     koefisienInput.addEventListener("input", hitungAngkaKredit);
 
-    // ===== CETAK LAPORAN & DOWNLOAD PDF FUNCTIONS =====
+    // ===== CETAK LAPORAN FUNCTION =====
     function cetakLaporan() {
-        const tahun = document.getElementById("tahun_pilih_f3").value;
-        
-        if (!tahun) {
-            alert("Silakan pilih tahun terlebih dahulu!");
-            return;
-        }
-
-        // Check if there's data to print
-        if (document.getElementById("format3-container").style.display === "none") {
-            alert("Tidak ada data untuk dicetak. Silakan input data terlebih dahulu.");
-            return;
-        }
-
-        // Hide action buttons and warning during print
-        const actionSection = document.querySelector('.format3-actions');
-        const warningSection = document.querySelector('.format3-warning');
-        
-        if (actionSection) actionSection.style.display = 'none';
-        if (warningSection) warningSection.style.display = 'none';
-
-        // Trigger print
-        window.print();
-
-        // Show buttons back after print dialog closes
-        setTimeout(() => {
-            if (actionSection) actionSection.style.display = 'flex';
-            if (warningSection) warningSection.style.display = 'flex';
-        }, 1000);
+    const tahun = document.getElementById("tahun_pilih_f3").value;
+    
+    if (!tahun) {
+        alert("Silakan pilih tahun terlebih dahulu!");
+        return;
     }
 
-    function downloadPDF() {
-        const tahun = document.getElementById("tahun_pilih_f3").value;
-        
-        if (!tahun) {
-            alert("Silakan pilih tahun terlebih dahulu!");
-            return;
-        }
-
-        // Check if there's data to download
-        if (document.getElementById("format3-container").style.display === "none") {
-            alert("Tidak ada data untuk didownload. Silakan input data terlebih dahulu.");
-            return;
-        }
-
-        // You can implement PDF generation here
-        // For now, show a message
-        alert("Fitur download PDF akan segera tersedia. Untuk sementara, gunakan 'Cetak Laporan' dan simpan sebagai PDF melalui browser.");
-        
-        // Alternative: redirect to a PHP file that generates PDF
-        // window.location.href = "generate_pdf.php?tahun=" + tahun;
+    // HAPUS SEMENTARA ELEMENT KETERANGAN
+    const keteranganSection = document.querySelector('.format3-bottom-section');
+    const tempParent = keteranganSection ? keteranganSection.parentNode : null;
+    const tempNextSibling = keteranganSection ? keteranganSection.nextSibling : null;
+    
+    // Remove element
+    if (keteranganSection) {
+        keteranganSection.remove();
     }
+
+    // Print
+    window.print();
+
+    // Restore element after print
+    setTimeout(() => {
+        if (keteranganSection && tempParent) {
+            if (tempNextSibling) {
+                tempParent.insertBefore(keteranganSection, tempNextSibling);
+            } else {
+                tempParent.appendChild(keteranganSection);
+            }
+        }
+    }, 1000);
+}
 
     // ===== ADD/REMOVE ROWS FUNCTIONS WITH UPDATED KETERANGAN =====
     function addPerformanceRow() {
@@ -972,128 +940,122 @@ if (!$user) {
         saveKeteranganData();
     });
 
-    // ===== FORMAT 2: AJAX Load Data =====
-    $("#btn-lihat-f2").click(function(e){
-        e.preventDefault();
-        let tahun = $("#tahun_pilih_f2").val();
-        
-        if(tahun === ""){
-            alert("Pilih tahun terlebih dahulu!");
-            return;
-        }
+    
+// ===== FORMAT 2: AJAX Load Data =====
+$("#btn-lihat-f2").click(function(e){
+    e.preventDefault();
+    let tahun = $("#tahun_pilih_f2").val();
+    
+    console.log("Button F2 clicked, tahun:", tahun); // Debug log
+    
+    if(tahun === ""){
+        alert("Pilih tahun terlebih dahulu!");
+        return;
+    }
 
-        // Show loading
-        $("#tabel-format2").html('<tr><td colspan="6" class="loading">Memuat data...</td></tr>');
-        $("#summary-container-f2").hide();
-        
-        $.ajax({
-            url: "load_form2.php",
-            type: "POST",
-            data: {tahun_pilih: tahun},
-            dataType: 'json',
-            success: function(response) {
-                console.log("Response dari server:", response);
+    // Show loading
+    $("#tabel-format2").html('<tr><td colspan="6" class="loading">Memuat data...</td></tr>');
+    $("#summary-container-f2").hide();
+    
+    $.ajax({
+        url: "load_form2.php",
+        type: "POST",
+        data: {tahun_pilih: tahun},
+        dataType: 'json',
+        success: function(response) {
+            console.log("Response dari server F2:", response);
 
-                if(response.status === 'success') {
-                    $("#tabel-format2").html(response.table_data);
+            if(response.status === 'success') {
+                $("#tabel-format2").html(response.table_data);
 
-                    if(response.summary_data) {
-                        $("#koefisien-per-tahun-f2").text(response.summary_data.koefisien_per_tahun);
-                        $("#angka-kredit-didapat-f2").text(response.summary_data.angka_kredit_yang_didapat);
-                        // PERUBAHAN: Set angka dasar menjadi 50,0 bukan dari response
-                        $("#angka-dasar-f2").text("50,0");
-                        $("#summary-container-f2").show();
-                    }
-                } else {
-                    $("#tabel-format2").html(response.table_data);
-                    $("#summary-container-f2").hide();
+                if(response.summary_data) {
+                    $("#koefisien-per-tahun-f2").text(response.summary_data.koefisien_per_tahun);
+                    $("#angka-kredit-didapat-f2").text(response.summary_data.angka_kredit_yang_didapat);
+                    $("#angka-dasar-f2").text("50,0");
+                    $("#summary-container-f2").show();
                 }
-            },
-            error: function(xhr, status, error) {
-                console.log("AJAX Error:", status, error);
-                console.log("Response Text:", xhr.responseText);
-                $("#tabel-format2").html('<tr><td colspan="6" class="no-data-message" style="color: red;">Terjadi kesalahan saat memuat data</td></tr>');
+            } else {
+                $("#tabel-format2").html(response.table_data);
                 $("#summary-container-f2").hide();
             }
-        });
-    });
-
-    // Auto load saat tahun berubah - Format 2
-    $("#tahun_pilih_f2").change(function() {
-        if($(this).val() !== "") {
-            $("#btn-lihat-f2").click();
+        },
+        error: function(xhr, status, error) {
+            console.log("AJAX Error F2:", status, error);
+            console.log("Response Text F2:", xhr.responseText);
+            console.log("Status Code:", xhr.status);
+            $("#tabel-format2").html('<tr><td colspan="6" class="no-data-message" style="color: red;">Terjadi kesalahan saat memuat data</td></tr>');
+            $("#summary-container-f2").hide();
         }
     });
+});
 
-    // Auto load saat tahun berubah - Format 3
-    $("#tahun_pilih_f3").change(function() {
-        if($(this).val() !== "") {
-            $("#btn-lihat-f3").click();
-        }
-        
-        // Update year display in notes
-        $("#current-year-display").text($(this).val());
-    });
+    
 
-    // ===== FORMAT 3: AJAX Load Data =====
+    // ===== FORMAT 3: AJAX Load Data - UPDATED WITH DYNAMIC YEAR =====
     $("#btn-lihat-f3").click(function(e){
-        e.preventDefault();
-        let tahun = $("#tahun_pilih_f3").val();
-        
-        if(tahun === ""){
-            alert("Pilih tahun terlebih dahulu!");
-            return;
-        }
-        
-        console.log("Memuat data Format 3 untuk tahun:", tahun);
-        
-        $.ajax({
-            url: "load_form3.php",
-            type: "POST",
-            data: {tahun_pilih: tahun},
-            dataType: 'json',
-            success: function(response) {
-                console.log("Response Format 3:", response);
+    e.preventDefault();
+    let tahun = $("#tahun_pilih_f3").val();
+    
+    console.log("Button F3 clicked, tahun:", tahun); // Debug log
+    
+    if(tahun === ""){
+        alert("Pilih tahun terlebih dahulu!");
+        return;
+    }
+    
+    // ===== FIXED: UPDATE CURRENT YEAR DISPLAY =====
+    $("#current-year-display").text(tahun);
+    
+    console.log("Memuat data Format 3 untuk tahun:", tahun);
+    
+    $.ajax({
+        url: "load_form3.php",
+        type: "POST",
+        data: {tahun_pilih: tahun},
+        dataType: 'json',
+        success: function(response) {
+            console.log("Response Format 3:", response);
+            
+            if(response.status === 'success') {
+                // Ada data, tampilkan tabel
+                $("#format3-container").show();
                 
-                if(response.status === 'success') {
-                    // Ada data, tampilkan tabel
-                    $("#format3-container").show();
-                    
-                    // Load data AK Konversi dari response
-                    if(response.total_angka_kredit > 0) {
-                        $(".editable-cell[data-type='ak_konversi_baru']").text(parseFloat(response.total_angka_kredit).toFixed(2));
-                    } else {
-                        // Fallback ke Format 1 jika tidak ada data dari DB
-                        loadAKKonversiFromFormat1();
-                    }
-                    
-                    // Calculate totals
-                    calculateFormat3Totals();
-                    
-                    // Hide warning when data is available
-                    $(".format3-warning").hide();
-                    
-                } else if(response.status === 'no_data') {
-                    // Tidak ada data
-                    $("#format3-container").show(); // Still show container
-                    
-                    // Show warning
-                    $(".format3-warning").show();
-                    
+                // Load data AK Konversi dari response
+                if(response.total_angka_kredit > 0) {
+                    $(".editable-cell[data-type='ak_konversi_baru']").text(parseFloat(response.total_angka_kredit).toFixed(2));
                 } else {
-                    // Error
-                    $("#format3-container").hide();
-                    alert("Terjadi kesalahan: " + response.message);
+                    // Fallback ke Format 1 jika tidak ada data dari DB
+                    loadAKKonversiFromFormat1();
                 }
-            },
-            error: function(xhr, status, error) {
-                console.log("AJAX Error Format 3:", status, error);
-                console.log("Response Text:", xhr.responseText);
+                
+                // Calculate totals
+                calculateFormat3Totals();
+                
+                // Hide warning when data is available
+                $(".format3-warning").hide();
+                
+            } else if(response.status === 'no_data') {
+                // Tidak ada data
+                $("#format3-container").show(); // Still show container
+                
+                // Show warning
+                $(".format3-warning").show();
+                
+            } else {
+                // Error
                 $("#format3-container").hide();
-                alert("Terjadi kesalahan saat memuat data Format 3");
+                alert("Terjadi kesalahan: " + response.message);
             }
-        });
+        },
+        error: function(xhr, status, error) {
+            console.log("AJAX Error Format 3:", status, error);
+            console.log("Response Text F3:", xhr.responseText);
+            console.log("Status Code:", xhr.status);
+            $("#format3-container").hide();
+            alert("Terjadi kesalahan saat memuat data Format 3");
+        }
     });
+});
 
     // ===== FORMAT 3: Editable Cells =====
     $(document).on('click', '.editable-cell:not(.keterangan-cell)', function() {
@@ -1223,10 +1185,10 @@ function updateStrikethroughText(kelebihanPangkat, kelebihanJenjang) {
         
         if (kelebihanPangkat < 0) {
             // Jika kurang dari 0, strikethrough "kelebihan"
-            newTextPangkat = '<span style="text-decoration: line-through;">Kelebihan</span>/ kekurangan <sup>**)</sup> Angka Kredit yang harus dicapai untuk kenaikan pangkat';
+            newTextPangkat = '<span style="text-decoration: line-through;">Kelebihan</span>/ kekurangan <sup>)</sup> Angka Kredit yang harus dicapai untuk kenaikan pangkat';
         } else {
             // Jika >= 0, strikethrough "kekurangan"
-            newTextPangkat = 'Kelebihan/ <span style="text-decoration: line-through;">kekurangan</span> <sup>**)</sup> Angka Kredit yang harus dicapai untuk kenaikan pangkat';
+            newTextPangkat = 'Kelebihan/ <span style="text-decoration: line-through;">kekurangan</span> <sup>)</sup> Angka Kredit yang harus dicapai untuk kenaikan pangkat';
         }
         
         pangkatCell.html(newTextPangkat);
@@ -1239,10 +1201,10 @@ function updateStrikethroughText(kelebihanPangkat, kelebihanJenjang) {
         
         if (kelebihanJenjang < 0) {
             // Jika kurang dari 0, strikethrough "kelebihan"
-            newTextJenjang = '<span style="text-decoration: line-through;">Kelebihan</span>/kekurangan <sup>**)</sup> Angka Kredit yang harus dicapai untuk peningkatan jenjang';
+            newTextJenjang = '<span style="text-decoration: line-through;">Kelebihan</span>/kekurangan <sup>)</sup> Angka Kredit yang harus dicapai untuk peningkatan jenjang';
         } else {
             // Jika >= 0, strikethrough "kekurangan"
-            newTextJenjang = 'Kelebihan/<span style="text-decoration: line-through;">kekurangan</span> <sup>**)</sup> Angka Kredit yang harus dicapai untuk peningkatan jenjang';
+            newTextJenjang = 'Kelebihan/<span style="text-decoration: line-through;">kekurangan</span> <sup>)</sup> Angka Kredit yang harus dicapai untuk peningkatan jenjang';
         }
         
         jenjangCell.html(newTextJenjang);
