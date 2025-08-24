@@ -112,10 +112,11 @@ if (isset($_GET['view_user']) && isset($_GET['nip'])) {
         }
         
         .stats-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
             margin: 20px 0;
+            flex-wrap: wrap;
         }
         
         .stat-card {
@@ -126,6 +127,12 @@ if (isset($_GET['view_user']) && isset($_GET['nip'])) {
             text-align: center;
             transition: transform 0.3s ease;
             border-left: 4px solid #28a745;
+            width: 200px;
+            height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
         
         .stat-card:hover {
@@ -134,17 +141,19 @@ if (isset($_GET['view_user']) && isset($_GET['nip'])) {
         
         .stat-card.users {
             border-left-color: #007bff;
+            margin-left: 30px;
         }
         
         .stat-card.konversi {
             border-left-color: #ffc107;
+            margin-left: 30px;
         }
         
         .stat-number {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             font-weight: 700;
             color: #28a745;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
         
         .stat-card.users .stat-number {
@@ -156,42 +165,54 @@ if (isset($_GET['view_user']) && isset($_GET['nip'])) {
         }
         
         .stat-label {
-            font-size: 1.1rem;
+            font-size: 1rem;
             color: #666;
             font-weight: 500;
         }
         
-        /* Fixed table layout - allow content to flow naturally */
+        /* FULL VIEW TABLE - NO HORIZONTAL SCROLL */
+        .table-scroll-wrapper {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin: 20px 0;
+            width: 100%;
+            overflow: visible; /* Remove horizontal scroll */
+        }
+        
         .users-table {
             width: 100%;
             border-collapse: collapse;
             background: white;
-            table-layout: auto; /* Changed from fixed to auto */
-            min-width: 1200px; /* Minimum width to prevent cramping */
+            table-layout: auto; /* Auto layout for responsive columns */
         }
         
         .users-table th {
             background: linear-gradient(135deg, #28a745, #218838);
             color: white;
-            padding: 15px 12px;
+            padding: 12px 8px;
             text-align: center;
             font-weight: 600;
-            font-size: 13px;
+            font-size: 12px;
             text-transform: uppercase;
             letter-spacing: 0.3px;
             white-space: nowrap;
+            position: sticky;
+            top: 0;
+            z-index: 10;
         }
         
         .users-table td {
-            padding: 15px 12px;
+            padding: 12px 8px;
             border-bottom: 1px solid #eee;
             color: #555;
             transition: background-color 0.3s ease;
             vertical-align: middle;
-            word-wrap: break-word;
-            max-width: 200px; /* Set max width but allow expansion */
-            font-size: 13px;
+            font-size: 12px;
             text-align: center;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            max-width: 150px; /* Prevent cells from getting too wide */
         }
         
         .users-table tbody tr:hover {
@@ -202,39 +223,122 @@ if (isset($_GET['view_user']) && isset($_GET['nip'])) {
             background-color: #fafafa;
         }
         
+        /* RESPONSIVE COLUMN SPECIFICATIONS */
+        .users-table th:nth-child(1),
+        .users-table td:nth-child(1) { /* No */
+            width: 4%;
+            max-width: 40px;
+        }
+        
+        .users-table th:nth-child(2),
+        .users-table td:nth-child(2) { /* Nama */
+            width: 18%;
+            text-align: center; /* Nama tidak center */
+            font-weight: 600;
+            max-width: 200px;
+        }
+        
+        .users-table th:nth-child(3),
+        .users-table td:nth-child(3) { /* NIP */
+            width: 12%;
+            max-width: 150px;
+        }
+        
+        .users-table th:nth-child(4),
+        .users-table td:nth-child(4) { /* Tempat, Tanggal Lahir */
+            width: 15%;
+            max-width: 180px;
+        }
+        
+        .users-table th:nth-child(5),
+        .users-table td:nth-child(5) { /* Jenis Kelamin */
+            width: 8%;
+            max-width: 100px;
+        }
+        
+        .users-table th:nth-child(6),
+        .users-table td:nth-child(6) { /* Pangkat/Golongan */
+            width: 13%;
+            max-width: 160px;
+        }
+        
+        .users-table th:nth-child(7),
+        .users-table td:nth-child(7) { /* Jabatan */
+            width: 12%;
+            max-width: 150px;
+        }
+        
+        .users-table th:nth-child(8),
+        .users-table td:nth-child(8) { /* Unit Kerja */
+            width: 10%;
+            max-width: 120px;
+        }
+        
+        .users-table th:nth-child(9),
+        .users-table td:nth-child(9) { /* Instansi */
+            width: 12%;
+            max-width: 150px;
+        }
+        
+        
+        .users-table th:nth-child(11),
+        .users-table td:nth-child(11) { /* Aksi */
+            width: 10%;
+            max-width: 120px;
+        }
+        
+        .action-buttons {
+            display: flex;
+            flex-direction: row;
+            gap: 5px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
         .action-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             padding: 8px 12px;
-            border: none;
-            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
             cursor: pointer;
             font-size: 12px;
             font-weight: 600;
             text-decoration: none;
-            display: inline-block;
-            margin: 2px;
-            transition: all 0.3s ease;
-            min-width: 40px;
-            text-align: center;
+            transition: all 0.2s ease;
+            min-width: 45px;
+            height: 32px;
+            background: #f7fafc;
+            color: #4a5568;
+            box-shadow: none;
         }
         
         .btn-view {
-            background: #007bff;
-            color: white;
+            color: #2563eb;
+            border-color: #dbeafe;
         }
         
         .btn-view:hover {
-            background: #0056b3;
+            background: #eff6ff;
+            border-color: #3b82f6;
+            color: #1d4ed8;
             transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(37, 99, 235, 0.1);
         }
         
         .btn-delete {
-            background: #dc3545;
-            color: white;
+            color: #dc2626;
+            border-color: #fecaca;
         }
         
         .btn-delete:hover {
-            background: #c82333;
+            background: #fef2f2;
+            border-color: #ef4444;
+            color: #b91c1c;
             transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(220, 38, 38, 0.1);
         }
         
         .user-detail-modal {
@@ -355,7 +459,7 @@ if (isset($_GET['view_user']) && isset($_GET['nip'])) {
         
         .search-container {
             margin-bottom: 20px;
-            max-width: 500px;
+            max-width: 700px;
             margin-left: auto;
             margin-right: auto;
         }
@@ -378,15 +482,6 @@ if (isset($_GET['view_user']) && isset($_GET['nip'])) {
             transform: translateY(-2px);
         }
         
-        .role-badge {
-            background: #6c757d;
-            color: white;
-            padding: 3px 8px;
-            border-radius: 12px;
-            font-size: 11px;
-            text-transform: uppercase;
-        }
-        
         .admin-header {
             background: #edede9;
             color: black;
@@ -407,57 +502,32 @@ if (isset($_GET['view_user']) && isset($_GET['nip'])) {
             margin: 10px 0 0 0;
             opacity: 0.9;
         }
-    
-        .table-scroll-wrapper {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            margin: 20px 0;
-            overflow-x: auto; /* Allow horizontal scroll on smaller screens */
-        }
         
-        /* Remove fixed column widths - let content determine width */
-        .users-table td:nth-child(2) {
-            font-weight: 600;
-            min-width: 150px;
-        }
-        
-        .users-table td:nth-child(3) {
-            min-width: 120px;
-        }
-        
-        .users-table td:nth-child(4) {
-            min-width: 180px;
-        }
-        
-        .users-table td:nth-child(5) {
-            min-width: 100px;
-        }
-        
-        .users-table td:nth-child(6) {
-            min-width: 150px;
-        }
-        
-        .users-table td:nth-child(7) {
-            min-width: 120px;
-        }
-        
-        .users-table td:nth-child(8) {
-            min-width: 150px;
-        }
-        
-        .users-table td:nth-child(9) {
-            min-width: 150px;
-        }
-        
-        .users-table td:nth-child(11) {
-            min-width: 120px;
+        /* Container adjustments for full width */
+        .tab-container {
+            max-width: none;
+            margin: 0 15px;
+            padding: 0;
         }
         
         /* Responsive adjustments */
         @media (max-width: 768px) {
             .stats-container {
-                grid-template-columns: 1fr;
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .stat-card {
+                width: 180px;
+                height: 100px;
+            }
+            
+            .stat-number {
+                font-size: 1.8rem;
+            }
+            
+            .stat-label {
+                font-size: 0.9rem;
             }
             
             .modal-content {
@@ -475,6 +545,54 @@ if (isset($_GET['view_user']) && isset($_GET['nip'])) {
             
             .admin-header h1 {
                 font-size: 1.5rem;
+            }
+            
+            .tab-container {
+                margin: 0 10px;
+            }
+            
+            .table-scroll-wrapper {
+                margin: 10px 0;
+            }
+            
+            /* Mobile table adjustments - keep full view */
+            .users-table th,
+            .users-table td {
+                padding: 10px 6px;
+                font-size: 11px;
+            }
+            
+            .users-table td:nth-child(2) { /* Nama tetap left align di mobile */
+                text-align: center;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                gap: 2px;
+            }
+            
+            .action-btn {
+                width: 100%;
+                min-width: 50px;
+                padding: 6px 8px;
+                font-size: 10px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .tab-container {
+                margin: 0 5px;
+            }
+            
+            .users-table th,
+            .users-table td {
+                padding: 8px 4px;
+                font-size: 10px;
+            }
+            
+            .users-table td:nth-child(2) { /* Pastikan nama tetap left align */
+                text-align: center;
+                font-weight: 600;
             }
         }
     </style>
@@ -518,10 +636,6 @@ if (isset($_GET['view_user']) && isset($_GET['nip'])) {
                 <div class="stat-number"><?php echo $total_konversi; ?></div>
                 <div class="stat-label">Total Data Konversi</div>
             </div>
-            <div class="stat-card">
-                <div class="stat-number"><?php echo date('Y'); ?></div>
-                <div class="stat-label">Tahun Aktif</div>
-            </div>
         </div>
 
         <!-- SEARCH BAR -->
@@ -543,7 +657,6 @@ if (isset($_GET['view_user']) && isset($_GET['nip'])) {
                         <th>Jabatan</th>
                         <th>Unit Kerja</th>
                         <th>Instansi</th>
-                        <th>Role</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -554,7 +667,7 @@ if (isset($_GET['view_user']) && isset($_GET['nip'])) {
                     while ($user = mysqli_fetch_assoc($query_users)) {
                         echo "<tr>";
                         echo "<td>" . $no++ . "</td>";
-                        echo "<td><strong>" . htmlspecialchars($user['nama'] ?: '-') . "</strong></td>";
+                        echo "<td>" . htmlspecialchars($user['nama'] ?: '-') . "</td>";
                         echo "<td>" . htmlspecialchars($user['no_seri_karpeg'] ?: $user['nip']) . "</td>";
                         echo "<td>" . htmlspecialchars($user['tempat_tanggal_lahir'] ?: '-') . "</td>";
                         echo "<td>" . htmlspecialchars($user['jenis_kelamin'] ?: '-') . "</td>";
@@ -562,10 +675,11 @@ if (isset($_GET['view_user']) && isset($_GET['nip'])) {
                         echo "<td>" . htmlspecialchars($user['jabatan_tmt'] ?: '-') . "</td>";
                         echo "<td>" . htmlspecialchars($user['unit_kerja'] ?: '-') . "</td>";
                         echo "<td>" . htmlspecialchars($user['instansi'] ?: '-') . "</td>";
-                        echo "<td><span class='role-badge'>" . htmlspecialchars($user['role'] ?: 'user') . "</span></td>";
                         echo "<td>";
-                        echo "<a href='?view_user=1&nip=" . urlencode($user['nip']) . "' class='action-btn btn-view' title='Lihat Detail'>👁️</a>";
-                        echo "<a href='?delete_user=1&nip=" . urlencode($user['nip']) . "' class='action-btn btn-delete' title='Hapus User' onclick='return confirm(\"Yakin ingin menghapus user " . htmlspecialchars($user['nama']) . "?\")'>🗑️</a>";
+                        echo "<div class='action-buttons'>";
+                        echo "<a href='?view_user=1&nip=" . urlencode($user['nip']) . "' class='action-btn btn-view' title='Lihat Detail'>👁</a>";
+                        echo "<a href='?delete_user=1&nip=" . urlencode($user['nip']) . "' class='action-btn btn-delete' title='Hapus User' onclick='return confirm(\"Yakin ingin menghapus user " . htmlspecialchars($user['nama']) . "?\")'>🗑</a>";
+                        echo "</div>";
                         echo "</td>";
                         echo "</tr>";
                     }

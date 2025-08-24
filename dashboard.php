@@ -81,7 +81,7 @@ if (!$user) {
             transition: all 0.3s ease;
             border-right: 1px solid #dee2e6;
             position: relative;
-            font-family: 'Poppins', sans-serif; /* Explicitly set font family */
+            font-family: 'Poppins', sans-serif;
         }
         
         .tab-button:last-child {
@@ -110,7 +110,6 @@ if (!$user) {
             background: #28a745;
         }
         
-        /* ===== TAB CONTENT STYLING ===== */
         .tab-content {
             background: white;
             border-radius: 0 0 12px 12px;
@@ -133,7 +132,6 @@ if (!$user) {
             to { opacity: 1; transform: translateY(0); }
         }
         
-        /* Update dashboard content styling */
         .dashboard-content {
             max-width: none;
             margin: 0;
@@ -143,7 +141,6 @@ if (!$user) {
             box-shadow: none;
         }
         
-        /* Tab content headers */
         .form-content h2 {
             margin-top: 0;
             margin-bottom: 20px;
@@ -152,7 +149,6 @@ if (!$user) {
             padding-bottom: 10px;
         }
 
-        /* ===== DROPDOWN BULAN STYLING ===== */
         .form-group select {
             width: 100%;
             padding: 12px 15px;
@@ -174,7 +170,6 @@ if (!$user) {
             border-color: #28a745;
         }
 
-        /* ===== FORMAT 3 TABLE STYLING ===== */
         .format3-container {
             margin-top: 20px;
         }
@@ -218,7 +213,6 @@ if (!$user) {
             padding: 12px 8px !important;
         }
 
-        /* Pastikan tfoot juga terlihat jika masih digunakan */
         .format3-table tfoot {
             display: table-footer-group !important;
         }
@@ -236,14 +230,12 @@ if (!$user) {
             padding: 12px 8px !important;
         }
 
-        /* Pastikan rowspan di-update dengan benar */
         .row-number {
             vertical-align: middle;
             text-align: center;
             font-weight: bold;
         }
 
-        /* Editable cells styling */
         .editable-cell {
             position: relative;
             cursor: pointer;
@@ -271,7 +263,6 @@ if (!$user) {
             font-weight: bold;
         }
 
-        /* Input styling when editing */
         .cell-input {
             width: 100%;
             border: none;
@@ -283,7 +274,6 @@ if (!$user) {
             box-shadow: 0 0 5px rgba(40, 167, 69, 0.5);
         }
 
-        /* Total row styling */
         .format3-table tfoot tr {
             background-color: #28a745 !important;
             color: white;
@@ -294,7 +284,6 @@ if (!$user) {
             border-color: #28a745;
         }
 
-        /* ===== ADD/REMOVE ROWS STYLING ===== */
         .description-container {
             display: flex;
             align-items: center;
@@ -350,7 +339,6 @@ if (!$user) {
             transform: translateY(-1px);
         }
 
-        /* ===== KETERANGAN CELL STYLING ===== */
         .keterangan-cell {
             background-color: #e8f4f8 !important;
             cursor: text;
@@ -382,6 +370,146 @@ if (!$user) {
         .keterangan-cell:focus::before {
             content: none;
         }
+
+        .alert {
+            padding: 15px;
+            margin: 20px;
+            border-radius: 8px;
+            font-weight: 500;
+            position: relative;
+            animation: slideDown 0.3s ease-out;
+            transition: all 0.5s ease-out;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+
+        .alert-error {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+
+        .alert-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            cursor: pointer;
+            font-size: 20px;
+            color: inherit;
+            opacity: 0.7;
+        }
+
+        .alert-close:hover {
+            opacity: 1;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .alert.fade-out {
+            opacity: 0;
+            transform: translateY(-20px);
+            pointer-events: none;
+        }
+
+        /* ===== FORMAT 2 DELETE BUTTON STYLING ===== */
+        .delete-row-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s;
+        }
+
+        .delete-row-btn:hover {
+            background: #c82333;
+            transform: scale(1.05);
+        }
+
+        .format2-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .format2-table th, .format2-table td {
+            border: 1px solid #ddd;
+            padding: 12px 8px;
+            text-align: center;
+            vertical-align: middle;
+            font-size: 13px;
+        }
+
+        .format2-table thead th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+        }
+
+        .format2-table tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .format2-table tbody tr:hover {
+            background-color: #e8f5e8;
+        }
+
+        .no-data-message, .loading {
+            color: #6c757d;
+            font-style: italic;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .summary-container {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #28a745;
+        }
+
+        .summary-row {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .summary-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .summary-item label {
+            font-weight: bold;
+            color: #495057;
+        }
+
+        .summary-item span {
+            background: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            border: 1px solid #dee2e6;
+            font-weight: 500;
+            color: #28a745;
+        }
     </style>
 </head>
 <body class="dashboard-page">
@@ -405,6 +533,20 @@ if (!$user) {
             </div>
         </div>
     </nav>
+
+    <?php if (isset($_SESSION['error_message'])): ?>
+        <div class="alert alert-error" id="session-error-alert">
+            <span class="alert-close" onclick="hideAlert('session-error-alert')">&times;</span>
+            <?php echo htmlspecialchars($_SESSION['error_message']); unset($_SESSION['error_message']); ?>
+        </div>
+    <?php endif; ?>
+
+    <?php if (isset($_SESSION['success_message'])): ?>
+        <div class="alert alert-success" id="session-success-alert">
+            <span class="alert-close" onclick="hideAlert('session-success-alert')">&times;</span>
+            <?php echo htmlspecialchars($_SESSION['success_message']); unset($_SESSION['success_message']); ?>
+        </div>
+    <?php endif; ?>
 
     <!-- TAB CONTAINER -->
     <div class="tab-container">
@@ -538,6 +680,7 @@ if (!$user) {
                             <th>Persentase</th>
                             <th>Koefisien</th>
                             <th>Angka Kredit</th>
+                        
                         </tr>
                     </thead>
                     <tbody id="tabel-format2">
@@ -731,6 +874,22 @@ if (!$user) {
     // Global variable untuk tracking row counter
     let performanceRowCounter = 6;
 
+    // ===== ALERT FUNCTIONS - FIXED =====
+    function hideAlert(element) {
+        if (typeof element === 'string') {
+            element = document.getElementById(element);
+        }
+        
+        if (element) {
+            element.classList.add('fade-out');
+            setTimeout(() => {
+                if (element.parentNode) {
+                    element.remove();
+                }
+            }, 500);
+        }
+    }
+
     // ===== TAB SWITCHING =====
     document.querySelectorAll('.tab-button').forEach(button => {
         button.addEventListener('click', function() {
@@ -766,39 +925,63 @@ if (!$user) {
     persentaseInput.addEventListener("input", hitungAngkaKredit);
     koefisienInput.addEventListener("input", hitungAngkaKredit);
 
+    // ===== FORMAT 2: DELETE FUNCTION =====
+    function deleteKonversiData(id) {
+        if (confirm('Apakah Anda yakin ingin menghapus data ini?')) {
+            $.ajax({
+                url: 'delete_konversi.php',
+                type: 'POST',
+                data: { id: id },
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status === 'success') {
+                        showSuccessMessage('Data berhasil dihapus!');
+                        // Reload data Format 2
+                        $("#btn-lihat-f2").click();
+                    } else {
+                        showErrorMessage('Gagal menghapus data: ' + response.message);
+                    }
+                },
+                error: function() {
+                    showErrorMessage('Terjadi kesalahan saat menghapus data');
+                }
+            });
+        }
+    }
+
     // ===== CETAK LAPORAN FUNCTION =====
     function cetakLaporan() {
-    const tahun = document.getElementById("tahun_pilih_f3").value;
-    
-    if (!tahun) {
-        alert("Silakan pilih tahun terlebih dahulu!");
-        return;
-    }
-
-    // HAPUS SEMENTARA ELEMENT KETERANGAN
-    const keteranganSection = document.querySelector('.format3-bottom-section');
-    const tempParent = keteranganSection ? keteranganSection.parentNode : null;
-    const tempNextSibling = keteranganSection ? keteranganSection.nextSibling : null;
-    
-    // Remove element
-    if (keteranganSection) {
-        keteranganSection.remove();
-    }
-
-    // Print
-    window.print();
-
-    // Restore element after print
-    setTimeout(() => {
-        if (keteranganSection && tempParent) {
-            if (tempNextSibling) {
-                tempParent.insertBefore(keteranganSection, tempNextSibling);
-            } else {
-                tempParent.appendChild(keteranganSection);
-            }
+        const tahun = document.getElementById("tahun_pilih_f3").value;
+        
+        if (!tahun) {
+            alert("Silakan pilih tahun terlebih dahulu!");
+            return;
         }
-    }, 1000);
-}
+
+        // HAPUS SEMENTARA ELEMENT KETERANGAN
+        const keteranganSection = document.querySelector('.format3-bottom-section');
+        const tempParent = keteranganSection ? keteranganSection.parentNode : null;
+        const tempNextSibling = keteranganSection ? keteranganSection.nextSibling : null;
+        
+        // Remove element
+        if (keteranganSection) {
+            keteranganSection.remove();
+        }
+
+        // Print
+        window.print();
+
+        // Restore element after print
+        setTimeout(() => {
+            if (keteranganSection && tempParent) {
+                if (tempNextSibling) {
+                    tempParent.insertBefore(keteranganSection, tempNextSibling);
+                } else {
+                    tempParent.appendChild(keteranganSection);
+                }
+            }
+        }, 1000);
+    }
 
     // ===== ADD/REMOVE ROWS FUNCTIONS WITH UPDATED KETERANGAN =====
     function addPerformanceRow() {
@@ -901,7 +1084,6 @@ if (!$user) {
     }
 
     // ===== KETERANGAN CELL FUNCTIONS =====
-    // Function to save keterangan data (optional - for persistence)
     function saveKeteranganData() {
         const keteranganData = {};
         
@@ -911,13 +1093,10 @@ if (!$user) {
             keteranganData[dataType] = content;
         });
         
-        // Save to localStorage for persistence
         localStorage.setItem('keterangan_data', JSON.stringify(keteranganData));
-        
         console.log('Keterangan data saved:', keteranganData);
     }
 
-    // Function to load keterangan data (optional - for persistence)
     function loadKeteranganData() {
         const savedData = localStorage.getItem('keterangan_data');
         
@@ -940,126 +1119,110 @@ if (!$user) {
         saveKeteranganData();
     });
 
-    
-// ===== FORMAT 2: AJAX Load Data =====
-$("#btn-lihat-f2").click(function(e){
-    e.preventDefault();
-    let tahun = $("#tahun_pilih_f2").val();
-    
-    console.log("Button F2 clicked, tahun:", tahun); // Debug log
-    
-    if(tahun === ""){
-        alert("Pilih tahun terlebih dahulu!");
-        return;
-    }
+    // ===== FORMAT 2: AJAX Load Data =====
+    $("#btn-lihat-f2").click(function(e){
+        e.preventDefault();
+        let tahun = $("#tahun_pilih_f2").val();
+        
+        console.log("Button F2 clicked, tahun:", tahun);
+        
+        if(tahun === ""){
+            alert("Pilih tahun terlebih dahulu!");
+            return;
+        }
 
-    // Show loading
-    $("#tabel-format2").html('<tr><td colspan="6" class="loading">Memuat data...</td></tr>');
-    $("#summary-container-f2").hide();
-    
-    $.ajax({
-        url: "load_form2.php",
-        type: "POST",
-        data: {tahun_pilih: tahun},
-        dataType: 'json',
-        success: function(response) {
-            console.log("Response dari server F2:", response);
+        // Show loading
+        $("#tabel-format2").html('<tr><td colspan="7" class="loading">Memuat data...</td></tr>');
+        $("#summary-container-f2").hide();
+        
+        $.ajax({
+            url: "load_form2.php",
+            type: "POST",
+            data: {tahun_pilih: tahun},
+            dataType: 'json',
+            success: function(response) {
+                console.log("Response dari server F2:", response);
 
-            if(response.status === 'success') {
-                $("#tabel-format2").html(response.table_data);
+                if(response.status === 'success') {
+                    $("#tabel-format2").html(response.table_data);
 
-                if(response.summary_data) {
-                    $("#koefisien-per-tahun-f2").text(response.summary_data.koefisien_per_tahun);
-                    $("#angka-kredit-didapat-f2").text(response.summary_data.angka_kredit_yang_didapat);
-                    $("#angka-dasar-f2").text("50,0");
-                    $("#summary-container-f2").show();
+                    if(response.summary_data) {
+                        $("#koefisien-per-tahun-f2").text(response.summary_data.koefisien_per_tahun);
+                        $("#angka-kredit-didapat-f2").text(response.summary_data.angka_kredit_yang_didapat);
+                        $("#angka-dasar-f2").text("50,0");
+                        $("#summary-container-f2").show();
+                    }
+                } else {
+                    $("#tabel-format2").html(response.table_data);
+                    $("#summary-container-f2").hide();
                 }
-            } else {
-                $("#tabel-format2").html(response.table_data);
+            },
+            error: function(xhr, status, error) {
+                console.log("AJAX Error F2:", status, error);
+                console.log("Response Text F2:", xhr.responseText);
+                console.log("Status Code:", xhr.status);
+                $("#tabel-format2").html('<tr><td colspan="7" class="no-data-message" style="color: red;">Terjadi kesalahan saat memuat data</td></tr>');
                 $("#summary-container-f2").hide();
             }
-        },
-        error: function(xhr, status, error) {
-            console.log("AJAX Error F2:", status, error);
-            console.log("Response Text F2:", xhr.responseText);
-            console.log("Status Code:", xhr.status);
-            $("#tabel-format2").html('<tr><td colspan="6" class="no-data-message" style="color: red;">Terjadi kesalahan saat memuat data</td></tr>');
-            $("#summary-container-f2").hide();
-        }
+        });
     });
-});
-
-    
 
     // ===== FORMAT 3: AJAX Load Data - UPDATED WITH DYNAMIC YEAR =====
     $("#btn-lihat-f3").click(function(e){
-    e.preventDefault();
-    let tahun = $("#tahun_pilih_f3").val();
-    
-    console.log("Button F3 clicked, tahun:", tahun); // Debug log
-    
-    if(tahun === ""){
-        alert("Pilih tahun terlebih dahulu!");
-        return;
-    }
-    
-    // ===== FIXED: UPDATE CURRENT YEAR DISPLAY =====
-    $("#current-year-display").text(tahun);
-    
-    console.log("Memuat data Format 3 untuk tahun:", tahun);
-    
-    $.ajax({
-        url: "load_form3.php",
-        type: "POST",
-        data: {tahun_pilih: tahun},
-        dataType: 'json',
-        success: function(response) {
-            console.log("Response Format 3:", response);
-            
-            if(response.status === 'success') {
-                // Ada data, tampilkan tabel
-                $("#format3-container").show();
-                
-                // Load data AK Konversi dari response
-                if(response.total_angka_kredit > 0) {
-                    $(".editable-cell[data-type='ak_konversi_baru']").text(parseFloat(response.total_angka_kredit).toFixed(2));
-                } else {
-                    // Fallback ke Format 1 jika tidak ada data dari DB
-                    loadAKKonversiFromFormat1();
-                }
-                
-                // Calculate totals
-                calculateFormat3Totals();
-                
-                // Hide warning when data is available
-                $(".format3-warning").hide();
-                
-            } else if(response.status === 'no_data') {
-                // Tidak ada data
-                $("#format3-container").show(); // Still show container
-                
-                // Show warning
-                $(".format3-warning").show();
-                
-            } else {
-                // Error
-                $("#format3-container").hide();
-                alert("Terjadi kesalahan: " + response.message);
-            }
-        },
-        error: function(xhr, status, error) {
-            console.log("AJAX Error Format 3:", status, error);
-            console.log("Response Text F3:", xhr.responseText);
-            console.log("Status Code:", xhr.status);
-            $("#format3-container").hide();
-            alert("Terjadi kesalahan saat memuat data Format 3");
+        e.preventDefault();
+        let tahun = $("#tahun_pilih_f3").val();
+        
+        console.log("Button F3 clicked, tahun:", tahun);
+        
+        if(tahun === ""){
+            alert("Pilih tahun terlebih dahulu!");
+            return;
         }
+        
+        $("#current-year-display").text(tahun);
+        console.log("Memuat data Format 3 untuk tahun:", tahun);
+        
+        $.ajax({
+            url: "load_form3.php",
+            type: "POST",
+            data: {tahun_pilih: tahun},
+            dataType: 'json',
+            success: function(response) {
+                console.log("Response Format 3:", response);
+                
+                if(response.status === 'success') {
+                    $("#format3-container").show();
+                    
+                    if(response.total_angka_kredit > 0) {
+                        $(".editable-cell[data-type='ak_konversi_baru']").text(parseFloat(response.total_angka_kredit).toFixed(2));
+                    } else {
+                        loadAKKonversiFromFormat1();
+                    }
+                    
+                    calculateFormat3Totals();
+                    $(".format3-warning").hide();
+                    
+                } else if(response.status === 'no_data') {
+                    $("#format3-container").show();
+                    $(".format3-warning").show();
+                } else {
+                    $("#format3-container").hide();
+                    alert("Terjadi kesalahan: " + response.message);
+                }
+            },
+            error: function(xhr, status, error) {
+                console.log("AJAX Error Format 3:", status, error);
+                console.log("Response Text F3:", xhr.responseText);
+                console.log("Status Code:", xhr.status);
+                $("#format3-container").hide();
+                alert("Terjadi kesalahan saat memuat data Format 3");
+            }
+        });
     });
-});
 
     // ===== FORMAT 3: Editable Cells =====
     $(document).on('click', '.editable-cell:not(.keterangan-cell)', function() {
-        if ($(this).find('input').length > 0) return; // Already editing
+        if ($(this).find('input').length > 0) return;
         
         var currentValue = $(this).text();
         var input = $('<input type="text" class="cell-input" value="' + currentValue + '">');
@@ -1067,7 +1230,6 @@ $("#btn-lihat-f2").click(function(e){
         $(this).html(input);
         input.focus().select();
         
-        // Save on Enter or blur
         input.on('blur keypress', function(e) {
             if (e.type === 'blur' || e.which === 13) {
                 var newValue = $(this).val();
@@ -1077,49 +1239,38 @@ $("#btn-lihat-f2").click(function(e){
         });
     });
 
-    // Function to load AK Konversi from Format 1
     function loadAKKonversiFromFormat1() {
-        // Get angka kredit from Format 1 if available
         var angkaKredit = $("#angka_kredit").val();
         if (angkaKredit && angkaKredit !== '') {
             $(".editable-cell[data-type='ak_konversi_baru']").text(parseFloat(angkaKredit).toFixed(2));
         }
     }
 
-    // Function to calculate Format 3 totals AND automatic calculations
     function calculateFormat3Totals() {
-        // Khusus untuk perhitungan JUMLAH ANGKA KREDIT KUMULATIF
-        // Hanya menghitung AK Dasar + AK Konversi
         var akDasarLama = parseFloat($(".editable-cell[data-type='ak_dasar_lama']").text().replace(',', '.').replace(/[^\d.-]/g, '')) || 0;
         var akDasarBaru = parseFloat($(".editable-cell[data-type='ak_dasar_baru']").text().replace(',', '.').replace(/[^\d.-]/g, '')) || 0;
         var akKonversiLama = parseFloat($(".editable-cell[data-type='ak_konversi_lama']").text().replace(',', '.').replace(/[^\d.-]/g, '')) || 0;
         var akKonversiBaru = parseFloat($(".editable-cell[data-type='ak_konversi_baru']").text().replace(',', '.').replace(/[^\d.-]/g, '')) || 0;
 
-        // Hitung jumlah masing-masing kolom untuk AK Dasar dan AK Konversi
         var akDasarJumlah = akDasarLama + akDasarBaru;
         var akKonversiJumlah = akKonversiLama + akKonversiBaru;
 
-        // Update kolom jumlah untuk baris AK Dasar dan AK Konversi
         $(".calculated-cell[data-type='ak_dasar_jumlah']").text(akDasarJumlah.toFixed(2));
         $(".calculated-cell[data-type='ak_konversi_jumlah']").text(akKonversiJumlah.toFixed(2));
 
-        // Hitung total kumulatif (hanya AK Dasar + AK Konversi)
         var totalKumulatifLama = akDasarLama + akKonversiLama;
         var totalKumulatifBaru = akDasarBaru + akKonversiBaru;
         var totalKumulatifJumlah = akDasarJumlah + akKonversiJumlah;
 
-        // Update JUMLAH ANGKA KREDIT KUMULATIF
         $("#total_lama_kumulatif").text(totalKumulatifLama.toFixed(2));
         $("#total_baru_kumulatif").text(totalKumulatifBaru.toFixed(2));
         $("#total_jumlah_kumulatif").text(totalKumulatifJumlah.toFixed(2));
 
-        // Hitung jumlah untuk baris lainnya (AK JF Lama, AK Penyesuaian, AK Pendidikan, dll)
         $('#performance-table-body tr:not(.total-row)').each(function() {
             const lamaCell = $(this).find('.editable-cell[data-type*="_lama"]:not(.keterangan-cell)');
             const baruCell = $(this).find('.editable-cell[data-type*="_baru"]:not(.keterangan-cell)');
             const jumlahCell = $(this).find('.calculated-cell[data-type*="_jumlah"]');
             
-            // Skip yang sudah dihitung di atas (ak_dasar dan ak_konversi)
             if (lamaCell.attr('data-type') === 'ak_dasar_lama' || 
                 lamaCell.attr('data-type') === 'ak_konversi_lama') {
                 return;
@@ -1137,38 +1288,26 @@ $("#btn-lihat-f2").click(function(e){
             }
         });
 
-        // ===== PERHITUNGAN OTOMATIS TABEL KEDUA =====
-        // Gunakan total kumulatif untuk perhitungan kelebihan/kekurangan
         calculateKelebihanAngkaKredit(totalKumulatifJumlah);
     }
 
-    // Function untuk menghitung kelebihan angka kredit secara otomatis
     function calculateKelebihanAngkaKredit(totalJumlahKumulatif) {
-        // Gunakan parameter yang diberikan, atau ambil dari elemen jika tidak ada
         var totalJumlah = totalJumlahKumulatif || parseFloat($("#total_jumlah_kumulatif").text().replace(',', '.')) || 0;
         
-        // Ambil nilai angka kredit minimal untuk pangkat
         var akMinimalPangkatText = $(".editable-cell[data-type='ak_minimal_pangkat']").text().replace(',', '.');
         var akMinimalPangkat = parseFloat(akMinimalPangkatText) || 0;
         
-        // Ambil nilai angka kredit minimal untuk jenjang jabatan
         var akMinimalJenjangText = $(".editable-cell[data-type='ak_minimal_jenjang']").text().replace(',', '.');
         var akMinimalJenjang = parseFloat(akMinimalJenjangText) || 0;
         
-        // Hitung kelebihan untuk pangkat
         var kelebihanPangkat = totalJumlah - akMinimalPangkat;
-        
-        // Hitung kelebihan untuk jenjang jabatan
         var kelebihanJenjang = totalJumlah - akMinimalJenjang;
         
-        // Update nilai di tabel kedua
         $(".calculated-cell[data-type='kelebihan_pangkat']").text(kelebihanPangkat.toFixed(3));
         $(".calculated-cell[data-type='kelebihan_jenjang']").text(kelebihanJenjang.toFixed(3));
         
-        // ===== IMPLEMENTASI STRIKETHROUGH OTOMATIS =====
         updateStrikethroughText(kelebihanPangkat, kelebihanJenjang);
         
-        // Debug log
         console.log("Perhitungan Kelebihan Angka Kredit:");
         console.log("Total Jumlah:", totalJumlah);
         console.log("AK Minimal Pangkat:", akMinimalPangkat);
@@ -1177,68 +1316,177 @@ $("#btn-lihat-f2").click(function(e){
         console.log("Kelebihan Jenjang:", kelebihanJenjang);
     }
 
-    // Function untuk update strikethrough text berdasarkan kondisi
-function updateStrikethroughText(kelebihanPangkat, kelebihanJenjang) {
-    var pangkatCell = $("#keterangan-pangkat");
-    if (pangkatCell.length > 0) {
-        var newTextPangkat = "";
-        
-        if (kelebihanPangkat < 0) {
-            // Jika kurang dari 0, strikethrough "kelebihan"
-            newTextPangkat = '<span style="text-decoration: line-through;">Kelebihan</span>/ kekurangan <sup>)</sup> Angka Kredit yang harus dicapai untuk kenaikan pangkat';
-        } else {
-            // Jika >= 0, strikethrough "kekurangan"
-            newTextPangkat = 'Kelebihan/ <span style="text-decoration: line-through;">kekurangan</span> <sup>)</sup> Angka Kredit yang harus dicapai untuk kenaikan pangkat';
+    function updateStrikethroughText(kelebihanPangkat, kelebihanJenjang) {
+        var pangkatCell = $("#keterangan-pangkat");
+        if (pangkatCell.length > 0) {
+            var newTextPangkat = "";
+            
+            if (kelebihanPangkat < 0) {
+                newTextPangkat = '<span style="text-decoration: line-through;">Kelebihan</span>/ kekurangan <sup>)</sup> Angka Kredit yang harus dicapai untuk kenaikan pangkat';
+            } else {
+                newTextPangkat = 'Kelebihan/ <span style="text-decoration: line-through;">kekurangan</span> <sup>)</sup> Angka Kredit yang harus dicapai untuk kenaikan pangkat';
+            }
+            
+            pangkatCell.html(newTextPangkat);
         }
         
-        pangkatCell.html(newTextPangkat);
-    }
-    
-    // Update untuk baris jenjang jabatan (baris ke-3)
-    var jenjangCell = $("#keterangan-jenjang");
-    if (jenjangCell.length > 0) {
-        var newTextJenjang = "";
-        
-        if (kelebihanJenjang < 0) {
-            // Jika kurang dari 0, strikethrough "kelebihan"
-            newTextJenjang = '<span style="text-decoration: line-through;">Kelebihan</span>/kekurangan <sup>)</sup> Angka Kredit yang harus dicapai untuk peningkatan jenjang';
-        } else {
-            // Jika >= 0, strikethrough "kekurangan"
-            newTextJenjang = 'Kelebihan/<span style="text-decoration: line-through;">kekurangan</span> <sup>)</sup> Angka Kredit yang harus dicapai untuk peningkatan jenjang';
+        var jenjangCell = $("#keterangan-jenjang");
+        if (jenjangCell.length > 0) {
+            var newTextJenjang = "";
+            
+            if (kelebihanJenjang < 0) {
+                newTextJenjang = '<span style="text-decoration: line-through;">Kelebihan</span>/kekurangan <sup>)</sup> Angka Kredit yang harus dicapai untuk peningkatan jenjang';
+            } else {
+                newTextJenjang = 'Kelebihan/<span style="text-decoration: line-through;">kekurangan</span> <sup>)</sup> Angka Kredit yang harus dicapai untuk peningkatan jenjang';
+            }
+            
+            jenjangCell.html(newTextJenjang);
         }
         
-        jenjangCell.html(newTextJenjang);
+        console.log("Strikethrough Update:");
+        console.log("Kelebihan Pangkat:", kelebihanPangkat, (kelebihanPangkat < 0 ? "-> Strike 'kelebihan'" : "-> Strike 'kekurangan'"));
+        console.log("Kelebihan Jenjang:", kelebihanJenjang, (kelebihanJenjang < 0 ? "-> Strike 'kelebihan'" : "-> Strike 'kekurangan'"));
     }
-    
-    // Log untuk debugging
-    console.log("Strikethrough Update:");
-    console.log("Kelebihan Pangkat:", kelebihanPangkat, (kelebihanPangkat < 0 ? "-> Strike 'kelebihan'" : "-> Strike 'kekurangan'"));
-    console.log("Kelebihan Jenjang:", kelebihanJenjang, (kelebihanJenjang < 0 ? "-> Strike 'kelebihan'" : "-> Strike 'kekurangan'"));
-}
 
-    // Tambahkan juga event listener untuk perubahan pada angka kredit minimal
     $(document).on('blur', '.editable-cell[data-type="ak_minimal_pangkat"], .editable-cell[data-type="ak_minimal_jenjang"]', function() {
-        // Trigger kalkulasi ulang ketika angka minimal berubah
         setTimeout(function() {
             calculateFormat3Totals();
         }, 100);
     });
 
-    // ===== PERHITUNGAN OTOMATIS PERSENTASE BERDASARKAN BULAN =====
+    // ===== IMPROVED MESSAGE FUNCTIONS =====
+    function showErrorMessage(message) {
+        const existingAlert = document.getElementById('dynamic-error-alert');
+        if (existingAlert) {
+            existingAlert.remove();
+        }
+        
+        const alertDiv = document.createElement('div');
+        alertDiv.className = 'alert alert-error';
+        alertDiv.id = 'dynamic-error-alert';
+        alertDiv.innerHTML = `
+            <span class="alert-close" onclick="hideAlert('dynamic-error-alert')">&times;</span>
+            ${message}
+        `;
+        
+        const navbar = document.querySelector('.navbar');
+        if (navbar) {
+            navbar.insertAdjacentElement('afterend', alertDiv);
+        } else {
+            document.body.insertBefore(alertDiv, document.body.firstChild);
+        }
+        
+        setTimeout(function() {
+            hideAlert(alertDiv);
+        }, 5000);
+    }
+
+    function showSuccessMessage(message) {
+        const existingAlert = document.getElementById('dynamic-success-alert');
+        if (existingAlert) {
+            existingAlert.remove();
+        }
+        
+        const alertDiv = document.createElement('div');
+        alertDiv.className = 'alert alert-success';
+        alertDiv.id = 'dynamic-success-alert';
+        alertDiv.innerHTML = `
+            <span class="alert-close" onclick="hideAlert('dynamic-success-alert')">&times;</span>
+            ${message}
+        `;
+        
+        const navbar = document.querySelector('.navbar');
+        if (navbar) {
+            navbar.insertAdjacentElement('afterend', alertDiv);
+        } else {
+            document.body.insertBefore(alertDiv, document.body.firstChild);
+        }
+        
+        setTimeout(function() {
+            hideAlert(alertDiv);
+        }, 5000);
+    }
+
+    // ===== FORM VALIDATION AND SUBMISSION - FIXED =====
+    function checkPeriodeDuplikasi(bulanAwal, bulanAkhir, tahun, form) {
+        $.ajax({
+            url: 'check_periode_duplikasi.php',
+            type: 'POST',
+            data: {
+                bulan_awal: bulanAwal,
+                bulan_akhir: bulanAkhir,
+                tahun: tahun
+            },
+            dataType: 'json',
+            success: function(response) {
+                if (response.exists) {
+                    showErrorMessage('Data untuk periode ' + bulanAwal + ' - ' + bulanAkhir + ' tahun ' + tahun + ' sudah ada! Silakan pilih periode yang berbeda.');
+                } else {
+                    form.submit();
+                }
+            },
+            error: function() {
+                console.log('Error checking periode duplikasi, proceeding with server validation');
+                form.submit();
+            }
+        });
+    }
+
+    // ===== DOCUMENT READY FUNCTIONS =====
     document.addEventListener("DOMContentLoaded", function() {
+        // ===== AUTO-HIDE ALERTS - FIXED =====
+        const alerts = document.querySelectorAll('.alert, [style*="background: #f8d7da"], [style*="background: #d4edda"]');
         
-        const persentaseInputDom = document.getElementById("persentase");
-        const koefisienInputDom = document.getElementById("koefisien");
-        const angkaKreditInputDom = document.getElementById("angka_kredit");
+        alerts.forEach(function(alert, index) {
+            if (!alert.id) {
+                alert.id = 'auto-alert-' + index;
+            }
+            
+            if (!alert.querySelector('.alert-close')) {
+                const closeBtn = document.createElement('span');
+                closeBtn.className = 'alert-close';
+                closeBtn.innerHTML = '&times;';
+                closeBtn.onclick = function() {
+                    hideAlert(alert);
+                };
+                
+                alert.style.position = 'relative';
+                alert.appendChild(closeBtn);
+            }
+            
+            setTimeout(function() {
+                hideAlert(alert);
+            }, 5000);
+        });
+
+        // ===== FORM SUBMISSION HANDLER - FIXED =====
+        const form = document.querySelector('.konversi-form');
         
-        // Load keterangan data when page loads
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                const bulanAwal = document.getElementById('bulan_awal').value;
+                const bulanAkhir = document.getElementById('bulan_akhir').value;
+                const tahun = document.getElementById('tahun').value;
+                
+                if (bulanAwal && bulanAkhir && tahun) {
+                    e.preventDefault();
+                    checkPeriodeDuplikasi(bulanAwal, bulanAkhir, tahun, form);
+                }
+            });
+        }
+
+        // ===== LOAD KETERANGAN DATA =====
         loadKeteranganData();
         
-        // Trigger perhitungan awal jika koefisien sudah ada nilai
+        // ===== TRIGGER INITIAL CALCULATION =====
+        const koefisienInputDom = document.getElementById("koefisien");
+        const persentaseInputDom = document.getElementById("persentase");
+        
         if (koefisienInputDom.value && persentaseInputDom.value) {
             hitungAngkaKredit();
         }
         
+        // ===== AUTOMATIC PERCENTAGE CALCULATION BASED ON MONTHS =====
         const bulanMap = {
             "januari": 1, "februari": 2, "maret": 3, "april": 4,
             "mei": 5, "juni": 6, "juli": 7, "agustus": 8,
@@ -1257,13 +1505,13 @@ function updateStrikethroughText(kelebihanPangkat, kelebihanJenjang) {
                 if (selisih <= 0) selisih += 12; 
                 persentaseInputDom.value = selisih;
                 
-                // Trigger perhitungan angka kredit
+                // Trigger angka kredit calculation
                 const nilaiPersentase = parseFloat(persentaseInputDom.value);
                 const nilaiKoefisien = parseFloat(koefisienInputDom.value);
                 if (!isNaN(nilaiPersentase) && !isNaN(nilaiKoefisien)) {
                     const persen = (nilaiPersentase / 12) * 100;
                     let angkaKredit = persen * nilaiKoefisien / 100;
-                    angkaKreditInputDom.value = angkaKredit.toFixed(3);
+                    document.getElementById("angka_kredit").value = angkaKredit.toFixed(3);
                 }
             } else {
                 persentaseInputDom.value = "";
