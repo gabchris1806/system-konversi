@@ -449,6 +449,7 @@ body.dashboard-page {
     background-color: #f0f0f0;
 }
 
+
 /* ===== NO DATA & LOADING MESSAGES ===== */
 .no-data-message {
     text-align: center;
@@ -525,7 +526,7 @@ body.dashboard-page {
     display: none;
 }
 
-/* ===== FORMAT 3 TABLE STYLING - FIXED BORDERS ===== */
+/* ===== FORMAT 3 TABLE STYLING - FIXED BORDERS (Abu-abu) ===== */
 .format3-container {
     margin-top: 20px;
 }
@@ -537,7 +538,7 @@ body.dashboard-page {
     background: white;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     table-layout: fixed;
-    border: 2px solid #000; /* Tambahkan border luar yang tegas */
+    border: 2px solid #f8f3f3; /* Ubah dari #000 ke #888 (abu-abu) */
 }
 
 /* UPDATED COLUMN WIDTHS */
@@ -549,12 +550,12 @@ body.dashboard-page {
 .format3-table th:nth-child(6) { width: 21%; }  /* KETERANGAN */
 
 .format3-table th, .format3-table td {
-    border: 1px solid #000; /* Ubah dari #ddd ke #000 untuk garis hitam penuh */
+    border: 1px solid #f8f3f3; /* Ubah dari #000 ke #888 (abu-abu) */
     padding: 12px 8px;
     text-align: center;
     vertical-align: middle;
     font-size: 13px;
-    box-sizing: border-box; /* Pastikan padding tidak mempengaruhi border */
+    box-sizing: border-box;
 }
 
 .format3-table thead th {
@@ -562,7 +563,7 @@ body.dashboard-page {
     font-weight: bold;
     position: sticky;
     top: 0;
-    border: 1px solid #000; /* Garis hitam penuh untuk header */
+    border: 1px solid #f8f3f3; /* Ubah dari #000 ke #888 (abu-abu) untuk header */
 }
 
 .format3-table tbody tr:nth-child(even) {
@@ -573,16 +574,16 @@ body.dashboard-page {
     background-color: #e8f5e8;
 }
 
-/* Total row styling - dengan border hitam penuh */
+/* Total row styling - dengan border abu-abu */
 .total-row td {
-    border: 1px solid #000 !important; /* Garis hitam penuh untuk total row */
+    border: 1px solid #f8f3f3 !important; /* Ubah dari #000 ke #888 (abu-abu) untuk total row */
     background-color: #28a745 !important;
     color: white !important;
     font-weight: bold !important;
     padding: 12px 8px !important;
 }
 
-/* Pastikan tfoot juga memiliki border hitam penuh */
+/* Pastikan tfoot juga memiliki border abu-abu */
 .format3-table tfoot {
     display: table-footer-group !important;
 }
@@ -594,7 +595,7 @@ body.dashboard-page {
 }
 
 .format3-table tfoot td {
-    border: 1px solid #000 !important; /* Garis hitam penuh untuk footer */
+    border: 1px solid #f8f3f3 !important; /* Ubah dari #000 ke #888 (abu-abu) untuk footer */
     background-color: #28a745 !important;
     color: white !important;
     padding: 12px 8px !important;
@@ -605,10 +606,10 @@ body.dashboard-page {
     vertical-align: middle;
     text-align: center;
     font-weight: bold;
-    border: 1px solid #000; /* Garis hitam penuh untuk nomor baris */
+    border: 1px solid #f8f3f3; /* Ubah dari #000 ke #888 (abu-abu) untuk nomor baris */
 }
 
-/* ===== KETERANGAN CELL STYLING - UPDATED WITH BLACK BORDERS ===== */
+/* ===== KETERANGAN CELL STYLING - UPDATED WITH GRAY BORDERS ===== */
 .keterangan-cell {
     background-color: #e8f4f8 !important;
     cursor: text;
@@ -616,14 +617,14 @@ body.dashboard-page {
     text-align: left !important;
     padding: 8px 12px !important;
     transition: all 0.3s ease;
-    border: 1px solid #000 !important; /* Garis hitam penuh untuk cell keterangan */
+    border: 1px solid #f8f3f3 !important; /* Ubah dari #000 ke #888 (abu-abu) untuk cell keterangan */
     word-wrap: break-word;
     overflow-wrap: break-word;
 }
 
 .keterangan-cell:hover {
     background-color: #d1ecf1 !important;
-    border: 1px solid #000 !important; /* Tetap hitam saat hover */
+    border: 1px solid #f8f3f3 !important; /* Tetap abu-abu saat hover */
 }
 
 .keterangan-cell:focus {
@@ -643,20 +644,20 @@ body.dashboard-page {
     content: none;
 }
 
-/* Editable cells styling dengan border hitam */
+/* Editable cells styling dengan border abu-abu */
 .editable-cell {
     position: relative;
     cursor: pointer;
     min-height: 30px;
     background-color: #fff3cd;
     transition: all 0.3s ease;
-    border: 1px solid #000 !important; /* Garis hitam penuh untuk cell yang bisa diedit */
+    border: 1px solid #f8f3f3 !important; /* Ubah dari #000 ke #888 (abu-abu) untuk cell yang bisa diedit */
 }
 
 .editable-cell:hover {
     background-color: #ffeaa7;
     transform: scale(1.02);
-    border: 1px solid #000 !important; /* Tetap hitam saat hover */
+    border: 1px solid #f8f3f3 !important; /* Tetap abu-abu saat hover */
 }
 
 .editable-cell:hover::after {
@@ -671,7 +672,7 @@ body.dashboard-page {
 .calculated-cell {
     background-color: #d4edda;
     font-weight: bold;
-    border: 1px solid #000 !important; /* Garis hitam penuh untuk cell terhitung */
+    border: 1px solid #f8f3f3 !important; /* Ubah dari #000 ke #888 (abu-abu) untuk cell terhitung */
 }
 
 /* Input styling when editing */
@@ -686,7 +687,7 @@ body.dashboard-page {
     box-shadow: 0 0 5px rgba(40, 167, 69, 0.5);
 }
 
-/* ===== PRINT STYLES - UPDATED FOR BLACK BORDERS ===== */
+/* ===== PRINT STYLES - UPDATED FOR GRAY BORDERS ===== */
 @media print {
     /* Hide navigation and other UI elements */
     .navbar,
@@ -730,40 +731,40 @@ body.dashboard-page {
     .keterangan-cell {
         background-color: transparent !important;
         cursor: default !important;
-        border: 1px solid #000 !important; /* Tetap hitam untuk print */
+        border: 1px solid #f8f3f3 !important; /* Tetap abu-abu untuk print */
     }
 
-    /* Table styling for print dengan border hitam penuh */
+    /* Table styling for print dengan border abu-abu */
     .format3-table {
         width: 100% !important;
         margin: 20px 0 !important;
         box-shadow: none !important;
-        border: 2px solid #000 !important; /* Border luar hitam penuh untuk print */
+        border: 2px solid #f8f3f3 !important; /* Border luar abu-abu untuk print */
     }
 
     .format3-table th, 
     .format3-table td {
-        border: 1px solid #000 !important; /* Semua garis hitam penuh untuk print */
+        border: 1px solid #f8f3f3 !important; /* Semua garis abu-abu untuk print */
         -webkit-print-color-adjust: exact;
         color-adjust: exact;
-        print-color-adjust: exact; /* Untuk browser yang lebih baru */
+        print-color-adjust: exact;
         font-size: 12px !important;
         padding: 8px !important;
     }
 
-    /* Ensure total row styling is visible in print dengan border hitam */
+    /* Ensure total row styling is visible in print dengan border abu-abu */
     .total-row td {
         background-color: #28a745 !important;
         color: white !important;
         -webkit-print-color-adjust: exact;
         color-adjust: exact;
         print-color-adjust: exact;
-        border: 1px solid #000 !important; /* Garis hitam penuh untuk total row di print */
+        border: 1px solid #f8f3f3 !important; /* Garis abu-abu untuk total row di print */
     }
 
-    /* Footer dengan border hitam penuh untuk print */
+    /* Footer dengan border abu-abu untuk print */
     .format3-table tfoot td {
-        border: 1px solid #000 !important;
+        border: 1px solid #f8f3f3 !important;
         background-color: #28a745 !important;
         color: white !important;
         -webkit-print-color-adjust: exact;
@@ -794,7 +795,7 @@ body.dashboard-page {
 
     .format3-notes-section {
         background: transparent !important;
-        border: 1px solid #000 !important; /* Border hitam untuk notes section */
+        border: 1px solid #f8f3f3 !important; /* Border abu-abu untuk notes section */
         page-break-inside: avoid;
         box-shadow: none !important;
         width: auto !important;

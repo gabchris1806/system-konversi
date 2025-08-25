@@ -433,6 +433,7 @@ if (!$user) {
             border-radius: 3px;
             cursor: pointer;
             font-size: 12px;
+            font-weight: 600;
             transition: all 0.3s;
         }
 
@@ -510,6 +511,231 @@ if (!$user) {
             font-weight: 500;
             color: #28a745;
         }
+
+        /* ===== FORMAT 2 ENHANCED STYLING ===== */
+        .format2-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .format2-table th {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 15px 12px;
+            text-align: center;
+            border-bottom: 3px solid #1e7e34;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .format2-table td {
+            padding: 12px 10px;
+            text-align: center;
+            vertical-align: middle;
+            border-bottom: 1px solid #e9ecef;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .format2-table tbody tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        .format2-table tbody tr:hover {
+            background-color: #e8f5e8;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(40, 167, 69, 0.15);
+        }
+
+        /* Editable field styling */
+        .editable-field {
+            position: relative;
+            cursor: pointer;
+            padding: 8px 12px !important;
+            border-radius: 4px;
+            min-height: 30px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .editable-field::after {
+            content: "✏️";
+            opacity: 0;
+            position: absolute;
+            top: 2px;
+            right: 4px;
+            font-size: 10px;
+            transition: opacity 0.3s ease;
+        }
+
+        .editable-field:hover::after {
+            opacity: 0.7;
+        }
+
+        /* Calculated field (non-editable) */
+        .calculated-field {
+            background-color: #e2e3e5;
+            color: #e2e3e5;
+            font-weight: bold;
+        }
+
+        /* Non-editable field */
+        .non-editable {
+            background-color: #f8f9fa;
+            color: #e2e3e5;
+            font-weight: 500;
+        }
+
+        /* Action cell styling */
+        .action-cell {
+            width: 80px;
+            text-align: center !important;
+        }
+
+        .delete-row-btn {
+            background: #fef2f2;
+            color: #dc2626;
+            border-color: #fecaca;
+            padding: 6px 10px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(220, 53, 69, 0.3);
+            min-width: 35px;
+            height: 35px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .delete-row-btn:hover {
+            background: #fef2f2;
+            border-color: #ef4444;
+            color: #b91c1c;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(220, 38, 38, 0.1);
+        }
+
+        .delete-row-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Input field styling for inline editing */
+        .cell-input-f2 {
+            width: 100% !important;
+            border: 2px solid #28a745 !important;
+            padding: 6px 8px !important;
+            text-align: center !important;
+            background: #fff3cd !important;
+            border-radius: 4px !important;
+            font-size: 14px !important;
+            font-weight: 500 !important;
+            outline: none !important;
+            box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.1) !important;
+            transition: all 0.3s ease !important;
+        }
+
+        .cell-input-f2:focus {
+            border-color: #20c997 !important;
+            box-shadow: 0 0 0 3px rgba(32, 201, 151, 0.2) !important;
+            background: #e7f3ff !important;
+        }
+
+        /* Enhanced hover effects for editable fields */
+        .editable-field:hover {
+            background: linear-gradient(135deg, #fff3cd, #ffeaa7) !important;
+            cursor: pointer !important;
+            border: 1px dashed #28a745 !important;
+            transform: scale(1.02) !important;
+            box-shadow: 0 2px 6px rgba(40, 167, 69, 0.2) !important;
+        }
+
+        /* Loading state */
+        .loading-cell {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+            color: #666;
+            font-style: italic;
+        }
+
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* Success animation */
+        .cell-success {
+            animation: success-pulse 0.6s ease-in-out;
+        }
+
+        @keyframes success-pulse {
+            0% { background-color: #d4edda; transform: scale(1); }
+            50% { background-color: #28a745; color: white; transform: scale(1.05); }
+            100% { background-color: #d4edda; transform: scale(1); }
+        }
+
+        /* Format 2 header enhancement */
+        .format2-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 15px 20px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 8px;
+            border-left: 4px solid #28a745;
+        }
+
+        .format2-instructions {
+            background: #e7f3ff;
+            border: 1px solid #b3d7ff;
+            padding: 12px 16px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: #0066cc;
+        }
+
+        .format2-instructions .icon {
+            display: inline-block;
+            margin-right: 8px;
+            font-size: 16px;
+        }
+
+        /* Responsive table for smaller screens */
+        @media (max-width: 768px) {
+            .format2-table {
+                font-size: 12px;
+            }
+            
+            .format2-table th,
+            .format2-table td {
+                padding: 8px 6px;
+            }
+            
+            .delete-row-btn {
+                padding: 4px 6px;
+                font-size: 12px;
+                min-width: 28px;
+                height: 28px;
+            }
+            
+            .editable-field::after {
+                display: none; /* Hide edit icon on mobile */
+            }
+        }
+        
     </style>
 </head>
 <body class="dashboard-page">
@@ -635,21 +861,22 @@ if (!$user) {
 
             <!-- FORMAT 2 CONTENT -->
             <div class="form-content" id="format2">
-                <h2>Format 2 - Data Tahunan</h2>
+                <div class="format2-header">
+                    <h2 style="margin: 0; color: #333;">Format 2 - Data Tahunan</h2>
+                </div>
                 
                 <div class="year-selector-container">
                     <label for="tahun_pilih_f2">Tahun:</label>
                     <select id="tahun_pilih_f2" required>
                         <option value="">Pilih Tahun</option>
                         <?php
-                        // Generate tahun dari tahun sekarang - 5 sampai tahun sekarang + 5
                         $current_year = date('Y');
                         for ($i = 1990; $i <= $current_year + 20; $i++) {
                             echo "<option value='".$i."'>".$i."</option>";
                         }
                         ?>
                     </select>
-                    <button type="button" id="btn-lihat-f2" class="btn-lihat">Lihat</button>
+                    <button type="button" id="btn-lihat-f2" class="btn-lihat">Lihat Data</button>
                 </div>
 
                 <!-- Summary Data -->
@@ -674,18 +901,18 @@ if (!$user) {
                 <table class="format2-table">
                     <thead>
                         <tr>
-                            <th>Tahun</th>
-                            <th>Periode (Bulan)</th>
-                            <th>Predikat</th>
-                            <th>Persentase</th>
-                            <th>Koefisien</th>
-                            <th>Angka Kredit</th>
-                        
+                            <th style="width: 10%;">Tahun</th>
+                            <th style="width: 20%;">Periode (Bulan)</th>
+                            <th style="width: 15%;">Predikat</th>
+                            <th style="width: 15%;">Persentase</th>
+                            <th style="width: 15%;">Koefisien</th>
+                            <th style="width: 15%;">Angka Kredit</th>
+                            <th style="width: 10%;">Aksi</th>
                         </tr>
                     </thead>
                     <tbody id="tabel-format2">
                         <tr>
-                            <td colspan="6" class="no-data-message">Silakan pilih tahun terlebih dahulu</td>
+                            <td colspan="7" class="no-data-message">Silakan pilih tahun terlebih dahulu</td>
                         </tr>
                     </tbody>
                 </table>
@@ -1166,6 +1393,241 @@ if (!$user) {
             }
         });
     });
+    
+    // ===== FORMAT 2: INLINE EDITING FUNCTIONS =====//
+        // UPDATE: Make Format 2 fields editable when clicked - ENHANCED VERSION
+        $(document).on('click', '.editable-field', function() {
+            if ($(this).find('input').length > 0) return; // Already editing
+            
+            const currentValue = $(this).text().replace('/12', ''); // Remove /12 from persentase
+            const field = $(this).attr('data-field');
+            const rowKey = $(this).closest('tr').attr('data-row-key');
+            
+            let inputType = 'text';
+            let step = '';
+            let inputOptions = '';
+            
+            // Determine input type based on field
+            switch(field) {
+                case 'persentase':
+                    inputType = 'number';
+                    inputOptions = 'min="1" max="12"';
+                    break;
+                case 'koefisien':
+                    inputType = 'number';
+                    inputOptions = 'step="0.01" min="0.01"';
+                    break;
+                case 'tahun':
+                    inputType = 'number';
+                    inputOptions = 'min="1900" max="2100"';
+                    break;
+                case 'periode':
+                    // For periode, we'll use a text input with validation
+                    inputType = 'text';
+                    inputOptions = 'placeholder="Contoh: April atau April - Juni"';
+                    break;
+                case 'predikat':
+                    inputType = 'text';
+                    inputOptions = 'placeholder="Masukkan predikat"';
+                    break;
+                default:
+                    inputType = 'text';
+            }
+            
+            // Create input element
+            const input = $(`<input type="${inputType}" ${inputOptions} class="cell-input-f2" value="${currentValue}" style="width: 100%; border: 2px solid #28a745; padding: 4px; text-align: center; background: #fff3cd; border-radius: 4px;">`);
+            
+            // Replace cell content with input
+            $(this).html(input);
+            input.focus().select();
+            
+            // Handle save on blur or Enter
+            input.on('blur keypress', function(e) {
+                if (e.type === 'blur' || e.which === 13) {
+                    const newValue = $(this).val().trim();
+                    const cell = $(this).parent();
+                    
+                    // Validate input based on field type
+                    if (!validateFieldInput(field, newValue, currentValue, cell)) {
+                        return;
+                    }
+                    
+                    if (newValue !== currentValue) {
+                        // Save to database
+                        saveFieldValue(rowKey, field, newValue, cell, currentValue);
+                    } else {
+                        // No change, restore original value
+                        const displayValue = getDisplayValue(field, newValue);
+                        cell.text(displayValue);
+                    }
+                }
+            });
+            
+            // Handle Escape key to cancel
+            input.on('keyup', function(e) {
+                if (e.which === 27) { // Escape key
+                    const displayValue = getDisplayValue(field, currentValue);
+                    $(this).parent().text(displayValue);
+                }
+            });
+        });
+
+        // Helper function to validate field input
+        function validateFieldInput(field, newValue, currentValue, cell) {
+            switch(field) {
+                case 'persentase':
+                    if (newValue < 1 || newValue > 12 || !Number.isInteger(Number(newValue))) {
+                        showErrorMessage('Persentase harus berupa bilangan bulat antara 1-12');
+                        cell.text(getDisplayValue(field, currentValue));
+                        return false;
+                    }
+                    break;
+                    
+                case 'koefisien':
+                    if (isNaN(newValue) || Number(newValue) <= 0) {
+                        showErrorMessage('Koefisien harus berupa angka positif');
+                        cell.text(getDisplayValue(field, currentValue));
+                        return false;
+                    }
+                    break;
+                    
+                case 'tahun':
+                    if (isNaN(newValue) || Number(newValue) < 1900 || Number(newValue) > 2100) {
+                        showErrorMessage('Tahun harus berupa angka antara 1900-2100');
+                        cell.text(getDisplayValue(field, currentValue));
+                        return false;
+                    }
+                    break;
+                    
+                case 'periode':
+                    // Validate periode format
+                    const validMonths = ['januari', 'februari', 'maret', 'april', 'mei', 'juni', 
+                                    'juli', 'agustus', 'september', 'oktober', 'november', 'desember'];
+                    const periodeParts = newValue.toLowerCase().split(' - ');
+                    let isValidPeriode = true;
+                    
+                    for (let month of periodeParts) {
+                        month = month.trim();
+                        if (!validMonths.includes(month)) {
+                            isValidPeriode = false;
+                            break;
+                        }
+                    }
+                    
+                    if (!isValidPeriode || newValue.trim() === '') {
+                        showErrorMessage('Format periode tidak valid. Gunakan nama bulan atau range bulan (contoh: "April" atau "April - Juni")');
+                        cell.text(getDisplayValue(field, currentValue));
+                        return false;
+                    }
+                    break;
+                    
+                case 'predikat':
+                    if (newValue.trim() === '') {
+                        showErrorMessage('Predikat tidak boleh kosong');
+                        cell.text(getDisplayValue(field, currentValue));
+                        return false;
+                    }
+                    break;
+            }
+            return true;
+        }
+
+        // Helper function to get display value
+        function getDisplayValue(field, value) {
+            switch(field) {
+                case 'persentase':
+                    return value + '/12';
+                case 'koefisien':
+                    return parseFloat(value).toFixed(2);
+                case 'periode':
+                    // Capitalize first letter of each word
+                    return value.split(' ').map(word => 
+                        word === '-' ? word : word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+                    ).join(' ');
+                default:
+                    return value;
+            }
+        }
+
+        // UPDATE: Enhanced Save field value to database function
+        function saveFieldValue(rowKey, field, newValue, cell, originalValue) {
+            // Show loading state
+            cell.html('<span style="color: #666; font-style: italic;">💾 Menyimpan...</span>');
+            
+            $.ajax({
+                url: 'update_konversi.php',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    row_key: rowKey,
+                    field: field,
+                    value: newValue
+                }),
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status === 'success') {
+                        // Display success and update cell
+                        const displayValue = getDisplayValue(field, newValue);
+                        cell.text(displayValue);
+                        cell.css('background-color', '#d4edda').animate({'background-color': 'transparent'}, 2000);
+                        
+                        // If persentase or koefisien was updated, update angka_kredit column
+                        if ((field === 'persentase' || field === 'koefisien') && response.new_angka_kredit) {
+                            const angkaKreditCell = cell.closest('tr').find('.calculated-field');
+                            angkaKreditCell.text(response.new_angka_kredit);
+                            angkaKreditCell.css('background-color', '#d4edda').animate({'background-color': 'transparent'}, 2000);
+                        }
+                        
+                        showSuccessMessage('Data berhasil diperbarui!');
+                        
+                        // Refresh summary data if necessary
+                        if (field === 'persentase' || field === 'koefisien' || field === 'tahun') {
+                            setTimeout(function() {
+                                $("#btn-lihat-f2").click();
+                            }, 1500);
+                        }
+                        
+                    } else {
+                        // Restore original value on error
+                        const displayValue = getDisplayValue(field, originalValue);
+                        cell.text(displayValue);
+                        showErrorMessage(response.message || 'Gagal menyimpan data');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    // Restore original value on error
+                    const displayValue = getDisplayValue(field, originalValue);
+                    cell.text(displayValue);
+                    showErrorMessage('Terjadi kesalahan saat menyimpan data');
+                    console.error('AJAX Error:', status, error);
+                    console.error('Response:', xhr.responseText);
+                }
+            });
+        }
+
+    // ===== FORMAT 2: DELETE FUNCTION =====
+    function deleteKonversiData(rowKey) {
+        if (confirm('Apakah Anda yakin ingin menghapus data ini?')) {
+            $.ajax({
+                url: 'delete_konversi.php',
+                type: 'POST',
+                data: { row_key: rowKey },
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status === 'success') {
+                        showSuccessMessage('Data berhasil dihapus!');
+                        // Reload data Format 2
+                        $("#btn-lihat-f2").click();
+                    } else {
+                        showErrorMessage('Gagal menghapus data: ' + response.message);
+                    }
+                },
+                error: function() {
+                    showErrorMessage('Terjadi kesalahan saat menghapus data');
+                }
+            });
+        }
+    }
 
     // ===== FORMAT 3: AJAX Load Data - UPDATED WITH DYNAMIC YEAR =====
     $("#btn-lihat-f3").click(function(e){
@@ -1317,14 +1779,14 @@ if (!$user) {
     }
 
     function updateStrikethroughText(kelebihanPangkat, kelebihanJenjang) {
-        var pangkatCell = $("#keterangan-pangkat");
+    var pangkatCell = $("#keterangan-pangkat");
         if (pangkatCell.length > 0) {
             var newTextPangkat = "";
             
             if (kelebihanPangkat < 0) {
-                newTextPangkat = '<span style="text-decoration: line-through;">Kelebihan</span>/ kekurangan <sup>)</sup> Angka Kredit yang harus dicapai untuk kenaikan pangkat';
+                newTextPangkat = '<span style="text-decoration: line-through;">Kelebihan</span>/ kekurangan <sup>**)</sup> Angka Kredit yang harus dicapai untuk kenaikan pangkat';
             } else {
-                newTextPangkat = 'Kelebihan/ <span style="text-decoration: line-through;">kekurangan</span> <sup>)</sup> Angka Kredit yang harus dicapai untuk kenaikan pangkat';
+                newTextPangkat = 'Kelebihan/ <span style="text-decoration: line-through;">kekurangan</span> <sup>**)</sup> Angka Kredit yang harus dicapai untuk kenaikan pangkat';
             }
             
             pangkatCell.html(newTextPangkat);
@@ -1335,9 +1797,9 @@ if (!$user) {
             var newTextJenjang = "";
             
             if (kelebihanJenjang < 0) {
-                newTextJenjang = '<span style="text-decoration: line-through;">Kelebihan</span>/kekurangan <sup>)</sup> Angka Kredit yang harus dicapai untuk peningkatan jenjang';
+                newTextJenjang = '<span style="text-decoration: line-through;">Kelebihan</span>/kekurangan <sup>**)</sup> Angka Kredit yang harus dicapai untuk peningkatan jenjang';
             } else {
-                newTextJenjang = 'Kelebihan/<span style="text-decoration: line-through;">kekurangan</span> <sup>)</sup> Angka Kredit yang harus dicapai untuk peningkatan jenjang';
+                newTextJenjang = 'Kelebihan/<span style="text-decoration: line-through;">kekurangan</span> <sup>**)</sup> Angka Kredit yang harus dicapai untuk peningkatan jenjang';
             }
             
             jenjangCell.html(newTextJenjang);
@@ -1346,7 +1808,7 @@ if (!$user) {
         console.log("Strikethrough Update:");
         console.log("Kelebihan Pangkat:", kelebihanPangkat, (kelebihanPangkat < 0 ? "-> Strike 'kelebihan'" : "-> Strike 'kekurangan'"));
         console.log("Kelebihan Jenjang:", kelebihanJenjang, (kelebihanJenjang < 0 ? "-> Strike 'kelebihan'" : "-> Strike 'kekurangan'"));
-    }
+    } 
 
     $(document).on('blur', '.editable-cell[data-type="ak_minimal_pangkat"], .editable-cell[data-type="ak_minimal_jenjang"]', function() {
         setTimeout(function() {
