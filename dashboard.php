@@ -623,7 +623,7 @@ if (!$user) {
             border-color: #ef4444;
             color: #b91c1c;
             transform: translateY(-1px);
-            box-shadow: 0 2px 4px rgba(220, 38, 38, 0.1);
+            box-shadow: 0 2px 4px rgba(220, 38, 38, 0.1);
         }
 
         .delete-row-btn:active {
@@ -1185,21 +1185,74 @@ if (!$user) {
             return;
         }
 
-        // HAPUS SEMENTARA ELEMENT KETERANGAN
+        // Generate current date in Indonesian format
+        const now = new Date();
+        const months = [
+            'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+            'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+        ];
+        
+        const day = now.getDate();
+        const month = months[now.getMonth()];
+        const year = now.getFullYear();
+        
+        const formattedDate = `${day} ${month} ${year}`;
+        
+        // CREATE SIGNATURE ELEMENT DINAMIS HANYA SAAT PRINT
+        const signatureHTML = `
+            <div class="signature-section" id="temp-signature-section" style="margin-top: 50px; display: flex; justify-content: flex-end; padding-right: 50px; page-break-inside: avoid;">
+                <div class="signature-container" style="text-align: left; width: 300px;">
+                    <div class="signature-location-date" style="font-size: 14px; margin-bottom: 5px;">
+                        Ditetapkan di Medan<br>
+                        Pada tanggal ${formattedDate}
+                    </div>
+                    <div class="signature-title" style="font-size: 14px; font-weight: normal; margin-bottom: 10px;">
+                        Pejabat Penilai Kinerja
+                    </div>
+                    <div style="height: 60px;"></div>
+                    <div class="signature-name" style="font-size: 14px; font-weight: bold; margin-bottom: 2px; text-decoration: underline;">
+                        Dr. Poltak Evencus Hutajulu, S.T., M.T.
+                    </div>
+                    <div class="signature-nip" style="font-size: 12px;">
+                        NIP. 198211220080301001
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        // HAPUS SEMENTARA ELEMENT KETERANGAN DAN SIGNATURE LAMA
         const keteranganSection = document.querySelector('.format3-bottom-section');
+        const oldSignatureSection = document.querySelector('.signature-section');
         const tempParent = keteranganSection ? keteranganSection.parentNode : null;
         const tempNextSibling = keteranganSection ? keteranganSection.nextSibling : null;
         
-        // Remove element
+        // Remove keterangan section
         if (keteranganSection) {
             keteranganSection.remove();
+        }
+        
+        // Remove old signature if exists
+        if (oldSignatureSection) {
+            oldSignatureSection.remove();
+        }
+        
+        // ADD SIGNATURE TEMPORARILY UNTUK PRINT
+        const format3Container = document.querySelector('.format3-container');
+        if (format3Container) {
+            format3Container.insertAdjacentHTML('beforeend', signatureHTML);
         }
 
         // Print
         window.print();
 
-        // Restore element after print
+        // CLEANUP: Remove temporary signature dan restore keterangan section
         setTimeout(() => {
+            const tempSignature = document.getElementById('temp-signature-section');
+            if (tempSignature) {
+                tempSignature.remove();
+            }
+            
+            // Restore keterangan section
             if (keteranganSection && tempParent) {
                 if (tempNextSibling) {
                     tempParent.insertBefore(keteranganSection, tempNextSibling);
