@@ -1027,13 +1027,13 @@ if (!$user) {
                             </tr>
                             <!-- BARIS TOTAL DIPINDAHKAN KE TBODY -->
                             <tr class="total-row" style="font-weight: bold; background-color: #28a745 !important; color: white !important;">
-                                <td colspan="2" style="text-align: left; padding-left: 10px; background-color: #28a745 !important; color: white !important;">
+                                <td colspan="1" style="text-align: left; padding-left: 10px; background-color: #28a745 !important; color: white !important; border: 1px solid #28a745;">
                                     JUMLAH ANGKA KREDIT KUMULATIF
                                 </td>
-                                <td id="total_lama_kumulatif" style="background-color: #28a745 !important; color: white !important;">0,00</td>
-                                <td id="total_baru_kumulatif" style="background-color: #28a745 !important; color: white !important;">75,00</td>
-                                <td id="total_jumlah_kumulatif" style="background-color: #28a745 !important; color: white !important;">75,00</td>
-                                <td style="background-color: #28a745 !important; color: white !important;"></td>
+                                <td id="total_lama_kumulatif" style="background-color: #28a745 !important; color: white !important; border: 1px solid #28a745; text-align: center;">0,00</td>
+                                <td id="total_baru_kumulatif" style="background-color: #28a745 !important; color: white !important; border: 1px solid #28a745; text-align: center;">75,00</td>
+                                <td id="total_jumlah_kumulatif" style="background-color: #28a745 !important; color: white !important; border: 1px solid #28a745; text-align: center;">75,00</td>
+                                <td style="background-color: #28a745 !important; color: white !important; border: 1px solid #28a745;"></td>
                             </tr>
                         </tbody>
                     </table>
@@ -1762,73 +1762,73 @@ if (!$user) {
     }
 
     function calculateFormat3Totals() {
-        var akDasarLama = parseFloat($(".editable-cell[data-type='ak_dasar_lama']").text().replace(',', '.').replace(/[^\d.-]/g, '')) || 0;
-        var akDasarBaru = parseFloat($(".editable-cell[data-type='ak_dasar_baru']").text().replace(',', '.').replace(/[^\d.-]/g, '')) || 0;
-        var akKonversiLama = parseFloat($(".editable-cell[data-type='ak_konversi_lama']").text().replace(',', '.').replace(/[^\d.-]/g, '')) || 0;
-        var akKonversiBaru = parseFloat($(".editable-cell[data-type='ak_konversi_baru']").text().replace(',', '.').replace(/[^\d.-]/g, '')) || 0;
-
-        var akDasarJumlah = akDasarLama + akDasarBaru;
-        var akKonversiJumlah = akKonversiLama + akKonversiBaru;
-
-        $(".calculated-cell[data-type='ak_dasar_jumlah']").text(akDasarJumlah.toFixed(2));
-        $(".calculated-cell[data-type='ak_konversi_jumlah']").text(akKonversiJumlah.toFixed(2));
-
-        var totalKumulatifLama = akDasarLama + akKonversiLama;
-        var totalKumulatifBaru = akDasarBaru + akKonversiBaru;
-        var totalKumulatifJumlah = akDasarJumlah + akKonversiJumlah;
-
-        $("#total_lama_kumulatif").text(totalKumulatifLama.toFixed(2));
-        $("#total_baru_kumulatif").text(totalKumulatifBaru.toFixed(2));
-        $("#total_jumlah_kumulatif").text(totalKumulatifJumlah.toFixed(2));
-
+        // Hitung untuk setiap baris
+        var totalLama = 0;
+        var totalBaru = 0;
+        var totalJumlah = 0;
+        
+        // Iterasi semua baris data (tidak termasuk baris total)
         $('#performance-table-body tr:not(.total-row)').each(function() {
             const lamaCell = $(this).find('.editable-cell[data-type*="_lama"]:not(.keterangan-cell)');
             const baruCell = $(this).find('.editable-cell[data-type*="_baru"]:not(.keterangan-cell)');
             const jumlahCell = $(this).find('.calculated-cell[data-type*="_jumlah"]');
             
-            if (lamaCell.attr('data-type') === 'ak_dasar_lama' || 
-                lamaCell.attr('data-type') === 'ak_konversi_lama') {
-                return;
-            }
-            
             if (lamaCell.length && baruCell.length && jumlahCell.length) {
+                // Parse nilai dari cell (handle berbagai format)
                 var lamaText = lamaCell.text().replace(',', '.').replace(/[^\d.-]/g, '');
                 var baruText = baruCell.text().replace(',', '.').replace(/[^\d.-]/g, '');
                 
-                var lamaValue = parseFloat(lamaText) || 0;
-                var baruValue = parseFloat(baruText) || 0;
-                var jumlah = lamaValue + baruValue;
+                // Konversi ke number, default 0 jika tidak valid atau "-"
+                var lamaValue = (lamaText === '' || lamaText === '-') ? 0 : parseFloat(lamaText) || 0;
+                var baruValue = (baruText === '' || baruText === '-') ? 0 : parseFloat(baruText) || 0;
                 
+                // Hitung jumlah untuk baris ini
+                var jumlah = lamaValue + baruValue;
                 jumlahCell.text(jumlah.toFixed(2));
+                
+                // Tambahkan ke total kumulatif
+                totalLama += lamaValue;
+                totalBaru += baruValue;
+                totalJumlah += jumlah;
             }
         });
-
-        calculateKelebihanAngkaKredit(totalKumulatifJumlah);
+        
+        // PERBAIKAN UTAMA: Update baris total kumulatif dengan posisi yang benar
+        // Sesuaikan dengan format yang diharapkan (kolom LAMA harus 0.00, BARU sesuai total, JUMLAH sesuai total)
+        $("#total_lama_kumulatif").text(totalLama.toFixed(2));
+        $("#total_baru_kumulatif").text(totalBaru.toFixed(2));
+        $("#total_jumlah_kumulatif").text(totalJumlah.toFixed(2));
+        
+        // Hitung kelebihan/kekurangan angka kredit
+        calculateKelebihanAngkaKredit(totalJumlah);
+        
+        console.log("Perhitungan Total Kumulatif:");
+        console.log("Total Lama:", totalLama.toFixed(2));
+        console.log("Total Baru:", totalBaru.toFixed(2));
+        console.log("Total Jumlah:", totalJumlah.toFixed(2));
     }
 
-    function calculateKelebihanAngkaKredit(totalJumlahKumulatif) {
-        var totalJumlah = totalJumlahKumulatif || parseFloat($("#total_jumlah_kumulatif").text().replace(',', '.')) || 0;
+    function calculateKelebihanAngkaKredit(totalJumlah) {
+        // Ambil nilai minimal untuk pangkat dan jenjang
+        var minimalPangkatText = $(".editable-cell[data-type='ak_minimal_pangkat']").text().replace(',', '.');
+        var minimalJenjangText = $(".editable-cell[data-type='ak_minimal_jenjang']").text().replace(',', '.');
         
-        var akMinimalPangkatText = $(".editable-cell[data-type='ak_minimal_pangkat']").text().replace(',', '.');
-        var akMinimalPangkat = parseFloat(akMinimalPangkatText) || 0;
+        var minimalPangkat = parseFloat(minimalPangkatText) || 50; // default 50
+        var minimalJenjang = parseFloat(minimalJenjangText) || 50; // default 50
         
-        var akMinimalJenjangText = $(".editable-cell[data-type='ak_minimal_jenjang']").text().replace(',', '.');
-        var akMinimalJenjang = parseFloat(akMinimalJenjangText) || 0;
+        // Hitung kelebihan/kekurangan
+        var kelebihanPangkat = totalJumlah - minimalPangkat;
+        var kelebihanJenjang = totalJumlah - minimalJenjang;
         
-        var kelebihanPangkat = totalJumlah - akMinimalPangkat;
-        var kelebihanJenjang = totalJumlah - akMinimalJenjang;
-        
+        // Update nilai kelebihan
         $(".calculated-cell[data-type='kelebihan_pangkat']").text(kelebihanPangkat.toFixed(3));
         $(".calculated-cell[data-type='kelebihan_jenjang']").text(kelebihanJenjang.toFixed(3));
         
+        // Update strikethrough text
         updateStrikethroughText(kelebihanPangkat, kelebihanJenjang);
         
-        console.log("Perhitungan Kelebihan Angka Kredit:");
-        console.log("Total Jumlah:", totalJumlah);
-        console.log("AK Minimal Pangkat:", akMinimalPangkat);
-        console.log("AK Minimal Jenjang:", akMinimalJenjang);
-        console.log("Kelebihan Pangkat:", kelebihanPangkat);
-        console.log("Kelebihan Jenjang:", kelebihanJenjang);
+        console.log("Kelebihan Pangkat:", kelebihanPangkat.toFixed(3));
+        console.log("Kelebihan Jenjang:", kelebihanJenjang.toFixed(3));
     }
 
     function updateStrikethroughText(kelebihanPangkat, kelebihanJenjang) {

@@ -30,7 +30,7 @@ input {
 }
 
 button {
-    
+    width: 96%;
     padding: 10px;
     background: #4CAF50;
     color: white;
@@ -541,14 +541,6 @@ body.dashboard-page {
     border: 2px solid #f8f3f3; /* Ubah dari #000 ke #888 (abu-abu) */
 }
 
-/* UPDATED COLUMN WIDTHS */
-.format3-table th:nth-child(1) { width: 5%; }   /* Kolom II */
-.format3-table th:nth-child(2) { width: 38%; }  /* HASIL PENILAIAN KINERJA */
-.format3-table th:nth-child(3) { width: 12%; }  /* LAMA */
-.format3-table th:nth-child(4) { width: 12%; }  /* BARU */
-.format3-table th:nth-child(5) { width: 12%; }  /* JUMLAH */
-.format3-table th:nth-child(6) { width: 21%; }  /* KETERANGAN */
-
 .format3-table th, .format3-table td {
     border: 1px solid #f8f3f3; /* Ubah dari #000 ke #888 (abu-abu) */
     padding: 12px 8px;
@@ -565,6 +557,14 @@ body.dashboard-page {
     top: 0;
     border: 1px solid #f8f3f3; /* Ubah dari #000 ke #888 (abu-abu) untuk header */
 }
+
+/* UPDATED COLUMN WIDTHS */
+.format3-table th:nth-child(1) { width: 5%; }   /* Kolom II */
+.format3-table th:nth-child(2) { width: 38%; }  /* HASIL PENILAIAN KINERJA */
+.format3-table th:nth-child(3) { width: 12%; }  /* LAMA */
+.format3-table th:nth-child(4) { width: 12%; }  /* BARU */
+.format3-table th:nth-child(5) { width: 12%; }  /* JUMLAH */
+.format3-table th:nth-child(6) { width: 21%; }  /* KETERANGAN */
 
 .format3-table tbody tr:nth-child(even) {
     background-color: #f9f9f9;
@@ -583,7 +583,19 @@ body.dashboard-page {
     padding: 12px 8px !important;
 }
 
-/* Pastikan tfoot juga memiliki border abu-abu */
+.total-row td:nth-child(1) {
+    text-align: left !important;
+    padding-left: 10px !important;
+    width: 48%; /* Combined width of first two columns (8% + 40%) */
+    max-width: 48%;
+    word-wrap: break-word;
+}
+
+.total-row td:nth-child(2) { width: 12%; text-align: center; }  /* LAMA */
+.total-row td:nth-child(3) { width: 12%; text-align: center; }  /* BARU */
+.total-row td:nth-child(4) { width: 12%; text-align: center; }  /* JUMLAH */
+.total-row td:nth-child(5) { width: 16%; text-align: center; }  /* KETERANGAN */
+
 .format3-table tfoot {
     display: table-footer-group !important;
 }
@@ -609,12 +621,80 @@ body.dashboard-page {
     border: 1px solid #f8f3f3; /* Ubah dari #000 ke #888 (abu-abu) untuk nomor baris */
 }
 
+.editable-cell {
+    position: relative;
+    cursor: pointer;
+    min-height: 30px;
+    background-color: #fff3cd;
+    transition: all 0.3s ease;
+}
+
+.editable-cell:hover {
+    background-color: #ffeaa7;
+    transform: scale(1.02);
+}
+
+.calculated-cell {
+    background-color: #d4edda;
+    font-weight: bold;
+}
+
+.cell-input {
+    width: 100%;
+    border: none;
+    background: transparent;
+    text-align: center;
+    font-size: 13px;
+    padding: 4px;
+    outline: none;
+    box-shadow: 0 0 5px rgba(40, 167, 69, 0.5);
+}
+
+.description-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.editable-description {
+    background-color: #fff3cd;
+    padding: 2px 5px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.editable-description:hover {
+    background-color: #ffeaa7;
+}
+
+.remove-row-btn {
+    opacity: 0;
+    transition: opacity 0.3s;
+    margin-left: 10px;
+    padding: 2px 6px;
+    background: #757575;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.description-container:hover .remove-row-btn {
+    opacity: 1;
+}
+
+.remove-row-btn:hover {
+    background: #757575 !important;
+}
+
 /* ===== KETERANGAN CELL STYLING - UPDATED WITH GRAY BORDERS ===== */
 .keterangan-cell {
     background-color: #e8f4f8 !important;
     cursor: text;
     min-height: 30px;
-    text-align: left !important;
+    text-align: center !important;
     padding: 8px 12px !important;
     transition: all 0.3s ease;
     border: 1px solid #f8f3f3 !important; /* Ubah dari #000 ke #888 (abu-abu) untuk cell keterangan */
