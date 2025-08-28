@@ -764,7 +764,7 @@ if (!$user) {
     <nav class="navbar">
         <div class="navbar-left">
             <img src="ptpn.png" class="logo" alt="Logo">
-            <span class="app-title">SISTEM KONVERSI ANGKA</span>
+            <span class="app-title">SISTEM KONVERSI ANGKA KREDIT</span>
         </div>
         <div class="navbar-right">
             <div class="profile-menu">
