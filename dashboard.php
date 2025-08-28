@@ -158,6 +158,12 @@ if (!$user) {
             background-color: white;
             transition: border-color 0.3s ease;
             cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 12px center;
+            background-repeat: no-repeat;
+            background-size: 16px;
+            text-align: center;
         }
 
         .form-group select:focus {
@@ -168,6 +174,21 @@ if (!$user) {
 
         .form-group select:hover {
             border-color: #28a745;
+        }
+
+        /* Style untuk dropdown predikat yang baru */
+        .predikat-dropdown {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border: 2px solid #dee2e6;
+            transition: all 0.3s ease;
+        }
+
+        
+
+        .predikat-dropdown:focus {
+            border-color: #28a745;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.15);
         }
 
         .format3-container {
@@ -304,6 +325,7 @@ if (!$user) {
 
         .remove-row-btn {
             opacity: 0;
+            width: 25px;
             transition: opacity 0.3s;
             margin-left: 10px;
             padding: 2px 6px;
@@ -459,7 +481,7 @@ if (!$user) {
         }
 
         .format2-table thead th {
-            background-color: #f8f9fa;
+            background-color: #4CAF50;
             font-weight: bold;
         }
 
@@ -524,14 +546,13 @@ if (!$user) {
         }
 
         .format2-table th {
-            background: linear-gradient(135deg, #28a745, #20c997);
+            background: #28a745;
             color: white;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             padding: 15px 12px;
             text-align: center;
-            border-bottom: 3px solid #1e7e34;
             position: sticky;
             top: 0;
             z-index: 10;
@@ -743,7 +764,7 @@ if (!$user) {
     <nav class="navbar">
         <div class="navbar-left">
             <img src="ptpn.png" class="logo" alt="Logo">
-            <span class="app-title">PT PERKEBUNAN NUSANTARA IV</span>
+            <span class="app-title">SISTEM KONVERSI ANGKA</span>
         </div>
         <div class="navbar-right">
             <div class="profile-menu">
@@ -836,7 +857,14 @@ if (!$user) {
                     <div class="row">
                         <div class="form-group">
                             <label for="predikat">Predikat</label>
-                            <input type="text" id="predikat" name="predikat" placeholder="Contoh: Baik" required>
+                            <select id="predikat" name="predikat" class="predikat-dropdown" required>
+                                <option value="">-- Pilih Predikat --</option>
+                                <option value="sangat baik" data-persen="150">Sangat Baik</option>
+                                <option value="baik" data-persen="100">Baik</option>
+                                <option value="butuh perbaikan" data-persen="75">Butuh Perbaikan</option>
+                                <option value="kurang" data-persen="50">Kurang</option>
+                                <option value="sangat kurang" data-persen="25">Sangat Kurang</option>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="persentase">Persentase (%)</label>
@@ -871,7 +899,7 @@ if (!$user) {
                         <option value="">Pilih Tahun</option>
                         <?php
                         $current_year = date('Y');
-                        for ($i = 1990; $i <= $current_year + 20; $i++) {
+                        for ($i = 2020; $i <= $current_year + 5; $i++) {
                             echo "<option value='".$i."'>".$i."</option>";
                         }
                         ?>
@@ -927,7 +955,7 @@ if (!$user) {
                     <select id="tahun_pilih_f3" required>
                         <option value="">Pilih Tahun</option>
                         <?php
-                        for ($i = 1990; $i <= $current_year + 20; $i++) {
+                        for ($i = 2020; $i <= $current_year + 5; $i++) {
                             echo "<option value='".$i."'>".$i."</option>";
                         }
                         ?>
@@ -958,7 +986,7 @@ if (!$user) {
                         </thead>
                         <tbody id="performance-table-body">
                             <tr data-row-id="1">
-                                <td rowspan="7" class="row-number">1</td>
+                                <td rowspan="7" class="row-number">     </td>
                                 <td style="text-align: left; padding-left: 10px;" class="row-description">
                                     <div class="description-container">
                                         <span class="description-text">1. AK Dasar yang diberikan</span>
@@ -1101,6 +1129,54 @@ if (!$user) {
     // Global variable untuk tracking row counter
     let performanceRowCounter = 6;
 
+    // ===== PREDIKAT DROPDOWN FUNCTIONS - NEW =====
+    const predikatSelect = document.getElementById("predikat");
+    const persentaseInput = document.getElementById("persentase");
+    const koefisienInput = document.getElementById("koefisien");
+    const angkaKreditInput = document.getElementById("angka_kredit");
+
+    // Mapping predikat ke persentase multiplier
+    const predikatMultiplier = {
+        "sangat baik": 1.5,    // 150%
+        "baik": 1.0,           // 100%
+        "butuh perbaikan": 0.75, // 75%
+        "kurang": 0.5,         // 50%
+        "sangat kurang": 0.25  // 25%
+    };
+
+    function hitungAngkaKreditDenganPredikat() {
+        const predikatValue = predikatSelect.value;
+        const nilaiPersentase = parseFloat(persentaseInput.value);
+        const nilaiKoefisien = parseFloat(koefisienInput.value);
+        
+        if (predikatValue && !isNaN(nilaiPersentase) && !isNaN(nilaiKoefisien)) {
+            // Hitung persentase dasar (bulan/12 * 100)
+            const persenDasar = (nilaiPersentase / 12) * 100;
+            
+            // Kalikan dengan multiplier predikat
+            const multiplier = predikatMultiplier[predikatValue];
+            const persenAkhir = persenDasar * multiplier;
+            
+            // Hitung angka kredit
+            const angkaKredit = persenAkhir * nilaiKoefisien / 100;
+            
+            angkaKreditInput.value = angkaKredit.toFixed(3);
+            
+            console.log("Perhitungan Angka Kredit:");
+            console.log("Predikat:", predikatValue, "(" + (multiplier * 100) + "%)");
+            console.log("Persentase:", nilaiPersentase + "/12 =", persenDasar.toFixed(2) + "%");
+            console.log("Persentase x Multiplier:", persenDasar.toFixed(2) + "% x", multiplier, "=", persenAkhir.toFixed(2) + "%");
+            console.log("Angka Kredit:", persenAkhir.toFixed(2) + "% x", nilaiKoefisien, "=", angkaKredit.toFixed(3));
+        } else {
+            angkaKreditInput.value = "";
+        }
+    }
+
+    // Event listeners untuk dropdown predikat dan input lainnya
+    predikatSelect.addEventListener("change", hitungAngkaKreditDenganPredikat);
+    persentaseInput.addEventListener("input", hitungAngkaKreditDenganPredikat);
+    koefisienInput.addEventListener("input", hitungAngkaKreditDenganPredikat);
+
     // ===== ALERT FUNCTIONS - FIXED =====
     function hideAlert(element) {
         if (typeof element === 'string') {
@@ -1131,26 +1207,6 @@ if (!$user) {
             document.getElementById(targetTab).classList.add('active');
         });
     });
-
-    // ===== FORMAT 1: Hitung angka kredit =====
-    const persentaseInput = document.getElementById("persentase");
-    const koefisienInput = document.getElementById("koefisien");
-    const angkaKreditInput = document.getElementById("angka_kredit");
-
-    function hitungAngkaKredit() {
-        const nilaiPersentase = parseFloat(persentaseInput.value);
-        const nilaiKoefisien = parseFloat(koefisienInput.value);
-        if (!isNaN(nilaiPersentase) && !isNaN(nilaiKoefisien)) {
-            const persen = (nilaiPersentase / 12) * 100;
-            let angkaKredit = persen * nilaiKoefisien / 100;
-            angkaKreditInput.value = angkaKredit.toFixed(3);
-        } else {
-            angkaKreditInput.value = "";
-        }
-    }
-
-    persentaseInput.addEventListener("input", hitungAngkaKredit);
-    koefisienInput.addEventListener("input", hitungAngkaKredit);
 
     // ===== FORMAT 2: DELETE FUNCTION =====
     function deleteKonversiData(id) {
@@ -1265,45 +1321,124 @@ if (!$user) {
 
     // ===== ADD/REMOVE ROWS FUNCTIONS WITH UPDATED KETERANGAN =====
     function addPerformanceRow() {
-        performanceRowCounter++;
-        const newRowId = performanceRowCounter;
-        
-        const newRow = '<tr data-row-id="' + newRowId + '">' +
-            '<td style="text-align: left; padding-left: 10px;" class="row-description">' +
-                '<div class="description-container">' +
-                    '<span class="description-text editable-description" onclick="editDescription(this)">' + newRowId + '. Item Baru</span>' +
-                    '<button type="button" class="remove-row-btn" onclick="removePerformanceRow(' + newRowId + ')">×</button>' +
-                '</div>' +
-            '</td>' +
-            '<td class="editable-cell" data-type="ak_custom_' + newRowId + '_lama">-</td>' +
-            '<td class="editable-cell" data-type="ak_custom_' + newRowId + '_baru">0.00</td>' +
-            '<td class="calculated-cell" data-type="ak_custom_' + newRowId + '_jumlah">0.00</td>' +
-            '<td class="editable-cell keterangan-cell" data-type="keterangan_' + newRowId + '" contenteditable="true">-</td>' +
-        '</tr>';
-        
-        // Insert sebelum baris total
+    performanceRowCounter++;
+    const newRowId = performanceRowCounter;
+    
+    const newRow = '<tr data-row-id="' + newRowId + '">' +
+        '<td style="text-align: left; padding-left: 10px;" class="row-description">' +
+            '<div class="description-container">' +
+                '<span class="description-text editable-description" onclick="editDescription(this)">' + newRowId + '. Item Baru</span>' +
+                '<button type="button" class="remove-row-btn" onclick="removePerformanceRow(' + newRowId + ')">×</button>' +
+            '</div>' +
+        '</td>' +
+        '<td class="editable-cell" data-type="ak_custom_' + newRowId + '_lama">-</td>' +
+        '<td class="editable-cell" data-type="ak_custom_' + newRowId + '_baru">0.00</td>' +
+        '<td class="calculated-cell" data-type="ak_custom_' + newRowId + '_jumlah">0.00</td>' +
+        '<td class="editable-cell keterangan-cell" data-type="keterangan_' + newRowId + '" contenteditable="true">-</td>' +
+    '</tr>';
+    
+    // Find the row with data-row-id="5" (AK yang diperoleh dari peningkatan pendidikan)
+    const row5 = $('tr[data-row-id="5"]');
+    
+    if (row5.length > 0) {
+        // Insert new row after row 5
+        row5.after(newRow);
+    } else {
+        // Fallback: insert before total row if row 5 not found
         $('.total-row').before(newRow);
-        
-        // Update rowspan dari kolom pertama
-        updateRowspan();
-        
-        // Recalculate totals
-        calculateFormat3Totals();
     }
+    
+    // Update numbering for all rows after row 5
+    updateRowNumberingAfterInsert();
+    
+    // Update rowspan dari kolom pertama
+    updateRowspan();
+    
+    // Recalculate totals
+    calculateFormat3Totals();
+}
 
+// ===== NEW FUNCTION TO UPDATE ROW NUMBERING AFTER INSERT =====
+function updateRowNumberingAfterInsert() {
+    let currentNumber = 6; // Start from 6 since we insert after row 5
+    
+    // Update all rows after row 5 (excluding total row)
+    $('#performance-table-body tr:not(.total-row)').each(function(index) {
+        const rowId = parseInt($(this).attr('data-row-id'));
+        
+        // Skip rows 1-5, they keep their original numbering
+        if (rowId <= 5) {
+            return true; // continue to next iteration
+        }
+        
+        // Update row data-id and numbering
+        $(this).attr('data-row-id', currentNumber);
+        
+        // Update text in description
+        const descriptionSpan = $(this).find('.description-text');
+        let currentText = descriptionSpan.text();
+        
+        // Special handling for the last row (originally row 6 with dots)
+        if (currentText.includes('................ **')) {
+            const newText = currentNumber + '. ................ **)';
+            descriptionSpan.text(newText);
+        } else {
+            // For other added rows, update normally
+            let newText = currentText.replace(/^\d+\./, currentNumber + '.');
+            descriptionSpan.text(newText);
+        }
+        
+        // Update remove button onclick
+        $(this).find('.remove-row-btn').attr('onclick', 'removePerformanceRow(' + currentNumber + ')');
+        
+        // Update data-type attributes for custom rows
+        const lamaCell = $(this).find('.editable-cell[data-type*="_lama"]:not(.keterangan-cell)');
+        const baruCell = $(this).find('.editable-cell[data-type*="_baru"]:not(.keterangan-cell)');
+        const jumlahCell = $(this).find('.calculated-cell[data-type*="_jumlah"]');
+        const keteranganCell = $(this).find('.keterangan-cell');
+        
+        // Update data-type attributes
+        if (currentText.includes('................ **')) {
+            // This is the special last row, keep its original data-type pattern
+            lamaCell.attr('data-type', 'ak_lainnya_lama');
+            baruCell.attr('data-type', 'ak_lainnya_baru');
+            jumlahCell.attr('data-type', 'ak_lainnya_jumlah');
+            keteranganCell.attr('data-type', 'keterangan_' + currentNumber);
+        } else {
+            // For other custom rows
+            lamaCell.attr('data-type', 'ak_custom_' + currentNumber + '_lama');
+            baruCell.attr('data-type', 'ak_custom_' + currentNumber + '_baru');
+            jumlahCell.attr('data-type', 'ak_custom_' + currentNumber + '_jumlah');
+            keteranganCell.attr('data-type', 'keterangan_' + currentNumber);
+        }
+        
+        currentNumber++;
+    });
+    
+    // Update global counter to match the last row number
+    performanceRowCounter = currentNumber - 1;
+}
+
+    // ===== UPDATED REMOVE ROW FUNCTION =====
     function removePerformanceRow(rowId) {
         const rowsCount = $('#performance-table-body tr:not(.total-row)').length;
         
-        if (rowsCount <= 1) {
-            alert('Minimal harus ada 1 baris!');
+        if (rowsCount <= 6) { // Minimum 6 rows (including the special row 6)
+            alert('Minimal harus ada 6 baris data!');
+            return;
+        }
+        
+        // Don't allow removing rows 1-5 (core data rows)
+        if (rowId <= 5) {
+            alert('Baris data inti (1-5) tidak dapat dihapus!');
             return;
         }
         
         if (confirm('Apakah Anda yakin ingin menghapus baris ini?')) {
             $('tr[data-row-id="' + rowId + '"]').remove();
             
-            // Update numbering
-            updateRowNumbering();
+            // Update numbering after removal
+            updateRowNumberingAfterInsert();
             
             // Update rowspan
             updateRowspan();
@@ -1447,83 +1582,82 @@ if (!$user) {
         });
     });
     
-    // ===== FORMAT 2: INLINE EDITING FUNCTIONS =====//
-        // UPDATE: Make Format 2 fields editable when clicked - ENHANCED VERSION
-        $(document).on('click', '.editable-field', function() {
-            if ($(this).find('input').length > 0) return; // Already editing
-            
-            const currentValue = $(this).text().replace('/12', ''); // Remove /12 from persentase
-            const field = $(this).attr('data-field');
-            const rowKey = $(this).closest('tr').attr('data-row-key');
-            
-            let inputType = 'text';
-            let step = '';
-            let inputOptions = '';
-            
-            // Determine input type based on field
-            switch(field) {
-                case 'persentase':
-                    inputType = 'number';
-                    inputOptions = 'min="1" max="12"';
-                    break;
-                case 'koefisien':
-                    inputType = 'number';
-                    inputOptions = 'step="0.01" min="0.01"';
-                    break;
-                case 'tahun':
-                    inputType = 'number';
-                    inputOptions = 'min="1900" max="2100"';
-                    break;
-                case 'periode':
-                    // For periode, we'll use a text input with validation
-                    inputType = 'text';
-                    inputOptions = 'placeholder="Contoh: April atau April - Juni"';
-                    break;
-                case 'predikat':
-                    inputType = 'text';
-                    inputOptions = 'placeholder="Masukkan predikat"';
-                    break;
-                default:
-                    inputType = 'text';
+    // ===== FORMAT 2: INLINE EDITING FUNCTIONS =====
+    $(document).on('click', '.editable-field', function() {
+        if ($(this).find('input').length > 0) return; // Already editing
+        
+        const currentValue = $(this).text().replace('/12', ''); // Remove /12 from persentase
+        const field = $(this).attr('data-field');
+        const rowKey = $(this).closest('tr').attr('data-row-key');
+        
+        let inputType = 'text';
+        let step = '';
+        let inputOptions = '';
+        
+        // Determine input type based on field
+        switch(field) {
+            case 'persentase':
+                inputType = 'number';
+                inputOptions = 'min="1" max="12"';
+                break;
+            case 'koefisien':
+                inputType = 'number';
+                inputOptions = 'step="0.01" min="0.01"';
+                break;
+            case 'tahun':
+                inputType = 'number';
+                inputOptions = 'min="1900" max="2100"';
+                break;
+            case 'periode':
+                // For periode, we'll use a text input with validation
+                inputType = 'text';
+                inputOptions = 'placeholder="Contoh: April atau April - Juni"';
+                break;
+            case 'predikat':
+                inputType = 'text';
+                inputOptions = 'placeholder="Masukkan predikat"';
+                break;
+            default:
+                inputType = 'text';
+        }
+        
+        // Create input element
+        const input = $(`<input type="${inputType}" ${inputOptions} class="cell-input-f2" value="${currentValue}" style="width: 100%; border: 2px solid #28a745; padding: 4px; text-align: center; background: #fff3cd; border-radius: 4px;">`);
+        
+        // Replace cell content with input
+        $(this).html(input);
+        input.focus().select();
+        
+        // Handle save on blur or Enter
+        input.on('blur keypress', function(e) {
+            if (e.type === 'blur' || e.which === 13) {
+                const newValue = $(this).val().trim();
+                const cell = $(this).parent();
+                
+                // Validate input based on field type
+                if (!validateFieldInput(field, newValue, currentValue, cell)) {
+                    return;
+                }
+                
+                if (newValue !== currentValue) {
+                    // Save to database
+                    saveFieldValue(rowKey, field, newValue, cell, currentValue);
+                } else {
+                    // No change, restore original value
+                    const displayValue = getDisplayValue(field, newValue);
+                    cell.text(displayValue);
+                }
             }
-            
-            // Create input element
-            const input = $(`<input type="${inputType}" ${inputOptions} class="cell-input-f2" value="${currentValue}" style="width: 100%; border: 2px solid #28a745; padding: 4px; text-align: center; background: #fff3cd; border-radius: 4px;">`);
-            
-            // Replace cell content with input
-            $(this).html(input);
-            input.focus().select();
-            
-            // Handle save on blur or Enter
-            input.on('blur keypress', function(e) {
-                if (e.type === 'blur' || e.which === 13) {
-                    const newValue = $(this).val().trim();
-                    const cell = $(this).parent();
-                    
-                    // Validate input based on field type
-                    if (!validateFieldInput(field, newValue, currentValue, cell)) {
-                        return;
-                    }
-                    
-                    if (newValue !== currentValue) {
-                        // Save to database
-                        saveFieldValue(rowKey, field, newValue, cell, currentValue);
-                    } else {
-                        // No change, restore original value
-                        const displayValue = getDisplayValue(field, newValue);
-                        cell.text(displayValue);
-                    }
-                }
-            });
-            
-            // Handle Escape key to cancel
-            input.on('keyup', function(e) {
-                if (e.which === 27) { // Escape key
-                    const displayValue = getDisplayValue(field, currentValue);
-                    $(this).parent().text(displayValue);
-                }
-            });
         });
+        
+        // Handle Escape key to cancel
+        input.on('keyup', function(e) {
+            if (e.which === 27) { // Escape key
+                const displayValue = getDisplayValue(field, currentValue);
+                $(this).parent().text(displayValue);
+            }
+        });
+    });
 
         // Helper function to validate field input
         function validateFieldInput(field, newValue, currentValue, cell) {
@@ -1602,7 +1736,7 @@ if (!$user) {
             }
         }
 
-        // UPDATE: Enhanced Save field value to database function
+        // Enhanced Save field value to database function
         function saveFieldValue(rowKey, field, newValue, cell, originalValue) {
             // Show loading state
             cell.html('<span style="color: #666; font-style: italic;">💾 Menyimpan...</span>');
@@ -1793,19 +1927,13 @@ if (!$user) {
             }
         });
         
-        // PERBAIKAN UTAMA: Update baris total kumulatif dengan posisi yang benar
-        // Sesuaikan dengan format yang diharapkan (kolom LAMA harus 0.00, BARU sesuai total, JUMLAH sesuai total)
+        // Update baris total kumulatif
         $("#total_lama_kumulatif").text(totalLama.toFixed(2));
         $("#total_baru_kumulatif").text(totalBaru.toFixed(2));
         $("#total_jumlah_kumulatif").text(totalJumlah.toFixed(2));
         
         // Hitung kelebihan/kekurangan angka kredit
         calculateKelebihanAngkaKredit(totalJumlah);
-        
-        console.log("Perhitungan Total Kumulatif:");
-        console.log("Total Lama:", totalLama.toFixed(2));
-        console.log("Total Baru:", totalBaru.toFixed(2));
-        console.log("Total Jumlah:", totalJumlah.toFixed(2));
     }
 
     function calculateKelebihanAngkaKredit(totalJumlah) {
@@ -1826,13 +1954,10 @@ if (!$user) {
         
         // Update strikethrough text
         updateStrikethroughText(kelebihanPangkat, kelebihanJenjang);
-        
-        console.log("Kelebihan Pangkat:", kelebihanPangkat.toFixed(3));
-        console.log("Kelebihan Jenjang:", kelebihanJenjang.toFixed(3));
     }
 
     function updateStrikethroughText(kelebihanPangkat, kelebihanJenjang) {
-    var pangkatCell = $("#keterangan-pangkat");
+        var pangkatCell = $("#keterangan-pangkat");
         if (pangkatCell.length > 0) {
             var newTextPangkat = "";
             
@@ -1857,10 +1982,6 @@ if (!$user) {
             
             jenjangCell.html(newTextJenjang);
         }
-        
-        console.log("Strikethrough Update:");
-        console.log("Kelebihan Pangkat:", kelebihanPangkat, (kelebihanPangkat < 0 ? "-> Strike 'kelebihan'" : "-> Strike 'kekurangan'"));
-        console.log("Kelebihan Jenjang:", kelebihanJenjang, (kelebihanJenjang < 0 ? "-> Strike 'kelebihan'" : "-> Strike 'kekurangan'"));
     } 
 
     $(document).on('blur', '.editable-cell[data-type="ak_minimal_pangkat"], .editable-cell[data-type="ak_minimal_jenjang"]', function() {
@@ -1998,7 +2119,7 @@ if (!$user) {
         const persentaseInputDom = document.getElementById("persentase");
         
         if (koefisienInputDom.value && persentaseInputDom.value) {
-            hitungAngkaKredit();
+            hitungAngkaKreditDenganPredikat();
         }
         
         // ===== AUTOMATIC PERCENTAGE CALCULATION BASED ON MONTHS =====
@@ -2018,24 +2139,28 @@ if (!$user) {
             if (awal > 0 && akhir > 0) {
                 let selisih = akhir - awal + 1;
                 if (selisih <= 0) selisih += 12; 
-                persentaseInputDom.value = selisih;
+                persentaseInput.value = selisih;
                 
-                // Trigger angka kredit calculation
-                const nilaiPersentase = parseFloat(persentaseInputDom.value);
-                const nilaiKoefisien = parseFloat(koefisienInputDom.value);
-                if (!isNaN(nilaiPersentase) && !isNaN(nilaiKoefisien)) {
-                    const persen = (nilaiPersentase / 12) * 100;
-                    let angkaKredit = persen * nilaiKoefisien / 100;
-                    document.getElementById("angka_kredit").value = angkaKredit.toFixed(3);
-                }
+                // Trigger angka kredit calculation dengan predikat
+                hitungAngkaKreditDenganPredikat();
             } else {
-                persentaseInputDom.value = "";
+                persentaseInput.value = "";
             }
         }
 
         bulanAwalSelect.addEventListener("change", hitungPersentase);
         bulanAkhirSelect.addEventListener("change", hitungPersentase);
-    });
+        
+        
+            
+            // Show tooltip with percentage info
+            if (selectedOption.value) {
+                const percentage = selectedOption.getAttribute('data-persen');
+                console.log(`Predikat dipilih: ${selectedOption.text} (${percentage}%)`);
+            }
+        });
+        
+        
     </script>
 
 </body>
