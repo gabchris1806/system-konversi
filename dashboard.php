@@ -312,7 +312,7 @@ if (!$user) {
         }
 
         .editable-description {
-            background-color: #fff3cd;
+            background-color: white;
             padding: 2px 5px;
             border-radius: 3px;
             cursor: pointer;
@@ -986,10 +986,11 @@ if (!$user) {
                         </thead>
                         <tbody id="performance-table-body">
                             <tr data-row-id="1">
-                                <td rowspan="7" class="row-number">     </td>
+                                <td class="row-number">1</td>
+                               
                                 <td style="text-align: left; padding-left: 10px;" class="row-description">
                                     <div class="description-container">
-                                        <span class="description-text">1. AK Dasar yang diberikan</span>
+                                        <span class="description-text">AK Dasar yang diberikan</span>
                                     </div>
                                 </td>
                                 <td class="editable-cell" data-type="ak_dasar_lama">-</td>
@@ -998,9 +999,10 @@ if (!$user) {
                                 <td class="editable-cell keterangan-cell" data-type="keterangan_1" contenteditable="true">-</td>
                             </tr>
                             <tr data-row-id="2">
+                                <td class="row-number">2</td>
                                 <td style="text-align: left; padding-left: 10px;" class="row-description">
                                     <div class="description-container">
-                                        <span class="description-text">2. AK JF Lama</span>
+                                        <span class="description-text">AK JF Lama</span>
                                     </div>
                                 </td>
                                 <td class="editable-cell" data-type="ak_jf_lama">-</td>
@@ -1009,9 +1011,10 @@ if (!$user) {
                                 <td class="editable-cell keterangan-cell" data-type="keterangan_2" contenteditable="true">-</td>
                             </tr>
                             <tr data-row-id="3">
+                                <td class="row-number">3</td>
                                 <td style="text-align: left; padding-left: 10px;" class="row-description">
                                     <div class="description-container">
-                                        <span class="description-text">3. AK Penyesuaian/ Penyetaraan</span>
+                                        <span class="description-text">AK Penyesuaian/ Penyetaraan</span>
                                     </div>
                                 </td>
                                 <td class="editable-cell" data-type="ak_penyesuaian_lama">-</td>
@@ -1020,9 +1023,10 @@ if (!$user) {
                                 <td class="editable-cell keterangan-cell" data-type="keterangan_3" contenteditable="true">-</td>
                             </tr>
                             <tr data-row-id="4">
+                                <td class="row-number">4</td>
                                 <td style="text-align: left; padding-left: 10px;" class="row-description">
                                     <div class="description-container">
-                                        <span class="description-text">4. AK Konversi</span>
+                                        <span class="description-text">AK Konversi</span>
                                     </div>
                                 </td>
                                 <td class="editable-cell" data-type="ak_konversi_lama">0,00</td>
@@ -1031,9 +1035,10 @@ if (!$user) {
                                 <td class="editable-cell keterangan-cell" data-type="keterangan_4" contenteditable="true">Dari konversi</td>
                             </tr>
                             <tr data-row-id="5">
+                                <td class="row-number">5</td>
                                 <td style="text-align: left; padding-left: 10px;" class="row-description">
                                     <div class="description-container">
-                                        <span class="description-text">5. AK yang diperoleh dari peningkatan pendidikan</span>
+                                        <span class="description-text">AK yang diperoleh dari peningkatan pendidikan</span>
                                     </div>
                                 </td>
                                 <td class="editable-cell" data-type="ak_pendidikan_lama">-</td>
@@ -1042,9 +1047,10 @@ if (!$user) {
                                 <td class="editable-cell keterangan-cell" data-type="keterangan_5" contenteditable="true">-</td>
                             </tr>
                             <tr data-row-id="6">
+                                <td class="row-number">6</td>
                                 <td style="text-align: left; padding-left: 10px;" class="row-description">
                                     <div class="description-container">
-                                        <span class="description-text editable-description">6. ................ **)</span>
+                                        <span class="description-text editable-description">................ **)</span>
                                         <button type="button" class="remove-row-btn" onclick="removePerformanceRow(6)">×</button>
                                     </div>
                                 </td>
@@ -1055,14 +1061,20 @@ if (!$user) {
                             </tr>
                             <!-- BARIS TOTAL DIPINDAHKAN KE TBODY -->
                             <tr class="total-row" style="font-weight: bold; background-color: #28a745 !important; color: white !important;">
-                                <td colspan="1" style="text-align: left; padding-left: 10px; background-color: #28a745 !important; color: white !important; border: 1px solid #28a745;">
-                                    JUMLAH ANGKA KREDIT KUMULATIF
-                                </td>
-                                <td id="total_lama_kumulatif" style="background-color: #28a745 !important; color: white !important; border: 1px solid #28a745; text-align: center;">0,00</td>
-                                <td id="total_baru_kumulatif" style="background-color: #28a745 !important; color: white !important; border: 1px solid #28a745; text-align: center;">75,00</td>
-                                <td id="total_jumlah_kumulatif" style="background-color: #28a745 !important; color: white !important; border: 1px solid #28a745; text-align: center;">75,00</td>
-                                <td style="background-color: #28a745 !important; color: white !important; border: 1px solid #28a745;"></td>
-                            </tr>
+                            <!-- kolom nomor dibiarkan kosong -->
+                            <td style="background-color: #28a745 !important; border: 1px solid #28a745;"></td>
+                            
+                            <!-- gabungkan deskripsi + keterangan kolom -->
+                            <td colspan="1" style="text-align: left; padding-left: 10px; background-color: #28a745 !important; color: white !important; border: 1px solid #28a745;">
+                                JUMLAH ANGKA KREDIT KUMULATIF
+                            </td>
+                            
+                            <td id="total_lama_kumulatif" style="background-color: #28a745 !important; text-align: center; border: 1px solid #28a745;">0.00</td>
+                            <td id="total_baru_kumulatif" style="background-color: #28a745 !important; text-align: center; border: 1px solid #28a745;">59.38</td>
+                            <td id="total_jumlah_kumulatif" style="background-color: #28a745 !important; text-align: center; border: 1px solid #28a745;">59.38</td>
+                            <td id="total_" style="background-color: #28a745 !important; text-align: center; border: 1px solid #28a745;"></td>
+                        </tr>
+
                         </tbody>
                     </table>
                     
@@ -1359,31 +1371,106 @@ if (!$user) {
 }
 
 // ===== NEW FUNCTION TO UPDATE ROW NUMBERING AFTER INSERT =====
-function updateRowNumberingAfterInsert() {
-    let currentNumber = 6; // Start from 6 since we insert after row 5
+function addPerformanceRow() {
+    performanceRowCounter++;
+    const newRowId = performanceRowCounter;
     
-    // Update all rows after row 5 (excluding total row)
+    // Create new row with proper column structure (including row number column)
+    const newRow = '<tr data-row-id="' + newRowId + '">' +
+        '<td class="row-number">' + newRowId + '</td>' +  // Add row number column
+        '<td style="text-align: left; padding-left: 10px;" class="row-description">' +
+            '<div class="description-container">' +
+                '<span class="description-text editable-description" onclick="editDescription(this)">Item Baru ' + newRowId + '</span>' +
+                '<button type="button" class="remove-row-btn" onclick="removePerformanceRow(' + newRowId + ')">×</button>' +
+            '</div>' +
+        '</td>' +
+        '<td class="editable-cell" data-type="ak_custom_' + newRowId + '_lama">-</td>' +
+        '<td class="editable-cell" data-type="ak_custom_' + newRowId + '_baru">0.00</td>' +
+        '<td class="calculated-cell" data-type="ak_custom_' + newRowId + '_jumlah">0.00</td>' +
+        '<td class="editable-cell keterangan-cell" data-type="keterangan_' + newRowId + '" contenteditable="true">-</td>' +
+    '</tr>';
+    
+    // Find the row with data-row-id="5" (AK yang diperoleh dari peningkatan pendidikan)
+    const row5 = $('tr[data-row-id="5"]');
+    
+    if (row5.length > 0) {
+        // Insert new row after row 5
+        row5.after(newRow);
+    } else {
+        // Fallback: insert before total row if row 5 not found
+        $('.total-row').before(newRow);
+    }
+    
+    // Update numbering for all rows after row 5
+    updateRowNumberingAfterInsert();
+    
+    // Recalculate totals
+    calculateFormat3Totals();
+}
+
+// Also update the updateRowNumberingAfterInsert function to handle row numbers properly
+function addPerformanceRow() {
+    // Calculate next row number based on existing rows (not global counter)
+    const currentRows = $('#performance-table-body tr:not(.total-row)').length;
+    const newRowNumber = currentRows + 1;
+    
+    // Create new row with proper column structure - insert BEFORE the last row (................ **)
+    const newRow = `<tr data-row-id="${newRowNumber}">
+        <td class="row-number">${newRowNumber}</td>
+        <td style="text-align: left; padding-left: 10px;" class="row-description">
+            <div class="description-container">
+                <span class="description-text editable-description" onclick="editDescription(this)">Item Baru</span>
+                <button type="button" class="remove-row-btn" onclick="removePerformanceRow(${newRowNumber})">×</button>
+            </div>
+        </td>
+        <td class="editable-cell" data-type="ak_custom_${newRowNumber}_lama">-</td>
+        <td class="editable-cell" data-type="ak_custom_${newRowNumber}_baru">0.00</td>
+        <td class="calculated-cell" data-type="ak_custom_${newRowNumber}_jumlah">0.00</td>
+        <td class="editable-cell keterangan-cell" data-type="keterangan_${newRowNumber}" contenteditable="true">-</td>
+    </tr>`;
+    
+    // Find the row that contains "................ **)" - this should always be the last data row
+    const lastSpecialRow = $('#performance-table-body tr:not(.total-row)').filter(function() {
+        return $(this).find('.description-text').text().includes('................ **');
+    });
+    
+    if (lastSpecialRow.length > 0) {
+        // Insert new row BEFORE the special row
+        lastSpecialRow.before(newRow);
+    } else {
+        // Fallback: insert before total row
+        $('.total-row').before(newRow);
+    }
+    
+    // Re-number ALL rows to ensure consistency
+    reNumberAllRows();
+    
+    // Recalculate totals
+    calculateFormat3Totals();
+}
+
+// ===== NEW FUNCTION TO RE-NUMBER ALL ROWS =====
+function reNumberAllRows() {
+    let currentNumber = 1;
+    
+    // Re-number ALL rows (excluding total row) from 1 to N
     $('#performance-table-body tr:not(.total-row)').each(function(index) {
-        const rowId = parseInt($(this).attr('data-row-id'));
-        
-        // Skip rows 1-5, they keep their original numbering
-        if (rowId <= 5) {
-            return true; // continue to next iteration
-        }
-        
         // Update row data-id and numbering
         $(this).attr('data-row-id', currentNumber);
+        
+        // Update the row number cell (first column)
+        $(this).find('.row-number').first().text(currentNumber);
         
         // Update text in description
         const descriptionSpan = $(this).find('.description-text');
         let currentText = descriptionSpan.text();
         
-        // Special handling for the last row (originally row 6 with dots)
+        // Special handling for the row with dots - keep it as the last row always
         if (currentText.includes('................ **')) {
-            const newText = currentNumber + '. ................ **)';
+            const newText = '................ **)';
             descriptionSpan.text(newText);
         } else {
-            // For other added rows, update normally
+            // For all other rows, update normally
             let newText = currentText.replace(/^\d+\./, currentNumber + '.');
             descriptionSpan.text(newText);
         }
@@ -1391,32 +1478,81 @@ function updateRowNumberingAfterInsert() {
         // Update remove button onclick
         $(this).find('.remove-row-btn').attr('onclick', 'removePerformanceRow(' + currentNumber + ')');
         
-        // Update data-type attributes for custom rows
+        // Update data-type attributes
         const lamaCell = $(this).find('.editable-cell[data-type*="_lama"]:not(.keterangan-cell)');
         const baruCell = $(this).find('.editable-cell[data-type*="_baru"]:not(.keterangan-cell)');
         const jumlahCell = $(this).find('.calculated-cell[data-type*="_jumlah"]');
         const keteranganCell = $(this).find('.keterangan-cell');
         
-        // Update data-type attributes
-        if (currentText.includes('................ **')) {
-            // This is the special last row, keep its original data-type pattern
+        // Determine data-type based on current row number and content
+        if (currentNumber === 1) {
+            // AK Dasar yang diberikan
+            lamaCell.attr('data-type', 'ak_dasar_lama');
+            baruCell.attr('data-type', 'ak_dasar_baru');
+            jumlahCell.attr('data-type', 'ak_dasar_jumlah');
+        } else if (currentNumber === 2) {
+            // AK JF Lama
+            lamaCell.attr('data-type', 'ak_jf_lama');
+            baruCell.attr('data-type', 'ak_jf_baru');
+            jumlahCell.attr('data-type', 'ak_jf_jumlah');
+        } else if (currentNumber === 3) {
+            // AK Penyesuaian/ Penyetaraan
+            lamaCell.attr('data-type', 'ak_penyesuaian_lama');
+            baruCell.attr('data-type', 'ak_penyesuaian_baru');
+            jumlahCell.attr('data-type', 'ak_penyesuaian_jumlah');
+        } else if (currentNumber === 4) {
+            // AK Konversi
+            lamaCell.attr('data-type', 'ak_konversi_lama');
+            baruCell.attr('data-type', 'ak_konversi_baru');
+            jumlahCell.attr('data-type', 'ak_konversi_jumlah');
+        } else if (currentNumber === 5) {
+            // AK yang diperoleh dari peningkatan pendidikan
+            lamaCell.attr('data-type', 'ak_pendidikan_lama');
+            baruCell.attr('data-type', 'ak_pendidikan_baru');
+            jumlahCell.attr('data-type', 'ak_pendidikan_jumlah');
+        } else if (currentText.includes('................ **')) {
+            // Special row with dots - always use "lainnya" type
             lamaCell.attr('data-type', 'ak_lainnya_lama');
             baruCell.attr('data-type', 'ak_lainnya_baru');
             jumlahCell.attr('data-type', 'ak_lainnya_jumlah');
-            keteranganCell.attr('data-type', 'keterangan_' + currentNumber);
         } else {
-            // For other custom rows
+            // Custom added rows
             lamaCell.attr('data-type', 'ak_custom_' + currentNumber + '_lama');
             baruCell.attr('data-type', 'ak_custom_' + currentNumber + '_baru');
             jumlahCell.attr('data-type', 'ak_custom_' + currentNumber + '_jumlah');
-            keteranganCell.attr('data-type', 'keterangan_' + currentNumber);
         }
+        
+        // Always update keterangan with current row number
+        keteranganCell.attr('data-type', 'keterangan_' + currentNumber);
         
         currentNumber++;
     });
+}
+
+// ===== UPDATED REMOVE ROW FUNCTION =====
+function removePerformanceRow(rowId) {
+    const rowsCount = $('#performance-table-body tr:not(.total-row)').length;
     
-    // Update global counter to match the last row number
-    performanceRowCounter = currentNumber - 1;
+    if (rowsCount <= 6) { // Minimum 6 rows
+        alert('Minimal harus ada 6 baris data!');
+        return;
+    }
+    
+    // Don't allow removing rows 1-5 (core data rows)
+    if (rowId <= 5) {
+        alert('Baris data inti (1-5) tidak dapat dihapus!');
+        return;
+    }
+    
+    if (confirm('Apakah Anda yakin ingin menghapus baris ini?')) {
+        $('tr[data-row-id="' + rowId + '"]').remove();
+        
+        // Re-number ALL rows after removal to ensure consistency
+        reNumberAllRows();
+        
+        // Recalculate totals
+        calculateFormat3Totals();
+    }
 }
 
     // ===== UPDATED REMOVE ROW FUNCTION =====
