@@ -756,7 +756,203 @@ if (!$user) {
                 display: none; /* Hide edit icon on mobile */
             }
         }
-        
+
+        /* ===== PRINT STYLES ===== */
+        @media print {
+            /* Hide elements that shouldn't be printed */
+            .navbar,
+            .tab-container .tab-bar,
+            .format3-bottom-section,
+            .year-selector-container,
+            .no-print,
+            .btn-print,
+            .report-btn,
+            .add-row-button,
+            .remove-row-btn,
+            .alert,
+            .format3-warning {
+                display: none !important;
+            }
+            
+            /* Reset page margins and styling */
+            body {
+                margin: 0;
+                padding: 20px;
+                font-family: Arial, sans-serif;
+                font-size: 12px;
+                line-height: 1.2;
+                color: black;
+                background: white;
+            }
+            
+            /* Print header styling */
+            .print-header {
+                margin-bottom: 20px;
+                page-break-inside: avoid;
+            }
+            
+            .print-header h2 {
+                font-size: 16px;
+                font-weight: bold;
+                text-align: center;
+                margin: 0;
+            }
+            
+            .print-header p {
+                font-size: 14px;
+                text-align: center;
+                margin: 5px 0;
+            }
+            
+            /* User identity table styling */
+            .print-header table {
+                width: 100%;
+                border-collapse: collapse;
+                margin: 20px 0;
+                border: 2px solid black;
+            }
+            
+            .print-header table th,
+            .print-header table td {
+                border: 1px solid black;
+                padding: 6px 8px;
+                font-size: 12px;
+                vertical-align: top;
+            }
+            
+            .print-header table th {
+                background-color: #f0f0f0;
+                font-weight: bold;
+                text-align: center;
+            }
+            
+            /* Main content styling */
+            .format3-container {
+                margin: 0;
+                padding: 0;
+            }
+            
+            .format3-container h3 {
+                text-align: center;
+                font-size: 16px;
+                font-weight: bold;
+                margin: 20px 0;
+                page-break-after: avoid;
+            }
+            
+            /* Main table styling for print */
+            .format3-table {
+                width: 100%;
+                border-collapse: collapse;
+                margin: 10px 0;
+                border: 2px solid black;
+                page-break-inside: avoid;
+            }
+            
+            .format3-table th,
+            .format3-table td {
+                border: 1px solid black !important;
+                padding: 4px 6px;
+                font-size: 11px;
+                text-align: center;
+                vertical-align: middle;
+                word-wrap: break-word;
+            }
+            
+            .format3-table th {
+                background-color: #f0f0f0 !important;
+                font-weight: bold;
+                font-size: 12px;
+            }
+            
+            .format3-table .total-row td {
+                background-color: #d0d0d0 !important;
+                font-weight: bold;
+                border: 1px solid black !important;
+            }
+            
+            /* Second table styling */
+            .format3-table:nth-of-type(2) {
+                margin-top: 20px;
+            }
+            
+            /* Signature section styling */
+            .signature-section {
+                margin-top: 30px;
+                display: flex;
+                justify-content: space-between;
+                padding: 0 30px;
+                page-break-inside: avoid;
+            }
+            
+            .signature-section .left-signature {
+                width: 300px;
+                text-align: left;
+            }
+            
+            .signature-section .right-signature {
+                width: 300px;
+                text-align: left;
+            }
+            
+            .signature-location-date {
+                font-size: 12px;
+                margin-bottom: 5px;
+            }
+            
+            .signature-title {
+                font-size: 12px;
+                margin-bottom: 60px;
+            }
+            
+            .signature-name {
+                font-size: 12px;
+                font-weight: bold;
+                text-decoration: underline;
+                margin-bottom: 2px;
+            }
+            
+            .signature-nip {
+                font-size: 11px;
+            }
+            
+            /* Text alignment overrides for print */
+            .format3-table td:nth-child(2) {
+                text-align: left !important;
+                padding-left: 8px !important;
+            }
+            
+            /* Remove any background colors that might not print well */
+            .editable-cell,
+            .calculated-cell,
+            .keterangan-cell {
+                background-color: white !important;
+            }
+            
+            /* Page break control */
+            .format3-table tbody tr {
+                page-break-inside: avoid;
+            }
+            
+            /* Ensure proper spacing */
+            .format3-container > * {
+                margin-bottom: 15px;
+            }
+            
+            /* Final note styling */
+            #temp-final-note {
+                page-break-before: always;
+                margin-top: 30px;
+                padding: 20px 0;
+            }
+            
+            #temp-final-note p {
+                font-size: 12px;
+                font-weight: bold;
+                margin: 20px 0;
+                text-align: left;
+            }
+        }
     </style>
 </head>
 <body class="dashboard-page">
@@ -1244,7 +1440,7 @@ if (!$user) {
         }
     }
 
-    // ===== CETAK LAPORAN FUNCTION =====
+    // ===== UPDATED CETAK LAPORAN FUNCTION WITH USER IDENTITY =====
     function cetakLaporan() {
         const tahun = document.getElementById("tahun_pilih_f3").value;
         
@@ -1266,10 +1462,82 @@ if (!$user) {
         
         const formattedDate = `${day} ${month} ${year}`;
         
-        // CREATE SIGNATURE ELEMENT DINAMIS HANYA SAAT PRINT
+        // Get user data from session (available in the DOM)
+        const userName = document.querySelector('.user-name').textContent;
+        const userNip = document.querySelector('.user-nip').textContent;
+        
+        // CREATE USER IDENTITY TABLE AND ENHANCED HEADER
+        const headerHTML = `
+            <div class="print-header" id="temp-print-header" style="margin-bottom: 30px; page-break-inside: avoid;">
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <h2 style="margin: 0; font-size: 16px; font-weight: bold;">PENETAPAN ANGKA KREDIT</h2>
+                    <p style="margin: 5px 0; font-size: 14px;">NOMOR : B/ /BPSDMI/PTKI/KP/I/${tahun}</p>
+                </div>
+                
+                <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+                    <div style="flex: 1;">
+                        <p style="margin: 2px 0; font-size: 14px;"><strong>Instansi :</strong> Kementerian Perindustrian</p>
+                    </div>
+                    <div style="flex: 1; text-align: right;">
+                        <p style="margin: 2px 0; font-size: 14px;"><strong>Masa Penilaian :</strong> Periode ${tahun}</p>
+                    </div>
+                </div>
+                
+                <!-- USER IDENTITY TABLE -->
+                <table style="width: 100%; border-collapse: collapse; margin-bottom: 30px; border: 2px solid #000;">
+                    <thead>
+                        <tr>
+                            <th style="border: 1px solid #000; padding: 8px; background-color: #f0f0f0; text-align: center; font-weight: bold; font-size: 14px;" colspan="2">
+                                I. KETERANGAN PERORANGAN
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="border: 1px solid #000; padding: 8px; width: 25%; font-size: 13px; font-weight: bold;">1. Nama</td>
+                            <td style="border: 1px solid #000; padding: 8px; font-size: 13px;">: ${userName}</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #000; padding: 8px; font-size: 13px; font-weight: bold;">2. NIP</td>
+                            <td style="border: 1px solid #000; padding: 8px; font-size: 13px;">: ${userNip}</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #000; padding: 8px; font-size: 13px; font-weight: bold;">3. Nomor Seri KARPEG</td>
+                            <td style="border: 1px solid #000; padding: 8px; font-size: 13px;" id="karpeg-cell">: <span id="karpeg-data">-</span></td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #000; padding: 8px; font-size: 13px; font-weight: bold;">4. Tempat/Tanggal Lahir</td>
+                            <td style="border: 1px solid #000; padding: 8px; font-size: 13px;" id="ttl-cell">: <span id="ttl-data">-</span></td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #000; padding: 8px; font-size: 13px; font-weight: bold;">5. Jenis Kelamin</td>
+                            <td style="border: 1px solid #000; padding: 8px; font-size: 13px;" id="gender-cell">: <span id="gender-data">-</span></td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #000; padding: 8px; font-size: 13px; font-weight: bold;">6. Pangkat/Golongan Ruang/TMT</td>
+                            <td style="border: 1px solid #000; padding: 8px; font-size: 13px;" id="pangkat-cell">: <span id="pangkat-data">-</span></td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #000; padding: 8px; font-size: 13px; font-weight: bold;">7. Jabatan/TMT</td>
+                            <td style="border: 1px solid #000; padding: 8px; font-size: 13px;" id="jabatan-cell">: <span id="jabatan-data">-</span></td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #000; padding: 8px; font-size: 13px; font-weight: bold;">8. Unit Kerja</td>
+                            <td style="border: 1px solid #000; padding: 8px; font-size: 13px;" id="unit-cell">: <span id="unit-data">-</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        `;
+        
+        // CREATE SIGNATURE ELEMENT
         const signatureHTML = `
-            <div class="signature-section" id="temp-signature-section" style="margin-top: 50px; display: flex; justify-content: flex-end; padding-right: 50px; page-break-inside: avoid;">
-                <div class="signature-container" style="text-align: left; width: 300px;">
+            <div class="signature-section" id="temp-signature-section" style="margin-top: 50px; display: flex; justify-content: space-between; padding: 0 50px; page-break-inside: avoid;">
+                <div class="left-signature" style="text-align: left; width: 300px;">
+                    <div style="font-size: 12px; margin-bottom: 5px;">
+                    </div>
+                </div>
+                <div class="right-signature" style="text-align: left; width: 300px;">
                     <div class="signature-location-date" style="font-size: 14px; margin-bottom: 5px;">
                         Ditetapkan di Medan<br>
                         Pada tanggal ${formattedDate}
@@ -1288,47 +1556,110 @@ if (!$user) {
             </div>
         `;
         
-        // HAPUS SEMENTARA ELEMENT KETERANGAN DAN SIGNATURE LAMA
+        // Remove temporary elements if they exist
+        const oldHeader = document.getElementById('temp-print-header');
+        const oldSignature = document.getElementById('temp-signature-section');
+        const oldFinalNote = document.getElementById('temp-final-note');
+        
+        if (oldHeader) oldHeader.remove();
+        if (oldSignature) oldSignature.remove();
+        if (oldFinalNote) oldFinalNote.remove();
+        
+        // Hide elements that shouldn't be printed
         const keteranganSection = document.querySelector('.format3-bottom-section');
-        const oldSignatureSection = document.querySelector('.signature-section');
-        const tempParent = keteranganSection ? keteranganSection.parentNode : null;
-        const tempNextSibling = keteranganSection ? keteranganSection.nextSibling : null;
-        
-        // Remove keterangan section
+        const originalDisplay = keteranganSection ? keteranganSection.style.display : '';
         if (keteranganSection) {
-            keteranganSection.remove();
+            keteranganSection.style.display = 'none';
         }
         
-        // Remove old signature if exists
-        if (oldSignatureSection) {
-            oldSignatureSection.remove();
-        }
-        
-        // ADD SIGNATURE TEMPORARILY UNTUK PRINT
+        // Add header and signature
         const format3Container = document.querySelector('.format3-container');
         if (format3Container) {
+            format3Container.insertAdjacentHTML('afterbegin', headerHTML);
             format3Container.insertAdjacentHTML('beforeend', signatureHTML);
-        }
-
-        // Print
-        window.print();
-
-        // CLEANUP: Remove temporary signature dan restore keterangan section
-        setTimeout(() => {
-            const tempSignature = document.getElementById('temp-signature-section');
-            if (tempSignature) {
-                tempSignature.remove();
+            
+            // Update the main table title
+            const mainTableTitle = format3Container.querySelector('h3');
+            if (mainTableTitle && mainTableTitle.textContent.includes('HASIL PENILAIAN ANGKA KREDIT')) {
+                mainTableTitle.style.textAlign = 'center';
+                mainTableTitle.style.margin = '20px 0';
+                mainTableTitle.style.fontSize = '16px';
+                mainTableTitle.style.fontWeight = 'bold';
             }
+        }
+        
+        // Load user data from server
+        loadUserDataForPrint();
+        
+        // Wait for user data to load, then print
+        setTimeout(() => {
+            window.print();
+        }, 1000);
+
+        // Cleanup after printing
+        setTimeout(() => {
+            const tempHeader = document.getElementById('temp-print-header');
+            const tempSignature = document.getElementById('temp-signature-section');
+            const tempFinalNote = document.getElementById('temp-final-note');
+            
+            if (tempHeader) tempHeader.remove();
+            if (tempSignature) tempSignature.remove();
+            if (tempFinalNote) tempFinalNote.remove();
             
             // Restore keterangan section
-            if (keteranganSection && tempParent) {
-                if (tempNextSibling) {
-                    tempParent.insertBefore(keteranganSection, tempNextSibling);
-                } else {
-                    tempParent.appendChild(keteranganSection);
-                }
+            if (keteranganSection) {
+                keteranganSection.style.display = originalDisplay;
             }
-        }, 1000);
+        }, 2000);
+    }
+
+    // ===== FUNCTION TO LOAD USER DATA FOR PRINT =====
+    function loadUserDataForPrint() {
+        const userNip = document.querySelector('.user-nip').textContent;
+        
+        $.ajax({
+            url: 'get_user_data.php',
+            type: 'POST',
+            data: { nip: userNip },
+            dataType: 'json',
+            success: function(response) {
+                if (response.status === 'success') {
+                    const userData = response.data;
+                    
+                    // Update user identity table cells
+                    if (userData.no_seri_karpeg && userData.no_seri_karpeg !== 'NULL') {
+                        document.getElementById('karpeg-data').textContent = userData.no_seri_karpeg;
+                    }
+                    
+                    if (userData.tempat_tanggal_lahir && userData.tempat_tanggal_lahir !== 'NULL') {
+                        document.getElementById('ttl-data').textContent = userData.tempat_tanggal_lahir;
+                    }
+                    
+                    if (userData.jenis_kelamin && userData.jenis_kelamin !== 'NULL') {
+                        document.getElementById('gender-data').textContent = userData.jenis_kelamin;
+                    }
+                    
+                    if (userData.pangkat_golongan_tmt && userData.pangkat_golongan_tmt !== 'NULL') {
+                        document.getElementById('pangkat-data').textContent = userData.pangkat_golongan_tmt;
+                    }
+                    
+                    if (userData.jabatan_tmt && userData.jabatan_tmt !== 'NULL') {
+                        document.getElementById('jabatan-data').textContent = userData.jabatan_tmt;
+                    }
+                    
+                    if (userData.unit_kerja && userData.unit_kerja !== 'NULL') {
+                        document.getElementById('unit-data').textContent = userData.unit_kerja;
+                    }
+                    
+                    console.log('User data loaded for print:', userData);
+                } else {
+                    console.log('Failed to load user data:', response.message);
+                }
+            },
+            error: function() {
+                console.log('Error loading user data for print');
+            }
+        });
     }
 
     // ===== ADD/REMOVE ROWS FUNCTIONS WITH UPDATED KETERANGAN =====
