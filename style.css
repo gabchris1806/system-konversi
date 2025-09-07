@@ -35,13 +35,13 @@ input {
 button {
     width: 96%;
     padding: 10px;
-    background: #4CAF50;
+    background: #0069d9;
     color: white;
     border: none;
     border-radius: 8px;
     cursor: pointer;
 }
-button:hover { background: #45a049; }
+button:hover { background: #004794; }
 
 .link {
     font-size: 12px;
@@ -78,7 +78,7 @@ body.dashboard-page {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #D0F0C0;
+    background: #aec0f4;
     padding: 10px 20px;
     color: black;
     position: relative;
@@ -204,7 +204,7 @@ body.dashboard-page {
 }
 
 .tab-button.active {
-    background: #28a745;
+    background: #004794;
     color: white;
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(40, 167, 69, 0.3);
@@ -301,7 +301,7 @@ body.dashboard-page {
 .submit-btn {
     width: 100%;
     padding: 12px;
-    background: #28a745;
+    background: #2b67ff;
     color: white;
     border: none;
     border-radius: 8px;
@@ -311,7 +311,7 @@ body.dashboard-page {
 }
 
 .submit-btn:hover {
-    background: #218838;
+    background: #004794;
 }
 
 /* ===== INPUT WRAPPER STYLING ===== */
@@ -357,7 +357,7 @@ body.dashboard-page {
     padding: 15px;
     background: #f8f9fa;
     border-radius: 8px;
-    border-left: 4px solid #28a745;
+    border-left: 4px solid #1a40ff;
 }
 
 .year-selector-container label {
@@ -536,7 +536,7 @@ body.dashboard-page {
 }
 
 .add-row-button:hover {
-    background: #218838;
+    background: #004794;
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0,0,0,0.3);
 }
@@ -896,7 +896,7 @@ body.dashboard-page {
         display: none !important;
     }
 
-     .tab-content {
+    .tab-content {
         box-shadow: none !important;
         border-radius: 0 !important;
         border: none !important; /* Hilangkan border hijau */
@@ -993,12 +993,12 @@ body.dashboard-page {
 .form-group select:focus,
 .year-selector-container select:focus {
     outline: none;
-    border-color: #4CAF50;
+    border-color: #0069d9;
     box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
 }
 
 .input-wrapper:focus-within {
-    border-color: #4CAF50 !important;
+    border-color: #0069d9 !important;
     box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
 }
 
