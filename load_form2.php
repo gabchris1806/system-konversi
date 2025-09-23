@@ -29,11 +29,20 @@ if ($tahun_pilih === '' || !is_numeric($tahun_pilih)) {
 
 $tahun_berikutnya = (int)$tahun_pilih + 1;
 
-// Query database - PERBAIKAN: Hanya gunakan kolom yang ada
-$sql = "SELECT * FROM nilai
+// PERBAIKAN: Query untuk periode akademik (April tahun_pilih - Maret tahun_berikutnya)
+$sql = "SELECT * FROM nilai 
         WHERE nip = ? 
-        AND (tahun = ? OR tahun = ?) 
-        ORDER BY tahun ASC, bulan ASC";
+        AND (
+            (tahun = ? AND bulan IN ('april', 'mei', 'juni', 'juli', 'agustus', 'september', 'oktober', 'november', 'desember'))
+            OR 
+            (tahun = ? AND bulan IN ('januari', 'februari', 'maret'))
+        )
+        ORDER BY 
+            CASE 
+                WHEN tahun = ? AND bulan IN ('april', 'mei', 'juni', 'juli', 'agustus', 'september', 'oktober', 'november', 'desember') THEN 1
+                WHEN tahun = ? AND bulan IN ('januari', 'februari', 'maret') THEN 2
+            END,
+            FIELD(bulan, 'april', 'mei', 'juni', 'juli', 'agustus', 'september', 'oktober', 'november', 'desember', 'januari', 'februari', 'maret')";
 
 $stmt = mysqli_prepare($conn, $sql);
 if (!$stmt) {
@@ -44,14 +53,14 @@ if (!$stmt) {
     exit;
 }
 
-mysqli_stmt_bind_param($stmt, "sii", $nip, $tahun_pilih, $tahun_berikutnya);
+mysqli_stmt_bind_param($stmt, "siiii", $nip, $tahun_pilih, $tahun_berikutnya, $tahun_pilih, $tahun_berikutnya);
 mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
 
 if (!$result || mysqli_num_rows($result) === 0) {
     echo json_encode([
         'status' => 'error',
-        'table_data' => '<tr><td colspan="7">Data tidak ditemukan</td></tr>'
+        'table_data' => '<tr><td colspan="7">Tidak ada data untuk periode akademik ' . $tahun_pilih . '/' . $tahun_berikutnya . '</td></tr>'
     ]);
     exit;
 }
@@ -62,7 +71,7 @@ $total_koefisien = 0;
 $count = 0;
 
 while ($row = mysqli_fetch_assoc($result)) {
-    // PERBAIKAN: Handle periode berdasarkan kolom yang ada di database
+    // Handle periode berdasarkan kolom yang ada di database
     $periode = '';
     
     // Prioritas: gunakan kolom periode jika ada dan tidak kosong
@@ -88,13 +97,18 @@ while ($row = mysqli_fetch_assoc($result)) {
 
     $persentase = $row['persentase'] ?? ($row['prosentase'] ?? '0');
     
-    // Create unique row key for editing (tahun_periode)
-    // Bersihkan row key dari karakter yang bermasalah
+    // Create unique row key for editing
     $periode_clean = str_replace([' ', '-', ' - '], ['_', '_', '_'], $periode);
     $row_key = $row['tahun'] . '_' . $periode_clean;
     
+    // PERBAIKAN: Tampilkan periode akademik yang benar
+    $display_year = $row['tahun'];
+    if ($row['tahun'] == $tahun_berikutnya && in_array(strtolower($row['bulan']), ['januari', 'februari', 'maret'])) {
+        $display_year = $row['tahun'];
+    }
+    
     $table_data .= "<tr data-row-key='{$row_key}'>
-        <td class='editable-field' data-field='tahun' title='Klik untuk edit'>{$row['tahun']}</td>
+        <td class='editable-field' data-field='tahun' title='Klik untuk edit'>{$display_year}</td>
         <td class='editable-field' data-field='periode' title='Klik untuk edit'>{$periode}</td>
         <td class='editable-field' data-field='predikat' title='Klik untuk edit'>{$row['predikat']}</td>
         <td class='editable-field' data-field='persentase' title='Klik untuk edit'>{$persentase}/12</td>
@@ -120,6 +134,7 @@ echo json_encode([
     'summary_data' => [
         'koefisien_per_tahun' => number_format($koefisien_per_tahun, 2),
         'angka_kredit_yang_didapat' => number_format($total_angka_kredit, 3)
-    ]
+    ],
+    'periode_info' => "Periode Akademik: April {$tahun_pilih} - Maret {$tahun_berikutnya}"
 ]);
 ?>

@@ -78,7 +78,7 @@ body.dashboard-page {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #3062f8;
+    background: linear-gradient( 135deg, #3062f8, #0228ff);
     padding: 10px 20px;
     color: rgb(255, 255, 255);
     position: relative;
