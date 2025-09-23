@@ -23,7 +23,7 @@ if (isset($_POST['login'])) {
             if ($_SESSION['role'] === 'admin') {
                 header("Location: admin_dashboard.php");
             } else {
-                header("Location: dashboard.php");
+                header("Location: landing_page.php");
             }
             exit();
         } else {

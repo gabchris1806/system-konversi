@@ -40,7 +40,7 @@ if (!$user) {
 <body class="dashboard-page">
     <!-- NAVBAR -->
     <nav class="navbar">
-        <div class="navbar-left">
+        <div class="navbar-left" onclick="location.href='landing_page.php'">
             <img src="Logo_PTKI_Medan.png" class="logo" alt="Logo">
             <span class="app-title">SISTEM KONVERSI ANGKA KREDIT</span>
         </div>
@@ -306,10 +306,10 @@ if (!$user) {
                                         <span class="description-text">AK Konversi</span>
                                     </div>
                                 </td>
-                                <td class="editable-cell" data-type="ak_konversi_lama">0,00</td>
-                                <td class="editable-cell" data-type="ak_konversi_baru" id="ak_konversi_from_form1">12.50</td>
-                                <td class="calculated-cell" data-type="ak_konversi_jumlah">12.50</td>
-                                <td class="editable-cell keterangan-cell" data-type="keterangan_4" contenteditable="true">Dari konversi</td>
+                                <td class="editable-cell" data-type="ak_konversi_lama">-</td>
+                                <td class="editable-cell" data-type="ak_konversi_baru" id="ak_konversi_from_form1">0.00</td>
+                                <td class="calculated-cell" data-type="ak_konversi_jumlah">0.00</td>
+                                <td class="editable-cell keterangan-cell" data-type="keterangan_4" contenteditable="true">-</td>
                             </tr>
                             <tr data-row-id="5">
                                 <td class="row-number">5</td>
@@ -347,8 +347,8 @@ if (!$user) {
                             </td>
                             
                             <td id="total_lama_kumulatif" style="background-color: #007bff !important; text-align: center; border: 1px solid #007bff;">0.00</td>
-                            <td id="total_baru_kumulatif" style="background-color: #007bff !important; text-align: center; border: 1px solid #007bff;">59.38</td>
-                            <td id="total_jumlah_kumulatif" style="background-color: #007bff !important; text-align: center; border: 1px solid #007bff;">59.38</td>
+                            <td id="total_baru_kumulatif" style="background-color: #007bff !important; text-align: center; border: 1px solid #007bff;">50.00</td>
+                            <td id="total_jumlah_kumulatif" style="background-color: #007bff !important; text-align: center; border: 1px solid #007bff;">50.00</td>
                             <td id="total_" style="background-color: #007bff !important; text-align: center; border: 1px solid #007bff;"></td>
                         </tr>
 
@@ -371,14 +371,17 @@ if (!$user) {
                                 <td class="editable-cell" data-type="ak_minimal_jenjang">50</td>
                             </tr>
                             <tr>
-                                <td id="keterangan-pangkat" style="text-align: left; padding: 12px;">Kelebihan/ kekurangan <sup>)</sup> Angka Kredit yang harus dicapai untuk kenaikan pangkat</td>
-                                <td class="calculated-cell" data-type="kelebihan_pangkat">25.000</td>
+                                <td id="keterangan-pangkat" style="text-align: left; padding: 12px;">Kelebihan/ <span style="text-decoration: line-through;">kekurangan</span> <sup>**)</sup> Angka Kredit yang harus dicapai untuk kenaikan pangkat</td>
+                                <td class="calculated-cell" data-type="kelebihan_pangkat">12.500</td>
                                 <td></td>
                             </tr>
                             <tr>
-                                <td id="keterangan-jenjang" style="text-align: left; padding: 12px;">Kelebihan/kekurangan <sup>)</sup> Angka Kredit yang harus dicapai untuk peningkatan jenjang</td>
+                                <td id="keterangan-jenjang" style="text-align: left; padding: 12px;">Kelebihan/<span style="text-decoration: line-through;">kekurangan</span> <sup>**)</sup> Angka Kredit yang harus dicapai untuk peningkatan jenjang</td>
                                 <td></td>
-                                <td class="calculated-cell" data-type="kelebihan_jenjang">25.000</td>
+                                <td class="calculated-cell" data-type="kelebihan_jenjang">12.500</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" class="colspan-row" style="padding: 12px; font-weight: bold;">DAPAT/TIDAK DAPAT <sup>**)</sup> DIPERTIMBANGKAN UNTUK PENGANGKATAN PERTAMA PNS DALAM JABATAN DOSEN ASISTEN AHLI</td>
                             </tr>
                         </tbody>
                     </table>
@@ -944,6 +947,13 @@ if (!$user) {
         $("#tabel-format2").html('<tr><td colspan="7" class="loading">Memuat data...</td></tr>');
         $("#summary-container-f2").hide();
         
+        // Update period info
+        let tahunBerikutnya = parseInt(tahun) + 1;
+        $("#period-info-f2").html(`
+            <h4>Periode Akademik ${tahun}/${tahunBerikutnya}</h4>
+            <p>April ${tahun} - Maret ${tahunBerikutnya}</p>
+        `).show();
+        
         $.ajax({
             url: "load_form2.php",
             type: "POST",
@@ -960,6 +970,11 @@ if (!$user) {
                         $("#angka-kredit-didapat-f2").text(response.summary_data.angka_kredit_yang_didapat);
                         $("#angka-dasar-f2").text("50,0");
                         $("#summary-container-f2").show();
+                    }
+
+                    // Update period info from response if available
+                    if(response.periode_info) {
+                        $("#period-info-f2 h4").text(response.periode_info);
                     }
                 } else {
                     $("#tabel-format2").html(response.table_data);
@@ -1003,9 +1018,8 @@ if (!$user) {
                 inputOptions = 'min="1900" max="2100"';
                 break;
             case 'periode':
-                // For periode, we'll use a text input with validation
                 inputType = 'text';
-                inputOptions = 'placeholder="Contoh: April atau April - Juni"';
+                inputOptions = 'placeholder="Contoh: April - Desember"';
                 break;
             case 'predikat':
                 inputType = 'text';
@@ -1053,138 +1067,120 @@ if (!$user) {
         });
     });
 
-        // Helper function to validate field input
-        function validateFieldInput(field, newValue, currentValue, cell) {
-            switch(field) {
-                case 'persentase':
-                    if (newValue < 1 || newValue > 12 || !Number.isInteger(Number(newValue))) {
-                        showErrorMessage('Persentase harus berupa bilangan bulat antara 1-12');
-                        cell.text(getDisplayValue(field, currentValue));
-                        return false;
-                    }
-                    break;
-                    
-                case 'koefisien':
-                    if (isNaN(newValue) || Number(newValue) <= 0) {
-                        showErrorMessage('Koefisien harus berupa angka positif');
-                        cell.text(getDisplayValue(field, currentValue));
-                        return false;
-                    }
-                    break;
-                    
-                case 'tahun':
-                    if (isNaN(newValue) || Number(newValue) < 1900 || Number(newValue) > 2100) {
-                        showErrorMessage('Tahun harus berupa angka antara 1900-2100');
-                        cell.text(getDisplayValue(field, currentValue));
-                        return false;
-                    }
-                    break;
-                    
-                case 'periode':
-                    // Validate periode format
-                    const validMonths = ['januari', 'februari', 'maret', 'april', 'mei', 'juni', 
-                                    'juli', 'agustus', 'september', 'oktober', 'november', 'desember'];
-                    const periodeParts = newValue.toLowerCase().split(' - ');
-                    let isValidPeriode = true;
-                    
-                    for (let month of periodeParts) {
-                        month = month.trim();
-                        if (!validMonths.includes(month)) {
-                            isValidPeriode = false;
-                            break;
-                        }
-                    }
-                    
-                    if (!isValidPeriode || newValue.trim() === '') {
-                        showErrorMessage('Format periode tidak valid. Gunakan nama bulan atau range bulan (contoh: "April" atau "April - Juni")');
-                        cell.text(getDisplayValue(field, currentValue));
-                        return false;
-                    }
-                    break;
-                    
-                case 'predikat':
-                    if (newValue.trim() === '') {
-                        showErrorMessage('Predikat tidak boleh kosong');
-                        cell.text(getDisplayValue(field, currentValue));
-                        return false;
-                    }
-                    break;
-            }
-            return true;
-        }
-
-        // Helper function to get display value
-        function getDisplayValue(field, value) {
-            switch(field) {
-                case 'persentase':
-                    return value + '/12';
-                case 'koefisien':
-                    return parseFloat(value).toFixed(2);
-                case 'periode':
-                    // Capitalize first letter of each word
-                    return value.split(' ').map(word => 
-                        word === '-' ? word : word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
-                    ).join(' ');
-                default:
-                    return value;
-            }
-        }
-
-        // Enhanced Save field value to database function
-        function saveFieldValue(rowKey, field, newValue, cell, originalValue) {
-            // Show loading state
-            cell.html('<span style="color: #666; font-style: italic;">💾 Menyimpan...</span>');
-            
-            $.ajax({
-                url: 'update_konversi.php',
-                type: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify({
-                    row_key: rowKey,
-                    field: field,
-                    value: newValue
-                }),
-                dataType: 'json',
-                success: function(response) {
-                    if (response.status === 'success') {
-                        // Display success and update cell
-                        const displayValue = getDisplayValue(field, newValue);
-                        cell.text(displayValue);
-                        cell.css('background-color', '#d1ecf1').animate({'background-color': 'transparent'}, 2000);
-                        
-                        // If persentase or koefisien was updated, update angka_kredit column
-                        if ((field === 'persentase' || field === 'koefisien') && response.new_angka_kredit) {
-                            const angkaKreditCell = cell.closest('tr').find('.calculated-field');
-                            angkaKreditCell.text(response.new_angka_kredit);
-                            angkaKreditCell.css('background-color', '#d1ecf1').animate({'background-color': 'transparent'}, 2000);
-                        }
-                        
-                        showSuccessMessage('Data berhasil diperbarui!');
-                        
-                        // Refresh summary data if necessary
-                        if (field === 'persentase' || field === 'koefisien' || field === 'tahun') {
-                            setTimeout(function() {
-                                $("#btn-lihat-f2").click();
-                            }, 1500);
-                        }
-                        
-                    } else {
-                        // Restore original value on error
-                        const displayValue = getDisplayValue(field, originalValue);
-                        cell.text(displayValue);
-                        showErrorMessage(response.message || 'Gagal menyimpan data');
-                    }
-                },
-                error: function(xhr, status, error) {
-                    // Restore original value on error
-                    const displayValue = getDisplayValue(field, originalValue);
-                    cell.text(displayValue);
-                    showErrorMessage('Terjadi kesalahan saat menyimpan data');
-                    console.error('AJAX Error:', status, error);
-                    console.error('Response:', xhr.responseText);
+    // Helper function to validate field input
+    function validateFieldInput(field, newValue, currentValue, cell) {
+        switch(field) {
+            case 'persentase':
+                if (newValue < 1 || newValue > 12 || !Number.isInteger(Number(newValue))) {
+                    showErrorMessage('Persentase harus berupa bilangan bulat antara 1-12');
+                    cell.text(getDisplayValue(field, currentValue));
+                    return false;
                 }
-            });
+                break;
+                
+            case 'koefisien':
+                if (isNaN(newValue) || Number(newValue) <= 0) {
+                    showErrorMessage('Koefisien harus berupa angka positif');
+                    cell.text(getDisplayValue(field, currentValue));
+                    return false;
+                }
+                break;
+                
+            case 'tahun':
+                if (isNaN(newValue) || Number(newValue) < 1900 || Number(newValue) > 2100) {
+                    showErrorMessage('Tahun harus berupa angka antara 1900-2100');
+                    cell.text(getDisplayValue(field, currentValue));
+                    return false;
+                }
+                break;
+                
+            case 'periode':
+                // Validasi untuk format yang sesuai dengan data
+                const validPeriodes = [
+                    'April - Desember', 
+                    'Januari - Maret',
+                    'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 
+                    'Oktober', 'November', 'Desember', 'Januari', 'Februari', 'Maret'
+                ];
+                
+                const normalizedValue = newValue.split(' ').map(word => 
+                    word === '-' ? word : word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+                ).join(' ');
+                
+                if (!validPeriodes.includes(normalizedValue)) {
+                    showErrorMessage('Periode harus berupa: "April - Desember", "Januari - Maret", atau nama bulan tunggal');
+                    cell.text(getDisplayValue(field, currentValue));
+                    return false;
+                }
+                break;
+                
+            case 'predikat':
+                if (newValue.trim() === '') {
+                    showErrorMessage('Predikat tidak boleh kosong');
+                    cell.text(getDisplayValue(field, currentValue));
+                    return false;
+                }
+                break;
         }
+        return true;
+    }
+
+    // Helper function to get display value
+    function getDisplayValue(field, value) {
+        switch(field) {
+            case 'persentase':
+                return value + '/12';
+            case 'koefisien':
+                return parseFloat(value).toFixed(2);
+            case 'periode':
+                return value.split(' ').map(word => 
+                    word === '-' ? word : word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+                ).join(' ');
+            default:
+                return value;
+        }
+    }
+
+    // Function to save field value
+    function saveFieldValue(rowKey, field, newValue, cell, oldValue) {
+        console.log('Updating field:', field, 'with value:', newValue);
+        
+        $.ajax({
+            url: 'update_field_format2.php',
+            type: 'POST',
+            data: {
+                row_key: rowKey,
+                field: field,
+                value: newValue
+            },
+            dataType: 'json',
+            success: function(response) {
+                console.log('Update response:', response);
+                
+                if (response.status === 'success') {
+                    const displayValue = getDisplayValue(field, newValue);
+                    cell.text(displayValue);
+                    
+                    // Refresh data jika field mempengaruhi calculated fields
+                    if (field === 'persentase' || field === 'koefisien') {
+                        setTimeout(() => {
+                            $('#btn-lihat-f2').click();
+                        }, 500);
+                    }
+                    
+                    showSuccessMessage(`${field.charAt(0).toUpperCase() + field.slice(1)} berhasil diupdate`);
+                } else {
+                    showErrorMessage(response.message || 'Gagal mengupdate ' + field);
+                    cell.text(getDisplayValue(field, oldValue));
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('AJAX Error:', status, error);
+                showErrorMessage('Terjadi kesalahan saat mengupdate ' + field);
+                cell.text(getDisplayValue(field, oldValue));
+            }
+        });
+    }
 
     // ===== FORMAT 2: DELETE FUNCTION =====
     function deleteKonversiData(rowKey) {
@@ -1210,7 +1206,7 @@ if (!$user) {
         }
     }
 
-    // ===== FORMAT 3: AJAX Load Data - UPDATED WITH DYNAMIC YEAR =====
+    // ===== FORMAT 3: AJAX Load Data =====
     $("#btn-lihat-f3").click(function(e){
         e.preventDefault();
         let tahun = $("#tahun_pilih_f3").val();
@@ -1221,7 +1217,9 @@ if (!$user) {
             alert("Pilih tahun terlebih dahulu!");
             return;
         }
-        
+
+        // Show loading state
+        showFormat3Loading();
         $("#current-year-display").text(tahun);
         console.log("Memuat data Format 3 untuk tahun:", tahun);
         
@@ -1233,35 +1231,176 @@ if (!$user) {
             success: function(response) {
                 console.log("Response Format 3:", response);
                 
+                hideFormat3Loading();
+                
                 if(response.status === 'success') {
                     $("#format3-container").show();
                     
+                    // Update AK Konversi dengan logika asli Anda
                     if(response.total_angka_kredit > 0) {
                         $(".editable-cell[data-type='ak_konversi_baru']").text(parseFloat(response.total_angka_kredit).toFixed(2));
                     } else {
-                        loadAKKonversiFromFormat1();
+                        // Panggil fungsi yang sudah ada
+                        if(typeof loadAKKonversiFromFormat1 === 'function') {
+                            loadAKKonversiFromFormat1();
+                        }
                     }
                     
-                    calculateFormat3Totals();
+                    // Panggil fungsi kalkulasi yang sudah ada
+                    if(typeof calculateFormat3Totals === 'function') {
+                        calculateFormat3Totals();
+                    }
+                    
                     $(".format3-warning").hide();
                     
                 } else if(response.status === 'no_data') {
-                    $("#format3-container").show();
-                    $(".format3-warning").show();
+                    // Tidak ada data, tampilkan card peringatan (BUKAN tabel kosong)
+                    showFormat3NoDataCard(tahun, response.message);
+                    
                 } else {
                     $("#format3-container").hide();
-                    alert("Terjadi kesalahan: " + response.message);
+                    showErrorMessage(response.message || 'Terjadi kesalahan');
                 }
             },
             error: function(xhr, status, error) {
                 console.log("AJAX Error Format 3:", status, error);
                 console.log("Response Text F3:", xhr.responseText);
                 console.log("Status Code:", xhr.status);
+                
+                hideFormat3Loading();
                 $("#format3-container").hide();
-                alert("Terjadi kesalahan saat memuat data Format 3");
+                showErrorMessage("Terjadi kesalahan saat memuat data Format 3");
             }
         });
     });
+
+    // Function to show loading state for Format 3
+    function showFormat3Loading() {
+        // Remove existing no-data card if any
+        $("#format3-no-data-card").remove();
+        
+        // Create and show loading card
+        const loadingHtml = `
+            <div id="format3-loading-card" class="no-data-message" style="
+                text-align: center;
+                padding: 40px;
+                margin: 20px 0;
+                background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+                border-radius: 15px;
+                border: 2px solid rgba(102, 126, 234, 0.2);
+                color: #667eea;
+                font-weight: 600;
+                font-size: 16px;
+            ">
+                <div class="loading-spinner" style="
+                    display: inline-block;
+                    width: 24px;
+                    height: 24px;
+                    border: 3px solid rgba(102, 126, 234, 0.3);
+                    border-top: 3px solid #667eea;
+                    border-radius: 50%;
+                    animation: spin 1s linear infinite;
+                    margin-right: 15px;
+                    vertical-align: middle;
+                "></div>
+                Memuat data laporan...
+            </div>
+        `;
+        
+        $("#format3-container").before(loadingHtml);
+    }
+
+    // Function to hide loading state for Format 3
+    function hideFormat3Loading() {
+        $("#format3-loading-card").remove();
+    }
+
+    // Function to show no data card for Format 3
+    function showFormat3NoDataCard(tahun, message) {
+        // Remove existing cards
+        $("#format3-loading-card").remove();
+        $("#format3-no-data-card").remove();
+        
+        let tahunBerikutnya = parseInt(tahun) + 1;
+        
+        const noDataHtml = `
+            <div id="format3-no-data-card" class="no-data-message" style="
+                text-align: center;
+                padding: 50px;
+                margin: 20px 0;
+                background: linear-gradient(135deg, rgba(245, 166, 35, 0.1), rgba(248, 113, 113, 0.1));
+                border-radius: 15px;
+                border: 2px dashed rgba(245, 166, 35, 0.3);
+                color: #d97706;
+            ">
+                <div style="font-size: 48px; margin-bottom: 20px;">📊</div>
+                <h3 style="color: #92400e; margin-bottom: 15px; font-size: 1.5rem;">
+                    Belum Ada Data Konversi
+                </h3>
+                <p style="color: #a16207; font-size: 1.1rem; margin-bottom: 20px;">
+                    ${message}
+                </p>
+                <div style="
+                    background: rgba(255, 255, 255, 0.8);
+                    padding: 15px;
+                    border-radius: 10px;
+                    margin: 20px 0;
+                    border: 1px solid rgba(245, 166, 35, 0.2);
+                ">
+                    <p style="color: #92400e; margin: 0; font-weight: 500;">
+                        <strong>Periode Akademik:</strong> April ${tahun} - Maret ${tahunBerikutnya}
+                    </p>
+                </div>
+                <p style="color: #a16207; font-size: 0.95rem; margin-bottom: 25px;">
+                    Silakan input data konversi terlebih dahulu di <strong>Format 1</strong> untuk dapat membuat laporan.
+                </p>
+                <button onclick="location.href='#format1'; $('.tab-button').removeClass('active'); $('[data-tab=format1]').addClass('active'); switchTab('format1');" 
+                        style="
+                            background: linear-gradient(135deg, #f59e0b, #d97706);
+                            color: white;
+                            border: none;
+                            padding: 12px 24px;
+                            border-radius: 8px;
+                            cursor: pointer;
+                            font-weight: 600;
+                            font-size: 14px;
+                            transition: all 0.3s ease;
+                            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+                        "
+                        onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(245, 158, 11, 0.4)';"
+                        onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(245, 158, 11, 0.3)';"
+                >
+                    Input Data di Format 1
+                </button>
+            </div>
+        `;
+        
+        $("#format3-container").before(noDataHtml);
+        
+        // Hide format3 container and warning
+        $("#format3-container").hide();
+        $(".format3-warning").hide();
+    }
+
+    // Function to update calculations (jika fungsi asli tidak ada)
+    // Hanya gunakan ini jika calculateFormat3Totals() tidak ada di kode Anda
+    function fallbackCalculateFormat3Totals() {
+        console.log('Using fallback calculation function');
+        // Add your calculation logic here if needed
+    }
+
+    // Add CSS for loading animation if not exists
+    if (!document.getElementById('format3-loading-styles')) {
+        const style = document.createElement('style');
+        style.id = 'format3-loading-styles';
+        style.textContent = `
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }   
+        `;
+        document.head.appendChild(style);
+    }
 
     // ===== FORMAT 3: Editable Cells =====
     $(document).on('click', '.editable-cell:not(.keterangan-cell)', function() {
@@ -1554,7 +1693,24 @@ if (!$user) {
             }
         });
         
+        const urlParams = new URLSearchParams(window.location.search);
+        const activeTab = urlParams.get('tab');
         
+        if (activeTab && document.querySelector(`[data-tab="${activeTab}"]`)) {
+            // Hapus active class dari semua tabs
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Set active tab
+            const targetTab = document.querySelector(`[data-tab="${activeTab}"]`);
+            targetTab.classList.add('active');
+            
+            // Trigger tab change event jika ada
+            if (typeof switchTab === 'function') {
+                switchTab(activeTab);
+            }
+        }
     </script>
 </body>
 </html>
