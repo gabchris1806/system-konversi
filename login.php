@@ -43,7 +43,7 @@ if (isset($_POST['login'])) {
     <link rel="stylesheet" href="style.css">
     <style>
         body {
-            background: linear-gradient(135deg, #2E7D32, #D0F0C0) !important;
+            background: linear-gradient(135deg, #001affd5, #00ffeaff) !important;
         }
     </style>
 </head>

@@ -34,7 +34,7 @@ if (isset($_POST['register'])) {
     <link rel="stylesheet" href="style.css">
     <style>
         body {
-            background: linear-gradient(135deg, #2E7D32, #D0F0C0) !important;
+            background: linear-gradient(135deg, #001affd5, #00ffeaff) !important;
         }
         .form-help {
             margin-bottom: 20px;
