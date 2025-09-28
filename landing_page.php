@@ -480,7 +480,7 @@ if (!$user) {
     <!-- NAVBAR -->
     <nav class="navbar">
         <div class="navbar-left">
-            <img src="../assets/images/Logo_PTKI_Medan.png" class="logo" alt="Logo">
+            <img src="Logo_PTKI_Medan.png" class="logo" alt="Logo">
             <span class="app-title">SISTEM KONVERSI ANGKA KREDIT</span>
         </div>
         <div class="navbar-right">
