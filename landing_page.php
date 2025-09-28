@@ -1,6 +1,6 @@
 <?php
 session_start();
-include __DIR__ . '/../config/db.php';
+include __DIR__ . '/db.php';
 
 // Cek login user
 if (!isset($_SESSION['nip'])) {

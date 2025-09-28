@@ -61,7 +61,7 @@ if (isset($_GET['delete_user']) && isset($_GET['nip'])) {
     mysqli_query($conn, "DELETE FROM nilai WHERE nip='$nip_to_delete'");
     
     // Delete user
-    $delete_result = mysqli_query($conn, "DELETE FROM pegawai WHERE nip='$nip_to_delete' AND role='user'");
+    $delete_result = mysqli_query($conn, "DELETE FROM pegawai WHERE nip='$nip_to_delete'");
     
     if ($delete_result) {
         echo "<script>alert('User berhasil dihapus!'); window.location.href='admin_dashboard.php';</script>";
