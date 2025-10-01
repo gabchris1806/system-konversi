@@ -27,22 +27,13 @@ if ($tahun_pilih === '' || !is_numeric($tahun_pilih)) {
     exit;
 }
 
-$tahun_berikutnya = (int)$tahun_pilih + 1;
-
-// PERBAIKAN: Query untuk periode akademik (April tahun_pilih - Maret tahun_berikutnya)
+// Query sederhana: hanya filter berdasarkan NIP dan tahun
 $sql = "SELECT * FROM nilai 
         WHERE nip = ? 
-        AND (
-            (tahun = ? AND bulan IN ('april', 'mei', 'juni', 'juli', 'agustus', 'september', 'oktober', 'november', 'desember'))
-            OR 
-            (tahun = ? AND bulan IN ('januari', 'februari', 'maret'))
-        )
+        AND tahun = ?
         ORDER BY 
-            CASE 
-                WHEN tahun = ? AND bulan IN ('april', 'mei', 'juni', 'juli', 'agustus', 'september', 'oktober', 'november', 'desember') THEN 1
-                WHEN tahun = ? AND bulan IN ('januari', 'februari', 'maret') THEN 2
-            END,
-            FIELD(bulan, 'april', 'mei', 'juni', 'juli', 'agustus', 'september', 'oktober', 'november', 'desember', 'januari', 'februari', 'maret')";
+            FIELD(bulan, 'januari', 'februari', 'maret', 'april', 'mei', 'juni', 
+                  'juli', 'agustus', 'september', 'oktober', 'november', 'desember')";
 
 $stmt = mysqli_prepare($conn, $sql);
 if (!$stmt) {
@@ -53,14 +44,14 @@ if (!$stmt) {
     exit;
 }
 
-mysqli_stmt_bind_param($stmt, "siiii", $nip, $tahun_pilih, $tahun_berikutnya, $tahun_pilih, $tahun_berikutnya);
+mysqli_stmt_bind_param($stmt, "si", $nip, $tahun_pilih);
 mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
 
 if (!$result || mysqli_num_rows($result) === 0) {
     echo json_encode([
         'status' => 'error',
-        'table_data' => '<tr><td colspan="7">Tidak ada data untuk periode akademik ' . $tahun_pilih . '/' . $tahun_berikutnya . '</td></tr>'
+        'table_data' => '<tr><td colspan="7">Tidak ada data untuk tahun ' . $tahun_pilih . '</td></tr>'
     ]);
     exit;
 }
@@ -101,14 +92,8 @@ while ($row = mysqli_fetch_assoc($result)) {
     $periode_clean = str_replace([' ', '-', ' - '], ['_', '_', '_'], $periode);
     $row_key = $row['tahun'] . '_' . $periode_clean;
     
-    // PERBAIKAN: Tampilkan periode akademik yang benar
-    $display_year = $row['tahun'];
-    if ($row['tahun'] == $tahun_berikutnya && in_array(strtolower($row['bulan']), ['januari', 'februari', 'maret'])) {
-        $display_year = $row['tahun'];
-    }
-    
     $table_data .= "<tr data-row-key='{$row_key}'>
-        <td class='editable-field' data-field='tahun' title='Klik untuk edit'>{$display_year}</td>
+        <td class='editable-field' data-field='tahun' title='Klik untuk edit'>{$row['tahun']}</td>
         <td class='editable-field' data-field='periode' title='Klik untuk edit'>{$periode}</td>
         <td class='editable-field' data-field='predikat' title='Klik untuk edit'>{$row['predikat']}</td>
         <td class='editable-field' data-field='persentase' title='Klik untuk edit'>{$persentase}/12</td>
@@ -135,6 +120,6 @@ echo json_encode([
         'koefisien_per_tahun' => number_format($koefisien_per_tahun, 2),
         'angka_kredit_yang_didapat' => number_format($total_angka_kredit, 3)
     ],
-    'periode_info' => "Periode Akademik: April {$tahun_pilih} - Maret {$tahun_berikutnya}"
+    'periode_info' => "Tahun: {$tahun_pilih}"
 ]);
 ?>

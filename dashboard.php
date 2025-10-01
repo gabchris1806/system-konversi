@@ -932,64 +932,63 @@ if (!$user) {
     });
 
     // ===== FORMAT 2: AJAX Load Data =====
-    $("#btn-lihat-f2").click(function(e){
-        e.preventDefault();
-        let tahun = $("#tahun_pilih_f2").val();
-        
-        console.log("Button F2 clicked, tahun:", tahun);
-        
-        if(tahun === ""){
-            alert("Pilih tahun terlebih dahulu!");
-            return;
-        }
+$("#btn-lihat-f2").click(function(e){
+    e.preventDefault();
+    let tahun = $("#tahun_pilih_f2").val();
+    
+    console.log("Button F2 clicked, tahun:", tahun);
+    
+    if(tahun === ""){
+        alert("Pilih tahun terlebih dahulu!");
+        return;
+    }
 
-        // Show loading
-        $("#tabel-format2").html('<tr><td colspan="7" class="loading">Memuat data...</td></tr>');
-        $("#summary-container-f2").hide();
-        
-        // Update period info
-        let tahunBerikutnya = parseInt(tahun) + 1;
-        $("#period-info-f2").html(`
-            <h4>Periode Akademik ${tahun}/${tahunBerikutnya}</h4>
-            <p>April ${tahun} - Maret ${tahunBerikutnya}</p>
-        `).show();
-        
-        $.ajax({
-            url: "load_form2.php",
-            type: "POST",
-            data: {tahun_pilih: tahun},
-            dataType: 'json',
-            success: function(response) {
-                console.log("Response dari server F2:", response);
+    // Show loading
+    $("#tabel-format2").html('<tr><td colspan="7" class="loading">Memuat data...</td></tr>');
+    $("#summary-container-f2").hide();
+    
+    // Update period info - hanya menampilkan tahun
+    $("#period-info-f2").html(`
+        <h4>Tahun ${tahun}</h4>
+        <p>Data konversi untuk tahun ${tahun}</p>
+    `).show();
+    
+    $.ajax({
+        url: "load_form2.php",
+        type: "POST",
+        data: {tahun_pilih: tahun},
+        dataType: 'json',
+        success: function(response) {
+            console.log("Response dari server F2:", response);
 
-                if(response.status === 'success') {
-                    $("#tabel-format2").html(response.table_data);
+            if(response.status === 'success') {
+                $("#tabel-format2").html(response.table_data);
 
-                    if(response.summary_data) {
-                        $("#koefisien-per-tahun-f2").text(response.summary_data.koefisien_per_tahun);
-                        $("#angka-kredit-didapat-f2").text(response.summary_data.angka_kredit_yang_didapat);
-                        $("#angka-dasar-f2").text("50,0");
-                        $("#summary-container-f2").show();
-                    }
-
-                    // Update period info from response if available
-                    if(response.periode_info) {
-                        $("#period-info-f2 h4").text(response.periode_info);
-                    }
-                } else {
-                    $("#tabel-format2").html(response.table_data);
-                    $("#summary-container-f2").hide();
+                if(response.summary_data) {
+                    $("#koefisien-per-tahun-f2").text(response.summary_data.koefisien_per_tahun);
+                    $("#angka-kredit-didapat-f2").text(response.summary_data.angka_kredit_yang_didapat);
+                    $("#angka-dasar-f2").text("50,0");
+                    $("#summary-container-f2").show();
                 }
-            },
-            error: function(xhr, status, error) {
-                console.log("AJAX Error F2:", status, error);
-                console.log("Response Text F2:", xhr.responseText);
-                console.log("Status Code:", xhr.status);
-                $("#tabel-format2").html('<tr><td colspan="7" class="no-data-message" style="color: red;">Terjadi kesalahan saat memuat data</td></tr>');
+
+                // Update period info from response if available
+                if(response.periode_info) {
+                    $("#period-info-f2 h4").text(response.periode_info);
+                }
+            } else {
+                $("#tabel-format2").html(response.table_data);
                 $("#summary-container-f2").hide();
             }
-        });
+        },
+        error: function(xhr, status, error) {
+            console.log("AJAX Error F2:", status, error);
+            console.log("Response Text F2:", xhr.responseText);
+            console.log("Status Code:", xhr.status);
+            $("#tabel-format2").html('<tr><td colspan="7" class="no-data-message" style="color: red;">Terjadi kesalahan saat memuat data</td></tr>');
+            $("#summary-container-f2").hide();
+        }
     });
+});
     
     // ===== FORMAT 2: INLINE EDITING FUNCTIONS =====
     $(document).on('click', '.editable-field', function() {
